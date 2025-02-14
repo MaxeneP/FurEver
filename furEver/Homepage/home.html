@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = 'icon' type = 'image/x-icon' href = './assets/favicon.png'>
+    <title>FurEver</title>
+    <link rel="stylesheet" href="./style/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel = 'stylesheet' href = './style/home_style.css'>
+    <script src = "./src/ph_provinces_and_cities-master/city.js" defer></script>
+    <script src="./src/home.js" defer></script>
+</head>
+<body>
+    <div id="flex-wrapper">
+        <div id="header">
+            <div id="header-left">
+                <label class="fa fa-bars header-buttons" aria-hidden="true" for = 'burger-menu-trigger'>
+                </label>
+                <input type="checkbox" id = 'burger-menu-trigger'>
+                <div id="burger-menu-dropdown">
+                    <div class="bm-item">
+                        <a>Home</a>
+                    </div>
+                    <div class="bm-item">
+                        <a>Browse</a>
+                    </div>
+                    <div class="bm-item">
+                        <a>Survey</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="header-right">
+                <div class="header-buttons">
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>                </div>
+                <div class="header-buttons">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                </div>
+                <div class="header-buttons">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="body">
+            <div id="body-top">
+                <div id="body-top-left">
+                    <form action="" id = "search-form" ></form>
+                    <i class="fa fa-search" aria-hidden="true" id = 'searchbar-label'></i>
+                    <input type="text" form="search-form" id = 'searchbar' placeholder = 'Find your FurEver!' name = 'searchbar'>
+                </div>
+                <div id="body-top-right">
+                    <input type="checkbox" id = 'location-dropdown-trigger'>
+                    <label id="location-dropdown" for = 'location-dropdown-trigger'>
+                        <div id="location-dropdown-label">
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            <p>LOCATION</p>
+                        </div>
+                    </label>
+                    <div id="cities">
+                    </div>
+                </div>
+            </div>
+            <div id="body-content">
+                <div id="listing-scroll">
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div id="body-fade"></div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>pmpurificacion@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>elcmapalad@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>blvfrancisco@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>aktcoquia@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>abchan@mymail.mapua.edu.ph</p>
+            </div>
+        </div>
+
+        <div id="listing-view-wrapper">
+            <div id="listing-view-left">
+                <div id="lv-carousel">
+                    <input type="checkbox" id="adopted-trigger">
+                    <div id="carousel-left" class= "carousel-btns">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                    <div id="carousel-right" class = "carousel-btns">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div id="adopted-tint">ADOPTED</div>
+                    <div id="carousel-info">
+                        <div id="name">Name</div>
+                        <div id="species">Species</div>
+                    </div>
+                    <div id="carousel-window">
+                        <img src="./assets/test2.jpg" alt="">
+                        <img src="./assets/test3.jpg" alt="">
+                        <img src="./assets/test4.jpg" alt="">
+                    </div>
+                    
+                </div>
+                <div id="lv-left-bottom">
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Breed</div>
+                        <div id="breed">Breed</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Birthday</div>
+                        <div id="birthday">Birthday</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Sex</div>
+                        <div id="sex">Sex</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Size</div>
+                        <div id="size">Size</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Activeness</div>
+                        <div id="activeness">Activeness</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Temperament</div>
+                        <div id="temperament">Temperament</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Family-Rating</div>
+                        <div id="family-friendliness">Nice</div>
+                    </div>
+                    <div class="lv-left-info">
+                        <div class="lv-left-label">Neutered</div>
+                        <div id="neutered">Neutered</div>
+                    </div>
+                </div>
+                <div id="add-to-wishlist-btn">
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div id="listing-view-right">
+                <div class="right-info">
+                    <div class="lv-right-label">Additional Info</div>
+                    <div id="additional-info">
+                        
+                    </div>
+                </div>
+                <div class="right-info">
+                    <div class="lv-right-label">Contact Information</div>
+                    <div>
+                        <div class="lv-right-label">
+                            <i class="fa fa-phone-square" aria-hidden="true"></i>
+                        </div>
+                        <div id="contact">0999020269</div>
+                    </div>
+                    <div>
+                        <div class="lv-right-label">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </div>
+                        <div id="location">General Trias, Cavite</div>
+                    </div>
+                </div>
+                <div id="close-lv">CLOSE</div>
+            </div>
+    
+        </div>
+    </div>
+</body>
+</html>
