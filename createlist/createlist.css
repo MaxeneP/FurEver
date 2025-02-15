@@ -1,0 +1,97 @@
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background-color: #ef7122;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    width: 80%;
+    gap: 20px;
+}
+
+/* Left Section */
+.left-section {
+    width: 40%;
+}
+
+h2 {
+    color: white;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.photo-slot {
+    background-color: white;
+    color: #ef7122;
+    font-size: 40px;
+    text-align: center;
+    border-radius: 10px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Right Section */
+.right-section {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    color: white;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+textarea {
+    height: 80px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.radio-group span {
+    color: white;
+    font-weight: bold;
+}
+
+.location-fields {
+    display: flex;
+    gap: 10px;
+}
+
+.save-create-btn {
+    width: 200px; /* Adjust size */
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: opacity 0.3s;
+}
+
+.save-create-btn:hover {
+    opacity: 0.8;
+}
