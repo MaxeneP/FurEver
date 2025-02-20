@@ -1,0 +1,99 @@
+/* Outer white background */
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Centered orange box */
+.outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 800px;
+    height: 80vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Inner orange box */
+.inner-container {
+    width: 95%;
+    height: 95%;
+    background-color: #ef7122;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Header Layout */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Text */
+h2 {
+    color: white;
+}
+
+/* PNG Button */
+.png-button {
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.png-button:hover {
+    transform: scale(1.1);
+}
+
+/* List Styles */
+.profile-item {
+    background-color: #ffe6b3;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    right: 0;
+    min-width: 150px;
+}
+
+.dropdown-content button {
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    border: none;
+    background: white;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

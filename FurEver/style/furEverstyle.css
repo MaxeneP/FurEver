@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.title-img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.input-box {
+    width: 250px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ef7122;
+    border-radius: 5px;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.reveal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    font-size: 16px;
+}
+
+.enter-btn img {
+    width: 100px;
+    margin-top: 20px;
+}
+
+.text {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.link {
+    color: #ef7122;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

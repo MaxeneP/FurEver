@@ -1,0 +1,115 @@
+<!-- signin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="signin.png" alt="Sign In" class="title-img">
+        <input type="text" placeholder="USERNAME..." class="input-box">
+        <div class="password-container">
+            <input type="password" id="signin-password" placeholder="PASSWORD..." class="input-box">
+            <button class="reveal-btn" onclick="togglePassword('signin-password')">👁</button>
+        </div>
+        <a href="#" class="enter-btn"> <img src="enter-button.png" alt="Enter"> </a>
+        <p class="text">Don't have an account? <a href="signup.html" class="link">Create one!</a></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="signup.png" alt="Sign Up" class="title-img">
+        <input type="text" placeholder="USERNAME..." class="input-box">
+        <input type="email" placeholder="EMAIL..." class="input-box">
+        <input type="text" placeholder="CONTACT NUMBER..." class="input-box">
+        <div class="password-container">
+            <input type="password" id="signup-password" placeholder="NEW PASSWORD..." class="input-box">
+            <button class="reveal-btn" onclick="togglePassword('signup-password')">👁</button>
+        </div>
+        <div class="password-container">
+            <input type="password" id="confirm-password" placeholder="CONFIRM PASSWORD..." class="input-box">
+            <button class="reveal-btn" onclick="togglePassword('confirm-password')">👁</button>
+        </div>
+        <a href="#" class="enter-btn"> <img src="enter-button.png" alt="Enter"> </a>
+        <p class="text">Already have an account? <a href="signin.html" class="link">Sign in!</a></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.title-img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.input-box {
+    width: 250px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ef7122;
+    border-radius: 5px;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.reveal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    font-size: 16px;
+}
+
+.enter-btn img {
+    width: 100px;
+    margin-top: 20px;
+}
+
+.text {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.link {
+    color: #ef7122;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
