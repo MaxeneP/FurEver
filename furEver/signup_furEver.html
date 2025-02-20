@@ -6,26 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="furEverstyle.css">
+    <script type="module" src="register.js"></script>
 </head>
 <body>
+    <form>
     <div class="container">
-        <img src="https://cdn.discordapp.com/attachments/813310181647712287/1338718323218845789/furEver_signin.png?ex=67ac1a18&is=67aac898&hm=06534ff3aa6abbfbbc0ac34d707796f0c32bbf888ad1207357ce95fb7c9c9cd4&" 
+        <img src="furever_resources/furEver_signup.png"  
         alt="Sign Up" class="title-img">
-        <input type="text" placeholder="USERNAME..." class="input-box">
-        <input type="email" placeholder="EMAIL..." class="input-box">
-        <input type="text" placeholder="CONTACT NUMBER..." class="input-box">
+        <input type="text" placeholder="USERNAME..." class="input-box" id="username">
+        <input type="email" placeholder="EMAIL..." class="input-box" id="email">
+        <input type="text" placeholder="CONTACT NUMBER..." class="input-box" id="contact_number">
         <div class="password-container">
             <input type="password" id="signup-password" placeholder="NEW PASSWORD..." class="input-box">
-            <button class="reveal-btn" onclick="togglePassword('signup-password')">👁</button>
+            <button type="button" class="reveal-btn" onclick="togglePassword('signup-password')">👁</button>
         </div>
         <div class="password-container">
             <input type="password" id="confirm-password" placeholder="CONFIRM PASSWORD..." class="input-box">
-            <button class="reveal-btn" onclick="togglePassword('confirm-password')">👁</button>
+            <button type="button" class="reveal-btn" onclick="togglePassword('confirm-password')">👁</button>
         </div>
-        <a href="#" class="enter-btn"> <img src="https://cdn.discordapp.com/attachments/813310181647712287/1338718322945949697/furEver_enter.png?ex=67ac1a18&is=67aac898&hm=f509b7257df0939af35578fbac8675946d09ac83511f02986c875756f9e7abeb&" 
-            alt="Enter"> </a>
+        <a href="#" class="enter-btn" id="submit"> <img src="furever_resources/furEver_enter.png"  
+            alt="Enter"></a>
         <p class="text">Already have an account? <a href="signin_Furever.html" class="link">Sign in!</a></p>
     </div>
     <script src="furever_password.js"></script>
+</form>
 </body>
 </html>
