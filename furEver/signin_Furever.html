@@ -6,18 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <link rel="stylesheet" href="furEverstyle.css">
+    <script type="module" src="register.js"></script>
 </head>
 <body>
     <div class="container">
-        <img src="https://cdn.discordapp.com/attachments/813310181647712287/1338718323218845789/furEver_signin.png?ex=67ac1a18&is=67aac898&hm=06534ff3aa6abbfbbc0ac34d707796f0c32bbf888ad1207357ce95fb7c9c9cd4&" 
+        <img src="furever_resources/furEver_signin.png" 
         alt="Sign In" class="title-img">
-        <input type="text" placeholder="USERNAME..." class="input-box">
+        <input type="email" placeholder="EMAIL..." class="input-box" id="email">
         <div class="password-container">
             <input type="password" id="signin-password" placeholder="PASSWORD..." class="input-box">
-            <button class="reveal-btn" onclick="togglePassword('signin-password')">👁</button>
+            <button type="button" class="reveal-btn" onclick="togglePassword('signin-password')">👁</button>
         </div>
-        <a href="#" class="enter-btn"> <img src="https://cdn.discordapp.com/attachments/813310181647712287/1338718322945949697/furEver_enter.png?ex=67ac1a18&is=67aac898&hm=f509b7257df0939af35578fbac8675946d09ac83511f02986c875756f9e7abeb&" 
-            alt="Enter"> </a>
+        <a href="#" class="enter-btn" id="signin-submit"> <img src="furever_resources/furEver_enter.png"  
+            alt="Enter"></a>
         <p class="text">Don't have an account? <a href="signup_furEver.html" class="link">Create one!</a></p>
     </div>
     <script src="furever_password.js"></script>
