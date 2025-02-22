@@ -8,6 +8,11 @@
     font-family: "League Spartan", sans-serif;
 }
 
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 ul, ol {
     list-style-type: none;
     padding: 0px;
