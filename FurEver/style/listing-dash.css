@@ -41,29 +41,19 @@ img {
     min-width: 0px;
 }
 
-/* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #7c675a #ffffff;
-  }
+*::-webkit-scrollbar {
+    display: none;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 16px;
-  }
+::-webkit-scrollbar {
+    display: none;
+}
 
-  *::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
+* {
+    scrollbar-width: none;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #7c675a;
-    border-radius: 10px;
-    border: 3px groove #ffffff;
-  }
-
-  /********************HEADER**********************/
+/********************HEADER**********************/
 /********************HEADER**********************/
 /********************HEADER**********************/
 /********************HEADER**********************/
@@ -100,46 +90,40 @@ img {
 
 #burger-menu-dropdown {
     position: absolute;
-    display:none;
-    width: 200px;
-    top: 50%;
-    left: 3%;
-    height: 500%;
-    background: rgba(124, 103, 90, .8);
-    z-index: 423; /* Birthday ko */
+    display: none;
+    width: 225px;
+    top: 100%;
+    left: 0%;
+    background: white;
+    z-index: 423;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
-    border-radius: 1rem;
-    color: white;
-    text-transform: uppercase;
     font-size: 2rem;
-    font-weight: bolder;
+    font-weight: 400;
+    border-radius: 1rem;
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.15);
 }
 
 .bm-item {
     height: 100%;
     width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    padding: 1.5rem 1.5rem;
+}
+
+.bm-item:first-child {
+    border-radius: 1rem 1rem 0 0;
+}
+
+.bm-item:last-child {
+    border-radius: 0 0 1rem 1rem;
 }
 
 .bm-item:hover {
-    cursor: pointer;    
-}
-
-.bm-item > a {
-    transition: all ease .2s;
-}
-
-.bm-item > a:hover {
-    scale: 1.2;
-}
-
-.bm-item:not(.bm-item:last-child) {
-    border-bottom: 2px solid white;
+    cursor: pointer; 
+    background-color: var(--furever-orange);
+    color: white;   
 }
 
 #burger-menu-trigger {
@@ -160,8 +144,9 @@ img {
 
 .header-buttons:hover {
     cursor: pointer;
-    scale: 1.2;
+    scale: 1.05;
 }
+
 
 /*************FOOTER**********************/
 /*************FOOTER**********************/
@@ -202,7 +187,7 @@ img {
     background-color: var(--furever-orange);
     height: 100%;
     width: 100%;
-    border-radius: 2rem;
+    border-radius: 1rem;
     display: grid;
     grid-template-rows: min-content 1fr;
     padding: 2rem;
