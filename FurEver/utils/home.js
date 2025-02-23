@@ -16,9 +16,25 @@ function init() {
 
 // for testing
 function tryAddListing() {
-    for (i = 0; i < 100; ++i) {
-        createTile('Ace Chan', '../assets/test-image.jpg', i);
+    for (i = 0; i < 97; ++i) {
+        switch (i%4) {
+            case 0:
+                createTile('Ace Chan', '../assets/test-image.jpg', i); 
+                break;
+            case 1:
+                createTile('Ace Chan', '../assets/test2.jpg', i);
+                break;
+            case 2:
+                createTile('Ace Chan', '../assets/test3.jpg', i);
+                break
+            case 3:
+                createTile('Ace Chan', '../assets/test4.jpg', i)
+                break;
+            default:
+                createTile('Ace Chan', '../assets/test-image.jpg', i);
+        }
     }
+    createEmptyTile();
 }
 
 // event delegation for click events
@@ -38,10 +54,6 @@ function eventDelegation(e) {
     if (e.target != document.getElementById('location-dropdown-trigger')) {
         let cb = document.getElementById('location-dropdown-trigger');
         cb.checked = false;
-    }
-    if (e.target.closest('.listing')) {
-        getListingDetails(e.target.closest('.listing').id);
-        showListing();
     }
     if (e.target.closest('#carousel-right')) {
         let carousel = document.getElementById('carousel-window');
@@ -106,6 +118,14 @@ function createTile(name, imageSrc, id) {
     ls.appendChild(listing);
 }
 
+function createEmptyTile() {
+    let ls = document.getElementById('listing-scroll');
+    do {
+        let empty = document.createElement('div');
+        ls.appendChild(empty);
+    }
+    while (ls.children.length % 4 != 1)
+}
 
 // function triggered when location from dropdown changes
 function onLocationChange(location) {
@@ -125,43 +145,5 @@ function getListingDetails(id) {
 
 // there is only a single pop-up modal for displaying
 // listings, this function updates the contents of that modal
-function updateListingPopup(imageSrces, breed, birthday, sex, size, activeness, temperament, familyRating, neutered, additionalInfo, contactNo, location, isAdopted) {
-
-    let carousel = document.getElementById('carousel-window');
-    
-    while (carousel.firstChild) {
-        carousel.removeChild(carousel.firstChild);
-    }
-
-    for (let src in imageSrces) {
-        let img = document.createElement('img');
-        img.setAttribute('src', src);
-        carousel.appendChild(img);
-    }
-    
-    document.getElementById('breed').textContent = breed;
-    document.getElementById('birthday').textContent = birthday;
-    document.getElementById('sex').textContent = sex;
-    document.getElementById('size').textContent = size;
-    document.getElementById('activeness').textContent = activeness;
-    document.getElementById('temperament').textContent = temperament;
-    document.getElementById('family-friendliness').textContent = familyRating;
-    document.getElementById('neutered').textContent = neutered;
-    document.getElementById('additional-info').textContent = additionalInfo;
-    document.getElementById('contact').textContent = contactNo;
-    document.getElementById('location').textContent = location;
-
-    if (isAdopted) {
-        document.getElementById('adopted-trigger').checked = true;
-    } else {
-        document.getElementById('adopted-trigger').checked = false;
-    }
-}
-
-// shows listing details via popup
-function showListing() {
-    let lv = document.getElementById('listing-view-wrapper');
-    lv.setAttribute('style', 'display: grid');
-}
 
 init();
