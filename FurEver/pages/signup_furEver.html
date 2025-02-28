@@ -1,0 +1,37 @@
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../style/furEverstyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+        <div class="container">
+            <img src="../assets/furEver_signup.png" alt="Sign Up" class="title-img">
+            <input type="text" placeholder="USERNAME..." class="input-box" name="display-name" id="display-name">
+            <input type="email" placeholder="EMAIL..." class="input-box" name="email" id="email">
+            <input type="text" placeholder="CONTACT NUMBER..." class="input-box" name="contact_number" id="contact_number">
+            <div class="password-container">
+                <input type="password" id="signup-password" name="signup-password" placeholder="NEW PASSWORD..."
+                    class="input-box">
+                <button type="button" class="reveal-btn" onclick="togglePassword('signup-password')">👁</button>
+            </div>
+            <div class="password-container">
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="CONFIRM PASSWORD..."
+                    class="input-box">
+                <button type="button" class="reveal-btn" onclick="togglePassword('confirm-password')">👁</button>
+            </div>
+            <a href="#" class="enter-btn" id="signup-submit"> <img src="../assets/furEver_enter.png"  
+                alt="Enter"></a>
+            <p class="text">Already have an account? <a href="signin_Furever.html" class="link">Sign in!</a></p>
+        </div>
+        <script src="../utils/furever_password.js"></script>
+        <script src="../utils/auth.js" defer></script>
+</body>
+
+</html>
