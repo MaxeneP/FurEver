@@ -204,7 +204,7 @@ img {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 3.5fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     gap: .5rem;
     min-width: 0;
@@ -222,6 +222,7 @@ img {
     gap: .5rem;
     overflow-y: auto;
     overflow-x: hidden; 
+    display: none;
 }
 
 #pictures-left > img, #pic-right-slider > img {
@@ -291,6 +292,7 @@ img {
     'breed gender' 1fr
     /1fr 1fr;
     z-index: 999;
+    overflow-x: auto;
 }
 
 #name {
@@ -304,6 +306,7 @@ img {
     letter-spacing: .2rem;
     font-size: 2rem;
     font-weight: 100;
+    white-space: nowrap;
 }
 
 #gender {
@@ -414,16 +417,24 @@ img {
 
 @media only screen and (max-width: 1235px) {
     #listing-wrapper {
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: 2fr 1fr;
     }
     
     #pictures {
         grid-template-columns: 1fr;
     }
     
-    #pictures-right {
-        display: none;
+}
+
+@media only screen and (max-width: 1235px) {
+    #listing-wrapper {
+        grid-template-columns: 1fr 1fr;
     }
+    
+    #pictures {
+        grid-template-columns: 1fr;
+    }
+    
 }
 
 @media only screen and (max-width: 1000px) {
