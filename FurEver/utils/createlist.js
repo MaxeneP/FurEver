@@ -52,6 +52,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             photoSlot.dataset.imageUrl = imageUrl;
         }
     });
+    let locationObject = new City();
+
+    function init() {
+        let provinceDrop = document.getElementById('provinces');
+        locationObject.showProvinces('#provinces');
+        
+        window.addEventListener('click', eventDelegation);
+        provinceDrop.addEventListener('change', provinceChange);
+    }
+
+
+    // for click events
+    function eventDelegation(e) {
+        // console.log(e.target);
+        if (e.target != document.querySelector('#burger-menu-trigger')) {
+            let cb = document.getElementById('burger-menu-trigger')
+            cb.checked = false;
+        }
+    }
+
+    function provinceChange(e) {
+        locationObject.showCities('#cities');
+    }
+
+    init();
+
 
     const save = document.querySelector(".save-create-btn");
 
@@ -80,9 +106,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         let Is_neutered = document.querySelector("input[name='neutered']:checked")?.value || "";
         let description = document.getElementById("description").value;
         let contact = document.getElementById("contact").value;
-        let region = document.getElementById("region").value;
-        let city = document.getElementById("city").value;
-        let address = document.getElementById("address").value;
+        let region = document.getElementById("provinces").value;
+        let city = document.getElementById("cities").value;
 
         if (!name || !contact) {
             alert("Please fill in required fields (Name, Contact)");
@@ -93,6 +118,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.querySelectorAll(".photo-slot").forEach(slot => {
             if (slot.dataset.imageUrl) images.push(slot.dataset.imageUrl);
         });
+
+        
         //insert animal data to animal listing table
         let { data, error } = await supabase
             .from("animal_listing")
@@ -111,7 +138,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 contact_info: contact,
                 region,
                 city,
-                address,
                 description,
                 image_URL: images.length > 0 ? images[0] : null
         }])
@@ -123,8 +149,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             alert("Failed to save listing.");
         } else {
             alert("Listing saved successfully!");
-            let listingId = data.id;
-            window.location.href = `view-lising.html?id=${listingId}`;
+            let listingId = data.animal_id;
+             window.location.href = `../pages/view-lising.html?animal_id=${listingId}`;
         }
 
     });
