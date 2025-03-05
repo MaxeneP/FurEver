@@ -1,97 +1,428 @@
-body {
-    background-color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: "League Spartan", sans-serif;
 }
+
+textarea {
+    resize: none;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+ul, ol {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+img {
+    padding: 0;
+    border: 0;
+}
+
+:root {
+    font-size: 12px;
+    --furever-orange: #ef7122;
+    --furever-grey: rgba(57 30 13 0.34);
+    --furever-blue: rgba(37, 150, 190);
+}
+
+body {
+    height: 100%;
+    width: 100%;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+}
+
+/********************HEADER**********************/
+/********************HEADER**********************/
+/********************HEADER**********************/
+/********************HEADER**********************/
+
+#header {
+    padding: 0 2rem 0 3rem;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    font-size: 4rem;
+    color: #fff;
+    
+}
+
+#header > div {
+    width: 100%;
+}
+
+#header-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+#header-left {
+    color: black;
+    position: relative;
+}
+
+#burger-menu-dropdown {
+    position: absolute;
+    display: none;
+    width: 225px;
+    top: 100%;
+    left: 0%;
+    background: white;
+    z-index: 423;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 2rem;
+    font-weight: 400;
+    border-radius: 1rem;
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.15);
+}
+
+.bm-item {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 1.5rem;
+}
+
+.bm-item:first-child {
+    border-radius: 1rem 1rem 0 0;
+}
+
+.bm-item:last-child {
+    border-radius: 0 0 1rem 1rem;
+}
+
+.bm-item:hover {
+    cursor: pointer; 
+    background-color: var(--furever-orange);
+    color: white;   
+}
+
+#burger-menu-trigger {
+    display: none;
+}
+
+#burger-menu-trigger:checked ~ #burger-menu-dropdown {
+    display: flex;
+}
+
+#header-right {
+    color: var(--furever-orange);
+}
+
+.header-buttons  {
+    transition: all 0.2s ease;
+}
+
+.header-buttons:hover {
+    cursor: pointer;
+    scale: 1.05;
+}
+
+/*************FOOTER**********************/
+/*************FOOTER**********************/
+/*************FOOTER**********************/
+/*************FOOTER**********************/
+
+#footer {
+    background-color: var(--furever-blue);
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.footer-email {
+    display: flex;
+    align-items: center;
+    color: rgb(25, 91, 122);
+    gap: .5rem;
+}
+
+/*****************BODY***************/
+/*****************BODY***************/
+/*****************BODY***************/
+/*****************BODY***************/
+/*****************BODY***************/
 
 .container {
-    background-color: #ef7122;
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    width: 80%;
-    gap: 20px;
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1.5fr 10fr 1fr;
+    overflow: hidden;
+    overflow-x: hidden; 
+    min-height: 0px;
+    min-width: 0px;
 }
 
-/* Left Section */
+#body {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    padding: 0 12rem 1rem 12rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1.5rem;
+    color: white;
+}
+
 .left-section {
-    width: 40%;
+    background: var(--furever-orange);
+    border-radius: 1rem 0 0 1rem;
+    padding: 1rem;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr 1fr;
+    gap: 1rem;
 }
 
-h2 {
+.left-section-top {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+}
+
+.button-group {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+.save-create-btn {
+    color: black;
+    background: white;
+    padding: .5rem 1rem;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border-radius: 1rem;
+    transition: all .2s ease;
+    border: 1px solid white;
+}
+
+.save-create-btn:hover {
+    cursor: pointer;
+    background: var(--furever-orange);
     color: white;
 }
 
 .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.photo-slot {
-    background-color: white;
-    color: #ef7122;
-    font-size: 40px;
-    text-align: center;
-    border-radius: 10px;
-    height: 100px;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.photo-slot-hover {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: white;
+    opacity: 0;
+    transition: all ease .2s;
+}
+
+.photo-slot {
+    font-size: 5rem;
+    color: white;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    border: 10px solid white;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s ease;
+    position: relative;
+}
+
+.photo-slot:hover {
     cursor: pointer;
 }
 
-/* Right Section */
-.right-section {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
+.photo-slot-hover:hover {
+    opacity: .5;
 }
 
-label {
-    font-weight: bold;
-    margin-top: 10px;
-    color: white;
+.left-info {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 1rem;
 }
 
-input, textarea {
+.left-info > .info {
+    height: 100%;
     width: 100%;
-    padding: 8px;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.left-info > .info > input {
+    border-radius: 1rem;
     border: none;
-    border-radius: 5px;
-    margin-top: 5px;
+    padding: 0 1rem;
 }
 
-textarea {
-    height: 80px;
+.right-section {
+    background: var(--furever-orange);
+    border-radius: 0 1rem 1rem 0;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    overflow-x: auto;
+    grid-template-rows: repeat(5, 1fr) 5fr repeat(2, 1fr);
 }
 
-.radio-group {
-    display: flex;
+.right-section > .info {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    gap: .3rem;
+}
+
+.right-section > .info:first-child {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: min-content 1fr;
+    gap: 1rem;
     align-items: center;
-    gap: 5px;
 }
 
-.radio-group span {
-    color: white;
-    font-weight: bold;
+
+.right-section textarea {
+    padding: .5rem;
+    border-radius: .5rem;
+}
+
+.right-section .radio-group {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    align-items: center;
+    gap: 1rem;
+}
+
+.radio-group > input {
+    display: none;
+}
+
+.pseudoradio > div {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    outline: 2px solid white;
+}
+
+.pseudoradio > div:hover {
+    cursor: pointer;
+}
+
+.radio-group > input:checked + .pseudoradio > div {
+    background: white;
+}
+
+.right-section > .info input[type="text"] {
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+}
+
+select:focus {
+    outline: none;
+
+}
+
+select {
+    padding: .5rem 1rem;
+    border-radius: 1rem;
 }
 
 .location-fields {
-    display: flex;
-    gap: 10px;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
-.save-create-btn {
-    width: 200px; /* Adjust size */
-    cursor: pointer;
-    display: block;
-    margin: 20px auto;
-    transition: opacity 0.3s;
+.location-fields > select {
+    width: 100%;
+    height: 100%;
 }
 
-.save-create-btn:hover {
-    opacity: 0.8;
+@media only screen and (max-width: 1000px) {
+    .footer-email {
+        display: none;
+    }
+
+    #footer > div:nth-child(1) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    #body {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+
 }
+
+
