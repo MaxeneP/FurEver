@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../utils/createlist.js"></script>
-    <script src="../utils/ph_provinces_and_cities-master/city.js" defer></script>
-    <script src="../utils/createlist2.js" defer></script>
+    <script src="../utils/ph_provinces_and_cities-master/city.js"></script>
+    <script src="../utils/auth.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -27,6 +28,9 @@
                     </div>
                     <div class="bm-item">
                         <a href="survey_1.html">Survey</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="#" id="sign-out">Sign Out</a>
                     </div>
                 </div>
             </div>
@@ -150,7 +154,7 @@
                 </div>
                 <div class="info">
                     <label>Animal Description</label>
-                    <textarea id="description" placeholder="Describe the animal"></textarea>
+                    <textarea id="description" placeholder="Describe the animal. Please include medical history and other necessary details"></textarea>
                 </div>
                 <div class="info">
                     <label>Contact Information</label>
