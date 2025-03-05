@@ -109,3 +109,20 @@ if(signIn){
         }
     })
 }
+
+//sign out user
+const signOut = document.getElementById('sign-out');
+if(signOut){
+    signOut.addEventListener("click", async function(event){
+        event.preventDefault();
+
+        const { error } = await supabase.auth.signOut()
+
+        alert("You have signed out.");
+        window.location.href = "../pages/signin_Furever.html";
+        if (error){
+            throw error;
+        }
+
+    })
+}
