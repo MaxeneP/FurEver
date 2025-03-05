@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (slot.dataset.imageUrl) images.push(slot.dataset.imageUrl);
         });
         //insert animal data to animal listing table
-        let { date, error } = await supabase
+        let { data, error } = await supabase
             .from("animal_listing")
             .insert([{
                 user_id: user.id,
@@ -114,14 +114,17 @@ document.addEventListener("DOMContentLoaded", async function () {
                 address,
                 description,
                 image_URL: images.length > 0 ? images[0] : null
-        }]);
+        }])
+            .select("animal_id")
+            .single();
 
         if (error) {
             console.error("Error saving listing:", error);
             alert("Failed to save listing.");
         } else {
             alert("Listing saved successfully!");
-            window.location.href = "listing-dashboard.html";
+            let listingId = data.id;
+            window.location.href = `view-lising.html?id=${listingId}`;
         }
 
     });
