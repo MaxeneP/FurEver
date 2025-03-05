@@ -1,3 +1,18 @@
+document.addEventListener("DOMContentLoaded", async function(){
+    const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNDAyMjQsImV4cCI6MjA1NTcxNjIyNH0.Q4HGFs832rIw2jhlKvFg2LsCgQuA7hEw91eedAApY60");
+    console.log("Supabase success.", supabase);
+
+    let user = await getUser();
+    if(!user){
+        alert("You must be logged in to browse");
+        window.location.href="../pages/signin_Furever.html";
+    }
+
+    async function getUser(){
+        const { data, error } = await supabase.auth.getUser();
+        return error ? null : data.user;
+    }
+
 function init() {
     // for populating dropdown
     let cityObj = new City();
@@ -11,31 +26,30 @@ function init() {
     }
 
     window.addEventListener('click', eventDelegation);
-    tryAddListing();
+    fetchListings();
 }
 
-// for testing
-function tryAddListing() {
-    for (i = 0; i < 97; ++i) {
-        switch (i%4) {
-            case 0:
-                createTile('Ace Chan', '../assets/test-image.jpg', i); 
-                break;
-            case 1:
-                createTile('Ace Chan', '../assets/test2.jpg', i);
-                break;
-            case 2:
-                createTile('Ace Chan', '../assets/test3.jpg', i);
-                break
-            case 3:
-                createTile('Ace Chan', '../assets/test4.jpg', i)
-                break;
-            default:
-                createTile('Ace Chan', '../assets/test-image.jpg', i);
+    //fetch records
+    async function fetchListings(){
+        const {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL");
+
+        if(error){
+            console.error("Error fetching listings: ", error);
         }
+
+        clearListings();
+        data.forEach(listing => {
+            createTile(listing.animal_name, listing.image_URL, listing.animal_id);
+        });
     }
-    createEmptyTile();
-}
+
+    function clearListings() {
+        let ls = document.getElementById('listing-scroll');
+        while (ls.firstChild) {
+            ls.removeChild(ls.firstChild);
+        }
+    
+    }
 
 // event delegation for click events
 function eventDelegation(e) {
@@ -74,41 +88,38 @@ function eventDelegation(e) {
 // **************************************************************************************************************
 // **************************************************************************************************************
 // **************************************************************************************************************
-// **************************************************************************************************************
-// **************************************************************************************************************
-// **************************************************************************************************************
-// **************************************************************************************************************
-// **************************************************************************************************************
-// **************************************************************************************************************
 
-// removes all current listings currently displayed 
-// can be called before fetching new listings
-function clearListings() {
-    let ls = document.getElementById('listing-scroll');
-    while (ls.firstChild) {
-        ls.removeChild(ls.firstChild);
-    }
-
-}
 
 // takes name of animal and cover picture of animal
 // then creates necessary HTML elements and appends output to be displayed on page
 function createTile(name, imageSrc, id) {
     let listing = document.createElement('div');
+    listing.classList.add('listing');
+    listing.setAttribute('animal_id', id);
+
     let listingPic = document.createElement('img');
+    listingPic.setAttribute('src', imageSrc); // cover picture
+    listingPic.classList.add('listing-pic');
+    
     let listingName = document.createElement('div');
+    listingName.classList.add('listing-name');
+    listingName.textContent = name;  // name of animal
+
     let listingHover = document.createElement('div');
     let p = document.createElement('p');
 
-    listingName.textContent = name;  // name of animal
-    listingPic.setAttribute('src', imageSrc); // cover picture
-    listing.setAttribute('id', id); // id is the PK of listing in the database
+
+    listing.setAttribute('animal_id', id); 
 
     p.textContent = 'View More';
     listingHover.setAttribute('class', 'listing-hover');
     listingName.setAttribute('class', 'listing-name');
-    listing.setAttribute('class', 'listing');
     listingPic.setAttribute('class', 'listing-pic');
+
+    listing.addEventListener('click', function () {
+        window.location.href = `../pages/view-lising.html?animal_id=${id}`;
+    });
+    
     listingHover.appendChild(p);
     listing.appendChild(listingPic);
     listing.appendChild(listingName);
@@ -137,13 +148,10 @@ function onLocationChange(location) {
 
 // function called when a listing is clicked, id is
 // id of listing in database
-function getListingDetails(id) {
-    // get details of listing corresponding to id
-    // ...
-    // call updateListingPopup with parameters
-}
 
 // there is only a single pop-up modal for displaying
 // listings, this function updates the contents of that modal
 
 init();
+
+});
