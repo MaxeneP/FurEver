@@ -5,92 +5,190 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Listing</title>
     <link rel="stylesheet" href="../style/createlist.css">
+    <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../utils/createlist.js"></script>
+    <script src="../utils/ph_provinces_and_cities-master/city.js" defer></script>
+    <script src="../utils/createlist2.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <!-- Left Section: Upload Photos -->
-        <div class="left-section">
-            <h2>Upload Photos</h2>
-            <div class="photo-grid" id="photoGrid">
-                <!-- 6 Upload Slots -->
-                <div class="photo-slot">+</div>
-            </div>
-            <input type="file" id="fileInput" accept="image/*" style="display: none;">
-        </div>
-
-        <!-- Right Section: Form -->
-        <div class="right-section">
-            <label>Name</label>
-            <input type="text" id="name" placeholder="Enter name">
-
-            <label>Date of Birth (Optional)</label>
-            <input type="date" id="dob">
-
-            <label>Species</label>
-            <input type="text" id="species" placeholder="Enter species (i.e. dog)">
-
-            <label>Breed</label>
-            <input type="text" id="breed" placeholder="Enter breed">
-
-            <label>Size</label>
-            <input type="text" id="size" placeholder="toy/small/medium/large">
-
-            <label>Sex</label>
-            <div class="radio-group">
-                <input type="radio" name="sex" id="male" value="Male"><label for="male">Male</label>
-                <input type="radio" name="sex" id="female" value="Female"><label for="female">Female</label>
+        <div id="header">
+            <div id="header-left">
+                <label class="fa fa-bars header-buttons" aria-hidden="true" for = 'burger-menu-trigger'>
+                </label>
+                <input type="checkbox" id = 'burger-menu-trigger'>
+                <div id="burger-menu-dropdown">
+                    <div class="bm-item">
+                        <a href="landing-page.html">Home</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="home.html">Browse</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="survey_1.html">Survey</a>
+                    </div>
+                </div>
             </div>
 
-            <label>Scale of Activeness</label>
-            <div class="radio-group">
-                <span>1 - Sedentary</span>
-                <input type="radio" name="activeness" value="1">
-                <input type="radio" name="activeness" value="2">
-                <input type="radio" name="activeness" value="3">
-                <input type="radio" name="activeness" value="4">
-                <input type="radio" name="activeness" value="5">
-                <span>Active - 5</span>
-            </div>
-
-            <label>Scale of Temperament</label>
-            <div class="radio-group">
-                <span>1 - Calm</span>
-                <input type="radio" name="temperament" value="1">
-                <input type="radio" name="temperament" value="2">
-                <input type="radio" name="temperament" value="3">
-                <input type="radio" name="temperament" value="4">
-                <input type="radio" name="temperament" value="5">
-                <span>Aggressive - 5</span>
-            </div>
-
-            <label>Neutered</label>
-            <div class="radio-group">
-                <input type="radio" name="neutered" id="yes" value="TRUE"><label for="yes">Yes</label>
-                <input type="radio" name="neutered" id="no" value="FALSE"><label for="no">No</label>
-            </div>
-
-            <label>Animal Description</label>
-            <textarea id="description" placeholder="Describe the animal"></textarea>
-
-            <label>Contact Information</label>
-            <input type="text" id="contact" placeholder="You may enter your social media links or contact number.">
-
-            <label>Location</label>
-            <div class="location-fields">
-                <input type="text" id="region" placeholder="Region">
-                <input type="text" id="address" placeholder="Address">
-                <input type="text" id="city" placeholder="City">
-            </div>
-
-            <!-- Save & Create PNG Button -->
-            <div class="button-group">
-                <img src="../assets/savencontinue.png"
-                    alt="Save and Create" class="save-create-btn">
+            <div id="header-right">
+                <div class="header-buttons">
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>                </div>
+                <div class="header-buttons">
+                    <a href="listing-dashboard.html">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="header-buttons">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
+
+        <div id="body">
+            <!-- Left Section: Upload Photos -->
+            <div class="left-section">
+                <div class="left-section-top">
+                    <h2>Upload Photo</h2>
+                    <div class="button-group">
+                        <div class="save-create-btn">SAVE AND CREATE</div>
+                    </div>
+                </div>
+                <div class="photo-grid" id="photoGrid">
+                    <!-- 6 Upload Slots -->
+                    <div class="photo-slot">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        <div class="photo-slot-hover"></div>
+                    </div>
+                </div>
+                
+                <div class="left-info">
+                    <div class="info">
+                        <label>Name</label>
+                        <input type="text" id="name" placeholder="Enter name">
+                    </div>
+                    <div class="info">
+                        <label>Date of Birth (Optional)</label>
+                        <input type="date" id="dob">
+                    </div>
+                    <div class="info">
+                        <label>Breed</label>
+                        <input type="text" id="breed" placeholder="Enter breed">
+                    </div>
+                    <div class="info">
+                        <label>Species</label>
+                        <input type="text" id="species" placeholder="Enter species (i.e. dog)">
+                    </div>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+            <!-- Right Section: Form -->
+            <div class="right-section">
+                <div class="info">
+                    <label>Size</label>
+                    <select name ='size' id = 'size'>
+                        <option value = 'toy'>Toy</option>
+                        <option value = 'medium'>Medium</option>
+                        <option value = 'large'>Large</option>
+                    </select>
+                </div>
+                <div class="info">
+                    <label>Sex</label>
+                    <div class="radio-group">
+                        <input type="radio" name="sex" id="male" value="Male">
+                        <label for="male" class = 'pseudoradio'><div></div></label>
+                        <p>Male</p>
+                        <input type="radio" name="sex" id="female" value="Female">
+                        <label for="female" class = 'pseudoradio'><div></div></label>
+                        <p>Female</p>
+                    </div>
+                </div>
+                <div class="info">
+                    <label>Scale of Activeness</label>
+                    <div class="radio-group">
+                        <span>1 - Sedentary</span>
+                        <input type="radio" name="activeness" value="1" id = "activeness1">
+                        <label for = 'activeness1' class = pseudoradio><div></div></label>
+                        <input type="radio" name="activeness" value="2" id = "activeness2">
+                        <label for = 'activeness2' class = pseudoradio><div></div></label>
+                        <input type="radio" name="activeness" value="3" id = "activeness3">
+                        <label for = 'activeness3' class = pseudoradio><div></div></label>
+                        <input type="radio" name="activeness" value="4" id = "activeness4">
+                        <label for = 'activeness4' class = pseudoradio><div></div></label>
+                        <input type="radio" name="activeness" value="5" id = "activeness5">
+                        <label for = 'activeness5' class = pseudoradio><div></div></label>
+                        <span>Active - 5</span>
+                    </div>
+                </div>
+                <div class="info">
+                    <label>Scale of Temperament</label>
+                    <div class="radio-group">
+                        <span>1 - Calm</span>
+                        <input type="radio" name="temperament" value="1" id = "temp1">
+                        <label for = 'temp1' class = pseudoradio><div></div></label>
+                        <input type="radio" name="temperament" value="2" id = "temp2">
+                        <label for = 'temp2' class = pseudoradio><div></div></label>
+                        <input type="radio" name="temperament" value="3" id = "temp3">
+                        <label for = 'temp3' class = pseudoradio><div></div></label>
+                        <input type="radio" name="temperament" value="4" id = "temp4">
+                        <label for = 'temp4' class = pseudoradio><div></div></label>
+                        <input type="radio" name="temperament" value="5" id = "temp5">
+                        <label for = 'temp5' class = pseudoradio><div></div></label>
+                        <span>Aggressive - 5</span>
+                    </div>
+                </div>
+                <div class="info">
+                    <label>Neutered</label>
+                    <div class="radio-group">
+                        <input type="radio" name="neutered" id="yes" value="TRUE">
+                        <label for="yes" class = 'pseudoradio'><div></div></label>
+                        <p>Yes</p>
+                        <input type="radio" name="neutered" id="no" value="FALSE">
+                        <label for="no" class = 'pseudoradio'><div></div></label>
+                        <p>No</p>
+                    </div>
+                </div>
+                <div class="info">
+                    <label>Animal Description</label>
+                    <textarea id="description" placeholder="Describe the animal"></textarea>
+                </div>
+                <div class="info">
+                    <label>Contact Information</label>
+                    <input type="text" id="contact" placeholder="You may enter your social media links or contact number.">
+                </div>
+                <div class="info">
+                    <label>Location</label>
+                    <div class="location-fields">
+                        <select name="provinces" id="provinces"></select>
+                        <select name="cities" id="cities"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>pmpurificacion@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>elcmapalad@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>blvfrancisco@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>aktcoquia@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>abchan@mymail.mapua.edu.ph</p>
+            </div>
+        </div>  
     </div>
 
-    <script src="../utils/createlist.js"></script>
 </body>
 </html>
