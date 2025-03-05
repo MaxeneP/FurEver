@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel = 'stylesheet' href = '../style/home_style.css'>
     <script src = "../utils/ph_provinces_and_cities-master/city.js" defer></script>
-    <script src="../utils/home.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div id="flex-wrapper">
@@ -19,13 +19,16 @@
                 <input type="checkbox" id = 'burger-menu-trigger'>
                 <div id="burger-menu-dropdown">
                     <div class="bm-item">
-                        <a href="landing-page.html">Home</a>
+                        <a href="../pages/landing-page.html">Home</a>
                     </div>
                     <div class="bm-item">
-                        <a href="home.html">Browse</a>
+                        <a href="../pages/home.html">Browse</a>
                     </div>
                     <div class="bm-item">
-                        <a href="survey_1.html">Survey</a>
+                        <a href="../pages/survey_1.html">Survey</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="#" id="sign-out">Sign Out</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +37,7 @@
                 <div class="header-buttons">
                     <i class="fa fa-bookmark" aria-hidden="true"></i>                </div>
                 <div class="header-buttons">
-                    <a href="listing-dashboard.html">
+                    <a href="../pages/listing-dashboard.html">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -92,5 +95,8 @@
             </div>
         </div>  
     </div>
+    
+    <script src="../utils/home.js"></script>
+    <script src="../utils/auth.js"></script>
 </body>
 </html>
