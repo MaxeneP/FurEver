@@ -7,7 +7,7 @@
     <title>FurEver</title>
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel = 'stylesheet' href = '../style/admin-dash.css'>
-    <script src="../utils/admin-dash.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div id="flex-wrapper">
@@ -16,7 +16,7 @@
             <div id="user-dropdown">
                 <div id="system-admin">System Admin</div>
                 <div class="divisor"></div>
-                <div id="signout"> <a href="signin_Furever.html">Sign Out </a></div>
+                <div id="signout"> <a href="#" id="sign-out">Sign Out </a></div>
             </div>
             <label for="user-dropdown-trigger">
                 <i class="fa fa-user-circle" aria-hidden="true" id = "user-btn"></i>
@@ -27,7 +27,7 @@
                 <div id="searchbar-wrapper">
                     <form action="" name = "search-id" id = "search-id"></form>
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input type = "text" form = "search-id" id = "searchbar" placeholder="Enter ID">
+                    <input type = "text" form = "search-id" id = "searchbar" placeholder="Enter ID"> <!-- will update nlng -->
                 </div>
                 <div id="dropdown-wrapper">
                     <input type="checkbox" id = 'dropdown-trigger'>
@@ -51,7 +51,6 @@
                     <div>USERNAME</div>
                     <div>EMAIL</div>
                     <div>CON_NUM</div>
-                    <div>PASSWORD</div>
                     <div><i class="fa fa-trash" aria-hidden="true"></i></div>
                 </div>
                 <div class="animal-record table-header">
@@ -60,21 +59,27 @@
                     <div>NAME</div>
                     <div>SPECIES</div>
                     <div>BREED</div>
+                    <div>SEX</div>
+                    <div>DOB</div>
                     <div>SIZE</div>
                     <div>ACTIVENESS</div>
                     <div>TEMPERAMENT</div>
-                    <div>LOCATION</div>
+                    <div>NEUTERED</div>
+                    <div>CONTACT INFO</div>
+                    <div>REGION</div>
+                    <div>CITY</div>
                     <div><i class="fa fa-trash" aria-hidden="true"></i></div>
                 </div>
                 <div class="adoption-record table-header">
                     <div>ADOPTION ID</div>
                     <div>ANIMAL ID</div>
                     <div>USER ID</div>
-                    <div>DATE</div>
                     <div><i class="fa fa-trash" aria-hidden="true"></i></div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="../utils/admin-dash.js" defer></script>
+    <script src="../utils/auth.js"></script>
 </body>
 </html>
