@@ -81,11 +81,12 @@ document.addEventListener("DOMContentLoaded", async function(){
             notNeutered.classList.add('checked');
         }
         
-
         // Display the uploaded image
         console.log(listing.image_URL);
-        let imageContainer = document.getElementById("pictures-right");
-            imageContainer.style.backgroundImage = `url('${listing.image_URL}')`;
+        let imageContainer = document.getElementById("pic-right-slider");
+        let image = document.createElement('img');
+        image.setAttribute('src', listing.image_URL);
+        imageContainer.appendChild(image);
     
 }
 
