@@ -41,27 +41,17 @@ img {
     min-width: 0px;
 }
 
-/* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #7c675a #ffffff;
-  }
+*::-webkit-scrollbar {
+    display: none;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 16px;
-  }
+::-webkit-scrollbar {
+    display: none;
+}
 
-  *::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: #7c675a;
-    border-radius: 10px;
-    border: 3px groove #ffffff;
-  }
+* {
+    scrollbar-width: none;
+}
 
 /********************HEADER**************************/
 /********************HEADER**************************/
@@ -96,18 +86,17 @@ img {
 #user-dropdown {
     position: absolute;
     top: 90%;
-    color: white;
-    background-color: #ef7122;
+    color: black;
+    background-color: white;
     font-size: 2.5rem;
-    text-transform: uppercase;
     font-weight: 400;
     display: none;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-radius: 2rem;
+    border-radius: 1rem;
     z-index: 999999999;
-    border: 2px solid white;
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.15);
 }
 
 #user-dropdown > .divisor {
@@ -120,7 +109,6 @@ img {
 
 #user-dropdown > div {
     display: flex;
-    justify-content: center;
     align-items: center;
     transition: all ease .2s;
     height: 100%;
@@ -128,17 +116,19 @@ img {
 
 #user-dropdown > div:first-child {
     width: 100%;
-    padding: 2rem 2rem 2rem 2rem;
+    padding: 2rem 2rem 2rem 1rem;
+    border-radius: 1rem 1rem 0 0;
 }
 
 #user-dropdown > div:last-child {
-    padding: 0 2rem 2rem 2rem;
+    padding: 1rem 2rem 2rem 2rem;
     width: 100%;
+    border-radius: 0 0 1rem 1rem;
 }
 
-#user-dropdown > div:not(.divisor):hover {
+#user-dropdown > div:hover {
     cursor: pointer;
-    scale: 1.05;
+    background: var(--furever-orange);
 }
 
 #user-dropdown-trigger:checked ~ #user-dropdown {
@@ -293,7 +283,6 @@ img {
     grid-auto-rows: 15%;
     overflow-y: auto;
     overflow-x: hidden;
-    gap: .5rem;
     padding: 2rem;
 }
 
@@ -307,30 +296,50 @@ img {
 .user-record {
     display: grid;
     grid-template-columns: repeat(5, 1fr) min-content;
-    gap: .5rem;
 }
 
 .animal-record {
     display: grid;
-    grid-template-columns: repeat(9, 1fr) min-content;
-    gap: .5rem;
+    grid-template-columns: repeat(14, 1fr) min-content;
 }
 
 .adoption-record {
     display: grid;
     grid-template-columns: repeat(4, 1fr) min-content;
-    gap: .5rem;
+}
+
+.table-header > div:first-child {
+    border-top-left-radius: 1rem;
+}
+
+.table-header > div:last-child {
+    border-top-right-radius: 1rem;
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+#body-content > div:last-child > div:first-child {
+    border-bottom-left-radius: 1rem;
+}
+
+#body-content > div:last-child > div:last-child {
+    border-bottom-right-radius: 1rem;
 }
 
 #body-content > div > div {
     background: rgb(243, 245, 213);
-    border-radius: 2rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: auto;
     padding: 1rem;
     font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+#body-content > div > div:last-child {
+    justify-content: center;
 }
 
 .delete-record-btn > i {
