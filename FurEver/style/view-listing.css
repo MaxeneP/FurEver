@@ -261,6 +261,9 @@ img {
 
 #pic-right-slider > img {
     scroll-snap-align: start;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 #add-to-wishlist-btn {
