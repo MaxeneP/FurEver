@@ -89,7 +89,6 @@ function eventDelegation(e) {
 // **************************************************************************************************************
 // **************************************************************************************************************
 
-
 // takes name of animal and cover picture of animal
 // then creates necessary HTML elements and appends output to be displayed on page
 function createTile(name, imageSrc, id) {
@@ -105,14 +104,11 @@ function createTile(name, imageSrc, id) {
     listingName.classList.add('listing-name');
     listingName.textContent = name;  // name of animal
 
-    let listingHover = document.createElement('div');
     let p = document.createElement('p');
-
 
     listing.setAttribute('animal_id', id); 
 
     p.textContent = 'View More';
-    listingHover.setAttribute('class', 'listing-hover');
     listingName.setAttribute('class', 'listing-name');
     listingPic.setAttribute('class', 'listing-pic');
 
@@ -120,10 +116,8 @@ function createTile(name, imageSrc, id) {
         window.location.href = `../pages/view-lising.html?animal_id=${id}`;
     });
     
-    listingHover.appendChild(p);
     listing.appendChild(listingPic);
     listing.appendChild(listingName);
-    listing.appendChild(listingHover)
     
     let ls = document.getElementById('listing-scroll');
     ls.appendChild(listing);
@@ -138,9 +132,17 @@ function createEmptyTile() {
     while (ls.children.length % 4 != 1)
 }
 
+function createLoader() {
+    let ls = document.getElementById('listing-scroll');
+    let loader = document.createElement('div');
+    loader.classList.add('loader');
+    ls.appendChild(loader);
+}
+
 // function triggered when location from dropdown changes
 function onLocationChange(location) {
-    clearListings(); 
+    clearListings();
+    createLoader(); 
     // get listings
     // ...
     // call create tile for listings
