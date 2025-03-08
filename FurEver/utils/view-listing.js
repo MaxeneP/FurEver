@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     let user = await getUser();
     if(!user){
-        alert("You must be logged in to create a listing");
+        alert("You must be logged in to access this page.");
         window.location.href="../pages/signin_Furever.html";
     }
 
@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", async function(){
                 document.getElementById("listing-wrapper").innerHTML = "<p>Listing not found.</p>";
                 return;
             }
-
-        document.getElementById("name").textContent = listing.animal_name;
+        let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
+        document.getElementById("name").textContent = name;
         document.getElementById("breed").textContent = listing.breed;
         document.getElementById("size").textContent = listing.size;
         
@@ -100,4 +100,45 @@ document.addEventListener("DOMContentLoaded", async function(){
         document.getElementById("listing-wrapper").innerHTML = "<p>Invalid listing ID.</p>";
         window.location.href = "../pages/home.html";
     }
+
+    //wish list feature here
+    async function addToWsihlist(listingId, animalName, imageUrl){
+       const {data, error} = await supabase
+       .from("wishlist")
+       .insert([{
+            user_id: user.id,
+            animal_id: listingId,
+            animal_name: animalName,
+            image_URL: imageUrl
+            }
+        ]);
+
+        if (error){
+            console.error("Error adding to wishlist: ", error);
+                alert("Failed to add to wishlist.");
+            }else{
+                alert("Added to wishlist!");
+            }
+        }
+    
+    //wish list button listener
+    const wishList = document.getElementById("add-to-wishlist-btn");
+    wishList.addEventListener("click", async function() {
+        const listingId = urlParams.get("animal_id"); 
+        if(!listingId){
+            alert("Invalid listing Id");
+            return;
+        }
+
+        const {data: listing, error} = await supabase.from("animal_listing").select("animal_name, image_URL").eq("animal_id", listingId).single();
+
+        if (error || !listing){
+            console.error("Error fetching listing: ", error);
+            alert("Could not retrieve listing data");
+            return;
+        }
+
+        addToWsihlist(listingId, listing.animal_name, listing.image_URL);
+    });
+    
 });
