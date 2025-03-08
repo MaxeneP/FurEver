@@ -333,7 +333,7 @@ img {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, calc(25% - (2rem * 3 / 4))));
-    grid-auto-rows: 300px;
+    grid-auto-rows: 45vh;
     justify-content: space-evenly;
     min-height: 0;
     min-width: 0;
@@ -395,7 +395,7 @@ img {
 }
 
 .listing:hover > .listing-hover{
-    transform: translateY(300px);
+    transform: translateY(45vh);
     transition-delay: 1s;
 }
 
