@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel = 'stylesheet' href = '../style/home_style.css'>
+    <script src = "../utils/ph_provinces_and_cities-master/city.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+    <div id="flex-wrapper">
+        <div id="header">
+            <div id="header-left">
+                <label class="fa fa-bars header-buttons" aria-hidden="true" for = 'burger-menu-trigger'>
+                </label>
+                <input type="checkbox" id = 'burger-menu-trigger'>
+                <div id="burger-menu-dropdown">
+                    <div class="bm-item">
+                        <a href="../pages/landing-page.html">Home</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="../pages/home.html">Browse</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="../pages/survey_1.html">Survey</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="#" id="sign-out">Sign Out</a>
+                    </div>
+                </div>
+                <div class="wishlist-title">My Wishlist</div>
+            </div>
+
+            <div id="header-right">
+                <div class="header-buttons">
+                    <a href="../pages/wishlist.html">
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                </a>
+                </div>
+                <div class="header-buttons">
+                    <a href="../pages/listing-dashboard.html">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="header-buttons">
+                    <a href="../pages/settings.html">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="body">
+            <div id="body">
+                <div id="body-top">
+                </div>
+                <div id="body-content">
+                    <div id="listing-scroll">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>pmpurificacion@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>elcmapalad@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>blvfrancisco@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>aktcoquia@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>abchan@mymail.mapua.edu.ph</p>
+            </div>
+        </div>  
+    </div>
+    <script src="../utils/wishlist.js"></script>
+    <script src="../utils/auth.js"></script>
+</body>
+</html>
