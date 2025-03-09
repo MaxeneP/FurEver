@@ -31,7 +31,7 @@ function init() {
 
     //fetch records
     async function fetchListings(){
-        const {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted").eq("Is_adopted", fasle);
+        const {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL");
 
         if(error){
             console.error("Error fetching listings: ", error);
@@ -83,6 +83,12 @@ function eventDelegation(e) {
         let lv = document.getElementById('listing-view-wrapper');
         lv.setAttribute('style', 'display: none'); 
     }
+    if (e.target == document.getElementById('close-potd')) {
+        document.getElementById('potd-trigger').checked = false;
+    }
+    if (e.target == document.getElementById('view-potd')) {
+        viewPotd();
+    }
 }
 
 // **************************************************************************************************************
@@ -123,15 +129,31 @@ function createTile(name, imageSrc, id) {
     ls.appendChild(listing);
 }
 
-function createEmptyTile() {
-    let ls = document.getElementById('listing-scroll');
-    do {
-        let empty = document.createElement('div');
-        ls.appendChild(empty);
-    }
-    while (ls.children.length % 4 != 1)
+
+// makes potd element visible
+// potd trigger is a checkbox
+// css rule makes potd tile visible depending
+// on state of checkbox 
+function showPotd() {
+    document.getElementById('potd-trigger').checked = true;
 }
 
+// sets pet of the day expects url in src
+// name is displayed as a string
+function setPotd(name, src) {
+    document.getElementById('potd-name').textContent = name;
+    document.getElementById('potd-pic').setAttribute('src', src);
+}
+
+
+// function called when view pet of the day
+// is clicked
+function viewPotd() {
+    console.log('view potd clicked!');
+}
+
+// function for adding loader when no element
+// is in listing scroll
 function createLoader() {
     let ls = document.getElementById('listing-scroll');
     let loader = document.createElement('div');
