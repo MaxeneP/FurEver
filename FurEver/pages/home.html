@@ -7,6 +7,7 @@
     <title>FurEver</title>
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel = 'stylesheet' href = '../style/home_style.css'>
+    <link rel="stylesheet" href="../style/header-footer.css">
     <script src = "../utils/ph_provinces_and_cities-master/city.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -95,6 +96,23 @@
                 <p>abchan@mymail.mapua.edu.ph</p>
             </div>
         </div>  
+        <input type="checkbox" id = 'potd-trigger'>
+        <div class="potd-wrapper">
+            <img id="potd-pic" src="../assets/chewy.jpg"></img>
+            <div id="potd-right">
+                <div>
+                    <p>Meet</p>
+                    <div id="potd-name">Chewy</div>
+                </div>
+                <p>
+                    Your pet of the day!
+                </p>
+                <div id="potd-btns">
+                    <div id="close-potd">Close</div>
+                    <div id="view-potd">View</div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="../utils/home.js"></script>
