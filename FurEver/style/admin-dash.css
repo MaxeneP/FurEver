@@ -110,7 +110,6 @@ img {
 #user-dropdown > div {
     display: flex;
     align-items: center;
-    transition: all ease .2s;
     height: 100%;
 }
 
@@ -129,6 +128,7 @@ img {
 #user-dropdown > div:hover {
     cursor: pointer;
     background: var(--furever-orange);
+    color: white;
 }
 
 #user-dropdown-trigger:checked ~ #user-dropdown {
@@ -144,11 +144,13 @@ img {
 /************************BODY*************************/
 
 #body {
-    padding: 3rem 6rem;
+    padding: 1rem 3rem;
     display: grid;
     grid-template-rows: min-content 1fr;
     min-height: 0;
     min-width: 0;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.05)
 }
 
 /******************BODY TOP**********************/
@@ -158,7 +160,7 @@ img {
 
 #body-top {
     background-color: var(--furever-orange);
-    border-radius: 2rem 2rem 0 0;
+    border-radius: 1rem 1rem 0 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -186,13 +188,13 @@ img {
     text-align: center;
     padding: 1rem;
     border-radius: 2rem;
-    background-color: rgb(243, 245, 213);
+    background-color: white;
     width: max(200px, 50%);
 }
 
 #body-content {
     background-color: var(--furever-orange);
-    border-radius: 0 0 2rem 2rem;
+    border-radius: 0 0 1rem 1rem;
 }
 
 #dropdown-wrapper {
@@ -211,7 +213,7 @@ img {
     font-size: 2rem;
     text-transform: uppercase;
     font-weight: bold;
-    background-color: rgb(243, 245, 213);
+    background-color: white;
     padding: 1rem 2rem;
     border-radius: 2rem;
     transition: all ease .2s;
@@ -230,7 +232,7 @@ img {
     flex-direction: column;
     width: 100%;
     font-size: 2rem;
-    background-color: rgb(243, 245, 213);
+    background-color: white;
     justify-content: center;
     position: absolute;
     top: 120%;
@@ -243,7 +245,6 @@ img {
     text-transform: uppercase;
     font-weight: 400;
     padding: 1rem 0;
-    transition: all ease .2s;
     border: 1px solid rgba(0,0,0,0);
     z-index: 423;
 }
@@ -329,7 +330,7 @@ img {
 }
 
 #body-content > div > div {
-    background: rgb(243, 245, 213);
+    background: white;
     display: flex;
     align-items: center;
     overflow-x: auto;
