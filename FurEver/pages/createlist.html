@@ -6,6 +6,7 @@
     <title>Create Listing</title>
     <link rel="stylesheet" href="../style/createlist.css">
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../style/header-footer.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../utils/createlist.js"></script>
     <script src="../utils/ph_provinces_and_cities-master/city.js"></script>
@@ -52,42 +53,22 @@
         <div id="body">
             <!-- Left Section: Upload Photos -->
             <div class="left-section">
-                <div class="left-section-top">
-                    <h2>Upload Photo</h2>
-                    <div class="button-group">
-                        <div class="save-create-btn">SAVE AND CREATE</div>
-                    </div>
+                <div class="info">
+                    <label>Name</label>
+                    <input type="text" id="name" placeholder="Enter name">
                 </div>
-                <div class="photo-grid" id="photoGrid">
-                    <!-- 6 Upload Slots -->
-                    <div class="photo-slot">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        <div class="photo-slot-hover"></div>
-                    </div>
+                <div class="info">
+                    <label>Date of Birth (Optional)</label>
+                    <input type="date" id="dob">
                 </div>
-                
-                <div class="left-info">
-                    <div class="info">
-                        <label>Name</label>
-                        <input type="text" id="name" placeholder="Enter name">
-                    </div>
-                    <div class="info">
-                        <label>Date of Birth (Optional)</label>
-                        <input type="date" id="dob">
-                    </div>
-                    <div class="info">
-                        <label>Breed</label>
-                        <input type="text" id="breed" placeholder="Enter breed">
-                    </div>
-                    <div class="info">
-                        <label>Species</label>
-                        <input type="text" id="species" placeholder="Enter species (i.e. dog)">
-                    </div>
+                <div class="info">
+                    <label>Breed</label>
+                    <input type="text" id="breed" placeholder="Enter breed">
                 </div>
-                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-            </div>
-            <!-- Right Section: Form -->
-            <div class="right-section">
+                <div class="info">
+                    <label>Species</label>
+                    <input type="text" id="species" placeholder="Enter species (i.e. dog)">
+                </div>
                 <div class="info">
                     <label>Size</label>
                     <select name ='size' id = 'size'>
@@ -152,7 +133,7 @@
                         <p>No</p>
                     </div>
                 </div>
-                <div class="info">
+                <div class="info textarea">
                     <label>Animal Description</label>
                     <textarea id="description" placeholder="Describe the animal. Please include medical history and other necessary details"></textarea>
                 </div>
@@ -167,6 +148,23 @@
                         <select name="cities" id="cities"></select>
                     </div>
                 </div>
+                <div class="button-group">
+                    <div class="save-create-btn">SAVE AND CREATE</div>
+                </div>
+            </div>
+
+            <!-- Right Section: Form -->
+            <div class="right-section">
+                <div class="right-section-top">
+                    <h2>Upload Photo</h2>
+                </div>
+                <div class="photo-grid" id="photoGrid">
+                    <!-- 6 Upload Slots -->
+                    <div class="photo-slot">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
             </div>
         </div>
 
