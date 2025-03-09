@@ -1,108 +1,59 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Settings Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'League Spartan', sans-serif;
-    }
-
-    .menu-item.active {
-      background-color: #e5e7eb;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    .menu-item span {
-      font-weight: normal; 
-    }
-
-    .menu-item.active span {
-      font-weight: bold; 
-    }
-	  .input-oval {
-            border-radius: 9999px;
-        }
-        .input-black-border {
-            border-color: black;
-        }
-  </style>
-  <script>
-    function selectMenuItem(item, sectionId) {
-      
-      document.querySelectorAll('.menu-item').forEach(el => {
-        el.classList.remove('active');
-        el.querySelector('span').style.fontWeight = 'normal'; 
-      });
-
-      item.classList.add('active');
-      item.querySelector('span').style.fontWeight = 'bold';
-		document.querySelectorAll('.section').forEach(el => {
-        el.classList.remove('active');
-      });
-      document.getElementById(sectionId).classList.add('active');
-    }
-	/*Account Section*/
-    function uploadNewPicture() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.onchange = function (event) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            document.getElementById('profile-picture').src = e.target.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      };
-      input.click();
-    }
-	  
-    function deletePicture() {
-      document.getElementById('profile-picture').src = 'https://placehold.co/100x100';
-    }
-
-    function enableEditing(id) {
-      const input = document.getElementById(id);
-      input.removeAttribute('readonly');
-      input.classList.add('border-b-2', 'border-gray-300');
-      input.focus();
-      document.getElementById(`edit-${id}`).classList.add('hidden');
-      document.getElementById(`save-${id}`).classList.remove('hidden');
-    }
-
-    function saveChanges(id) {
-      const input = document.getElementById(id);
-      input.setAttribute('readonly', true);
-      input.classList.remove('border-b-2', 'border-gray-300');
-      document.getElementById(`edit-${id}`).classList.remove('hidden');
-      document.getElementById(`save-${id}`).classList.add('hidden');
-    }
-	  /*Security Section*/
-
-	  /*Delete Account Section*/
-	  
-  </script>
+  <link rel="stylesheet" href="../style/settings.css"> 
+  <script src="../utils/settings.js" defer></script> 
 </head>
 <body class="bg-white font-sans">
+  <!-- Header -->
+  <div id="header" class="flex justify-between items-center p-4 pl-9">
+    <div id="header-left">
+      <label class="fa fa-bars header-buttons text-5xl cursor-pointer" aria-hidden="true" for="burger-menu-trigger"></label>
+      <input type="checkbox" id="burger-menu-trigger" class="hidden">
+      <div id="burger-menu-dropdown">
+        <div class="bm-item">
+          <a href="landing-page.html">Home</a>
+        </div>
+        <div class="bm-item">
+          <a href="home.html">Browse</a>
+        </div>
+        <div class="bm-item">
+          <a href="survey_1.html">Survey</a>
+        </div>
+        <div class="bm-item">
+          <a href="#" id="sign-out">Sign Out</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="header-right" class="flex space-x-4">
+      <div class="header-buttons cursor-pointer">
+		  <a href="savedlist.html">
+        <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true"></i>
+		  </a>
+      </div>
+      <div class="header-buttons cursor-pointer">
+        <a href="listing-dashboard.html">
+          <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="header-buttons cursor-pointer">
+		  <a href="settings.html">
+        <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
+		  </a>
+      </div>
+    </div>
+  </div>
+
   <div class="flex flex-col md:flex-row">
     <!-- Sidebar -->
-    <div class="w-full md:w-1/4 bg-white h-auto md:h-screen p-4 flex flex-col justify-between border-r border-gray-300">
+    <div class="w-full md:w-1/4 bg-white h-auto md:h-screen p-4 pl-9 flex flex-col justify-between border-r border-gray-300"> 
       <div>
-        <div class="flex items-center mb-8">
-          <i class="fas fa-bars text-4xl"></i>
-        </div>
-		  <h2 class="text-2xl font-bold mb-8">SETTINGS</h2>
+        <h2 class="text-2xl font-bold mb-8">SETTINGS</h2>
         <div class="mb-8">
           <div class="flex items-center mb-4 menu-item active w-full p-2" onclick="selectMenuItem(this, 'account-section')">
             <i class="fas fa-user-circle text-orange-500 text-2xl"></i>
@@ -122,10 +73,8 @@
     </div>
 
     <!-- Main Content -->
-    <div class="w-full md:w-3/4 p-8">
+    <div class="w-full md:w-3/4 p-8 pl-5"> 
       <!-- Account Section -->
-		<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
-		<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
       <div id="account-section" class="section active">
         <div class="flex flex-col md:flex-row justify-between items-center mb-8">
           <div class="flex items-center mb-4 md:mb-0">
@@ -182,60 +131,51 @@
       </div>
 
       <!-- Security Section -->
-		<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
-		
       <div id="security-section" class="section">
         <h2 class="text-2xl font-bold mb-2">Change Password</h2>
-                <p class="mb-4">To change your password, please fill in the fields below. Your password must contain at least 8 characters, it must also include at least one upper case letter, one lower case letter, one number, and one special character.</p>
-                <form>
-                    <div class="mb-4">
-                        <label class="block text-lg mb-2">Current Password</label>
-                        <div class="relative w-1/3">
-                            <input type="password" class="w-full p-2 pl-10 border input-oval input-black-border" placeholder="Current Password" id="current-password">
-                            <i class="fas fa-lock absolute left-3 top-3 text-gray-500"></i>
-                        </div>
-                        <i class="fas fa-check text-green-500 mt-2 hidden" id="current-password-check"></i>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-lg mb-2">New Password</label>
-                        <div class="relative w-1/3">
-                            <input type="password" class="w-full p-2 pl-10 border input-oval input-black-border" placeholder="New Password" id="new-password">
-                            <i class="fas fa-lock absolute left-3 top-3 text-gray-500"></i>
-                        </div>
-                        <i class="fas fa-times text-red-500 mt-2 hidden" id="new-password-error"></i>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-lg mb-2">Confirm Password</label>
-                        <div class="relative w-1/3">
-                            <input type="password" class="w-full p-2 pl-10 border input-oval input-black-border" placeholder="Confirm Password">
-                            <i class="fas fa-lock absolute left-3 top-3 text-gray-500"></i>
-                        </div>
-                    </div>
-					 <div class="flex space-x-4 w-1/3 mt-4">
-                <button type="submit" class="bg-orange-500 text-white w-1/2 py-2 rounded">Save</button>
-                <button type="button" class="bg-orange-500 text-white w-1/2 py-2 rounded">Cancel</button>
-      		</div>
-	 </form>
-	</div>
+        <p class="mb-4">To change your password, please fill in the fields below. Your password must contain at least 8 characters, it must also include at least one upper case letter, one lower case letter, one number, and one special character.</p>
+        <form>
+          <div class="mb-4">
+            <label class="block text-lg mb-2">Current Password</label>
+            <div class="relative w-1/3">
+              <input type="password" class="w-full p-2 pl-10 border input-oval input-black-border" placeholder="Current Password" id="current-password">
+              <i class="fas fa-lock absolute left-3 top-3 text-gray-500"></i>
+            </div>
+            <i class="fas fa-check text-green-500 mt-2 hidden" id="current-password-check"></i>
+          </div>
+          <div class="mb-4">
+            <label class="block text-lg mb-2">New Password</label>
+            <div class="relative w-1/3">
+              <input type="password" class="w-full p-2 pl-10 border input-oval input-black-border" placeholder="New Password" id="new-password">
+              <i class="fas fa-lock absolute left-3 top-3 text-gray-500"></i>
+            </div>
+            <i class="fas fa-times text-red-500 mt-2 hidden" id="new-password-error"></i>
+          </div>
+          <div class="mb-4">
+            <label class="block text-lg mb-2">Confirm Password</label>
+            <div class="relative w-1/3">
+              <input type="password" class="w-full p-2 pl-10 border input-oval input-black-border" placeholder="Confirm Password">
+              <i class="fas fa-lock absolute left-3 top-3 text-gray-500"></i>
+            </div>
+          </div>
+          <div class="flex space-x-4 w-1/3 mt-4">
+            <button type="submit" class="bg-orange-500 text-white w-1/2 py-2 rounded">Save</button>
+            <button type="button" class="bg-orange-500 text-white w-1/2 py-2 rounded">Cancel</button>
+          </div>
+        </form>
+      </div>
 
       <!-- Delete Account Section -->
       <div id="delete-account-section" class="section">
         <h2 class="text-2xl font-bold mb-8">Delete Account</h2>
         <p class="mb-4">You are about to permanently delete your account, which will also erase all your listings. This action cannot be reversed.</p>
-            <div class="flex items-center">
-                <label for="confirm" class="mr-4">To confirm this, type “DELETE”</label>
-                <input id="confirm" type="text" class="border border-gray-400 p-2 mr-4">
-                <button class="bg-red-600 text-white p-2 py-2 rounded" style="width: 150; height: 43">Delete account</button>
-            </div>
-		</div>
-	  </div>
-	</div>
-
-  <div class="absolute top-4 right-4 flex space-x-4">
-    <i class="fas fa-bookmark text-orange-500 text-4xl cursor-pointer"></i>
-    <i class="fas fa-user text-orange-500 text-4xl cursor-pointer"></i>
-    <i class="fas fa-cog text-orange-500 text-4xl cursor-pointer"></i>
+        <div class="flex items-center">
+          <label for="confirm" class="mr-4">To confirm this, type “DELETE”</label>
+          <input id="confirm" type="text" class="border border-gray-400 p-2 mr-4">
+          <button class="bg-red-600 text-white p-2 py-2 rounded" style="width: 150; height: 43">Delete account</button>
+        </div>
+      </div>
+    </div>
   </div>
-	  
 </body>
 </html>
