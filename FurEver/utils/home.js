@@ -31,7 +31,7 @@ function init() {
 
     //fetch records
     async function fetchListings(){
-        const {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL");
+        const {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted").eq("Is_adopted", fasle);
 
         if(error){
             console.error("Error fetching listings: ", error);
