@@ -27,6 +27,11 @@ function init() {
 
     window.addEventListener('click', eventDelegation);
     fetchListings();
+
+    fetchPotd();
+    showPotd();
+
+    setInterval(fetchPotd, 60000); //for testing, 24 hours = 86400000
 }
 
     //fetch records
