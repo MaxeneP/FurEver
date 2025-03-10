@@ -1,51 +1,89 @@
 <html>
 <head>
+    <link rel='icon' type='image/x-icon' href='../assets/favicon.png'>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../style/survey_2.css">
 </head>
 <body class="bg-white font-sans">
-    <div class="flex justify-between items-center p-4">
-        <i class="fas fa-bars text-4xl"></i>
-        <div class="flex items-center space-x-4">
-            <i class="fas fa-bookmark text-orange-500 text-4xl"></i>
-            <i class="fas fa-user-circle text-orange-500 text-4xl"></i>
+
+    <!-- Header Section -->
+    <div id="flex-wrapper">
+    <div id="header">
+      <div id="header-left">
+        <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
+        <input type="checkbox" id="burger-menu-trigger">
+        <div id="burger-menu-dropdown">
+          <div class="bm-item">
+            <a href="landing-page.html">Home</a>
+          </div>
+          <div class="bm-item">
+            <a href="home.html">Browse</a>
+          </div>
+          <div class="bm-item">
+            <a href="survey_1.html">Survey</a>
+          </div>
+          <div class="bm-item">
+            <a href="#" id="sign-out">Sign Out</a>
+          </div>
         </div>
-    </div>
+      </div>
+
+      <div id="header-right">
+                <div class="header-buttons">
+					<a href="savedlist.html">
+                    <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true" ></i> 
+						</a>
+		  		</div>
+                <div class="header-buttons">
+                    <a href="listing-dashboard.html">
+                        <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="header-buttons">
+					<a href="settings.html">
+                    <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
+					</a>
+                </div>
+            </div>
+        </div>
+
+    <!-- Body Section -->
     <div class="flex flex-col items-center mt-8 space-y-4">
         <div class="flex justify-center items-center">
             <img alt="Survey icon" class="h-16" src="../assets/survey.png" style="height: 70px; width: auto; max-width: 200%;"/>
         </div>
-        <div class="flex flex-col mt-8 space-y-4">
-    <div class="flex items-center space-x-4">
-     <label class="font-bold">
-      WHAT KIND OF ANIMAL ARE YOU LOOKING FOR?
-     </label>
-     <div class="relative">
-      <i class="fas fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">
-      </i>
-      <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
-       <option></option>
-       <option>Dog</option>
-       <option>Cat</option>
-       <option>Hooman</option>
-      </select>
-     </div>
-    </div>
+        
+        <!-- Survey Form Section -->
+        <div class="flex flex-col mt-8 space-y-4 w-full max-w-xl">
+            <!-- Animal Type Dropdown -->
             <div class="flex items-center space-x-4">
-     <label class="font-bold">
-      WHAT SIZE DO YOU PREFER?
-     </label>
-     <div class="relative">
-      <i class="fas fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl">
-      </i>
-      <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
-       <option></option>
-       <option>Small</option>
-       <option>Medium</option>
-       <option>Large</option>
-      </select>
-     </div>
-    </div>
+                <label class="font-bold">WHAT KIND OF ANIMAL ARE YOU LOOKING FOR?</label>
+                <div class="relative">
+                    <i class="fa fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl"></i>
+                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
+                        <option></option>
+                        <option>Dog</option>
+						<option>Cat</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Size Preference Dropdown -->
+            <div class="flex items-center space-x-4">
+                <label class="font-bold">WHAT SIZE DO YOU PREFER?</label>
+                <div class="relative">
+                    <i class="fa fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl"></i>
+                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
+                        <option></option>
+                        <option>Toy</option>
+                        <option>Medium</option>
+                        <option>Large</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Gender Preference Radios -->
             <div class="flex items-center space-x-4">
                 <label class="font-bold">DO YOU PREFER MALE OR FEMALE?</label>
                 <div class="flex space-x-4">
@@ -59,6 +97,8 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Activity Level Radios -->
             <div class="flex items-center space-x-4">
                 <label class="font-bold">HOW ACTIVE ARE YOU?</label>
                 <div class="flex items-center space-x-2">
@@ -81,6 +121,8 @@
                     <span>ACTIVE - 5</span>
                 </div>
             </div>
+
+            <!-- Children Preference Radios -->
             <div class="flex items-center space-x-4">
                 <label class="font-bold">DO YOU HAVE CHILDREN?</label>
                 <div class="flex space-x-4">
@@ -92,35 +134,37 @@
                         <input class="form-radio" name="children" type="radio"/>
                         <span>NO</span>
                     </label>
- </div>
-            </div>
-        </div>
-		<button class="bg-orange-500 text-white px-10 py-1 rounded-full flex items-center space-x-2" style="height: 40px; width: 100px;">
-    <i class="fas fa-arrow-right text-lg" style=" font-size: 25"></i>
-</button>
-        <div class="relative">
-    
-    <div style="position: fixed; bottom: 0; left: 0; width: 100%; height: 190px; overflow: hidden; z-index: 0;">
-        <img alt="Paw prints on the left" src="../assets/paws.png" style="position: absolute; bottom: 0; left: 0; height: 190px; width: auto; max-width: none;"/>
-    </div>
-  
-    <div style="position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: flex-start; z-index: 1;">
-        
-    </div>
-</div>
-            <div style="position: fixed; bottom: 0; right: 0; width: 100%; height: 160px; overflow: hidden;">
-    <img alt="Paw prints on the right" src="../assets/pets.png" style="position: absolute; bottom: 0; right: 0; height: 160px; width: auto; max-width: none;"/>
-</div>
-<div style="position: fixed; bottom: 0; right: 0; width: 100%; display: flex; justify-content: flex-end; z-index: 1;">
-    
-</div>
-            <div class="fixed bottom-0 left-0 w-full bg-blue-200 bg-opacity-50 p-4 flex justify-between items-center">
-                <div class="text-white">
-                    <p>CONTACT US</p>
-                    <p>EMAILS</p>
                 </div>
             </div>
         </div>
-	</body>
+
+        <!-- Submit Button -->
+        <button class="bg-orange-500 text-white px-10 py-1 rounded-full flex items-center space-x-2 mt-8" style="height: 40px; width: 100px;">
+			<a href="home.html">
+            <i class="fa fa-arrow-right text-lg" style="font-size: 25px;"></i>
+			</a>
+        </button>
+		
+    </div>
+
+    <!-- Footer Section with Paw Prints -->
+    <div class="relative">
+        <div style="position: fixed; bottom: 0; left: 0; width: 100%; height: 190px; overflow: hidden; z-index: 0;">
+            <img alt="Paw prints on the left" src="../assets/paws.png" style="position: absolute; bottom: 0; left: 0; height: 190px; width: auto; max-width: none;"/>
+        </div>
+
+        <div style="position: fixed; bottom: 0; right: 0; width: 100%; height: 160px; overflow: hidden;">
+            <img alt="Paw prints on the right" src="../assets/pets.png" style="position: absolute; bottom: 0; right: 0; height: 160px; width: auto; max-width: none;"/>
+        </div>
+
+        <!-- Footer Section with Contact Info -->
+        <div class="fixed bottom-0 left-0 w-full bg-blue-200 bg-opacity-50 p-4 flex justify-between items-center">
+            <div class="text-white">
+                <p>CONTACT US</p>
+                <p>EMAILS</p>
+            </div>
+        </div>
+    </div>
+    
+</body>
 </html>
-   
