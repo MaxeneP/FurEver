@@ -1,0 +1,102 @@
+.container {
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            gap: 20px; 
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .chewy-font {
+            font-family: 'Chewy', cursive; 
+            font-size: 70px; 
+        }
+
+        .league-font {
+            font-family: 'League Spartan', sans-serif; 
+        }
+
+        .button {
+            width: %; 
+        }
+        
+        #header {
+    		padding: 0 1rem 0 2rem;
+    		height: 10%;
+    		background-color: white;
+    		display: flex;
+    		flex-direction: row;
+    		justify-content: space-between;
+    		align-items: center;
+    		position: relative;
+	
+}
+
+		#header > div {
+    		width: 100%;
+}
+
+		#header-right {
+    		display: flex;
+    		flex-direction: row;
+    		justify-content: flex-end;
+    		gap: 1rem;
+}
+		
+		.header-buttons {
+  transition: all 0.2s ease;
+	
+}
+
+.header-buttons:hover {
+  cursor: pointer;
+  scale: 1.05;
+}
+		/* Burger Menu Dropdown */
+#burger-menu-dropdown {
+  position: absolute;
+  display: none;
+  width: 225px;
+  top: 100%;
+  background: white;
+  z-index: 423;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: 400;
+  border-radius: 1.5rem;
+  box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.bm-item {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1rem;
+}
+
+.bm-item:first-child {
+  border-radius: 1rem 1rem 0 0;
+}
+
+.bm-item:last-child {
+  border-radius: 0 0 1rem 1rem;
+}
+
+.bm-item:hover {
+  cursor: pointer; 
+  background-color: #ef7122; /* --furever-orange */
+  color: white;   
+}
+
+#burger-menu-trigger {
+  display: none;
+}
+
+#burger-menu-trigger:checked ~ #burger-menu-dropdown {
+  display: flex;
+}
