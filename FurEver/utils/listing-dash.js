@@ -161,9 +161,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         const userId = localStorage.getItem("user_id");
     
-        //show as adopted
-        let listingElement = document.getElementById(id);
-    
         const {error} = await supabase.from("adoption").insert([{user_id: userId, animal_id: id}]);
 
         if (error){
