@@ -12,7 +12,6 @@ function selectMenuItem(item, sectionId) {
   document.getElementById(sectionId).classList.add('active');
 }
 
-/* Account Section */
 function uploadNewPicture() {
   const input = document.createElement('input');
   input.type = 'file';
