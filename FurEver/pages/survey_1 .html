@@ -12,71 +12,91 @@
 <body class="bg-white font-fredoka">
 
     <!-- Header Section -->
-   <div id="flex-wrapper">
-    <div id="header">
-      <div id="header-left">
-        <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
-        <input type="checkbox" id="burger-menu-trigger">
-        <div id="burger-menu-dropdown">
-          <div class="bm-item">
-            <a href="landing-page.html">Home</a>
-          </div>
-          <div class="bm-item">
-            <a href="home.html">Browse</a>
-          </div>
-          <div class="bm-item">
-            <a href="survey_1.html">Survey</a>
-          </div>
-          <div class="bm-item">
-            <a href="#" id="sign-out">Sign Out</a>
-          </div>
-        </div>
-      </div>
+   <div id="flex-wrapper" class = 'h-screen grid grid-rows-[1.5fr_10fr_1fr] grid-cols-[1fr]'>
+        <div id="header">
+            <div id="header-left">
+                <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
+                <input type="checkbox" id="burger-menu-trigger">
+                <div id="burger-menu-dropdown">
+                    <div class="bm-item">
+                        <a href="../pages/home.html">Home</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="survey_1 .html">Survey</a>
+                    </div>
+                    <div class="bm-item">
+                        <a href="#" id="sign-out">Sign Out</a>
+                    </div>
+                </div>
+            </div>
 
-      <div id="header-right">
-                <div class="header-buttons">
-					<a href="savedlist.html">
-                    <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true" ></i> 
-						</a>
-		  		</div>
-                <div class="header-buttons">
-                    <a href="listing-dashboard.html">
-                        <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
+            <div id="header-right">
+                    <div class="header-buttons">
+                        <a href="../pages/wishlist.html">
+                            <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true" ></i> 
+                        </a>
+                    </div>
+                    <div class="header-buttons">
+                        <a href="../pages/listing-dashboard.html">
+                            <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="header-buttons">
+                        <a href="../pages/settings.html">
+                            <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
+                        </a>
+                    </div>
+            </div>
+        </div>
+
+        <!-- Body Section -->
+        <div id="body" class="text-left w-full">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-bold text-black mb-8 chewy-font tracking-wider" style="text-align: center;">
+                    Take a survey to <br> find your purfect<br> match!
+                </h1>
+                <div class="flex space-x-20">
+                    <a href="survey_2.html">
+                        <button class="bg-orange-500 text-white py-2 px-6 rounded-full text-lg button font-bold league-font tracking-wide">
+                            CONTINUE
+                        </button>
                     </a>
+                    <a href="home.html">
+                    <button class="bg-orange-500 text-white py-2 px-12 rounded-full text-lg button font-bold league-font tracking-wider">
+                        SKIP
+                    </button>
+                        </a>
                 </div>
-                <div class="header-buttons">
-					<a href="settings.html">
-                    <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
-					</a>
-                </div>
+            </div>
+            
+            <!--side picture-->
+            <div>
+                <img alt="Three happy dogs" class="w-70 h-70 md:w-80 md:h-80 rounded-full object-cover" height="400" src="../assets/Dog.jpg" width="600"/>
             </div>
         </div>
 
-    <!-- Body Section -->
-    <div id="body" class="text-left mt-16 container">
-        <div>
-            <h1 class="text-4xl md:text-5xl font-bold text-black mb-8 chewy-font tracking-wider" style="text-align: center;">
-                Take a survey to <br> find your purfect<br> match!
-            </h1>
-            <div class="flex space-x-20">
-                <a href="survey_2.html">
-                    <button class="bg-orange-500 text-white py-2 px-6 rounded-full text-lg button font-bold league-font tracking-wide">
-                        CONTINUE
-                    </button>
-                </a>
-				<a href="home.html">
-                <button class="bg-orange-500 text-white py-2 px-12 rounded-full text-lg button font-bold league-font tracking-wider">
-                    SKIP
-                </button>
-					</a>
+        <div id="footer">
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>pmpurificacion@mymail.mapua.edu.ph</p>
             </div>
-        </div>
-		
-		<!--side picture-->
-        <div>
-            <img alt="Three happy dogs" class="w-70 h-70 md:w-80 md:h-80 rounded-full object-cover" height="400" src="../assets/Dog.jpg" width="600"/>
-        </div>
-    </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>elcmapalad@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>blvfrancisco@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>aktcoquia@mymail.mapua.edu.ph</p>
+            </div>
+            <div class="footer-email">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>abchan@mymail.mapua.edu.ph</p>
+            </div>
+        </div>  
 	</div>
 </body>
 </html>
