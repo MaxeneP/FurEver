@@ -106,7 +106,7 @@ body {
     justify-content: center;
     font-size: 5rem;
     font-family: "Chewy", serif;
-    text-align: center;
+    text-align: center
 }
 
 #left > div:last-child {
@@ -118,6 +118,7 @@ body {
     text-transform: uppercase;
     font-weight: bolder;
     align-self: center;
+    gap: 2rem;
 }
 
 #left > div:last-child > a {
@@ -126,14 +127,13 @@ body {
     color: white;
     border-radius: 3rem;
     transition: all ease .2s;
+    border: 3px solid #ef7122
 }
 
 #left > div:last-child > a:hover {
     cursor: pointer;
-    scale: 1.1;
     background: white;
     color: #ef7122;
-    border: 3px solid #ef7122;
 }
 
 #right {
