@@ -130,6 +130,22 @@ function createTile(name, imageSrc, id) {
 }
 
 
+let animalId = null;
+
+// for potd record fetching
+async function fetchPotd(){
+        const {data, error} = await supabase.from("potd_view").select("animal_id, animal_name, image_URL, Is_adopted").eq("Is_adopted", false).limit(1).single();
+        if (error){
+            console.error("Error fetching record:", error);
+        }
+        if (!data || data.length === 0){
+            alert("No pet of the day found");
+        }
+
+        animalId = data.animal_id;
+        setPotd(data.animal_name, data.image_URL, data.animal_id);    
+
+}
 // makes potd element visible
 // potd trigger is a checkbox
 // css rule makes potd tile visible depending
@@ -150,7 +166,14 @@ function setPotd(name, src) {
 // is clicked
 function viewPotd() {
     console.log('view potd clicked!');
+    
+    window.location.href = `../pages/view-lising.html?animal_id=${animalId}`;
+
+    if (!animalId){
+        alert("No animal Id");
+    }
 }
+
 
 // function for adding loader when no element
 // is in listing scroll
