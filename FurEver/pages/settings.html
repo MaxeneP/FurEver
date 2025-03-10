@@ -11,20 +11,17 @@
 	
 </head>
 <body class="bg-white font-sans">
-  <div id="flex-wrapper">
+  <div id="flex-wrapper" class = 'h-screen flex flex-col'>
     <div id="header">
       <div id="header-left">
         <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
         <input type="checkbox" id="burger-menu-trigger">
         <div id="burger-menu-dropdown">
           <div class="bm-item">
-            <a href="landing-page.html">Home</a>
+            <a href="../pages/home.html">Home</a>
           </div>
           <div class="bm-item">
-            <a href="home.html">Browse</a>
-          </div>
-          <div class="bm-item">
-            <a href="survey_1.html">Survey</a>
+            <a href="../pages/survey_1 .html">Survey</a>
           </div>
           <div class="bm-item">
             <a href="#" id="sign-out">Sign Out</a>
@@ -34,30 +31,30 @@
 
       <div id="header-right">
                 <div class="header-buttons">
-					<a href="savedlist.html">
+					<a href="../pages/wishlist.html">
                     <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true" ></i> 
 						</a>
 		  		</div>
                 <div class="header-buttons">
-                    <a href="listing-dashboard.html">
+                    <a href="../pages/listing-dashboard.html">
                         <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
                     </a>
                 </div>
                 <div class="header-buttons">
-					<a href="settings.html">
+					<a href="../pages/settings.html">
                     <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
 					</a>
                 </div>
             </div>
         </div>
 
-    <div id="body">
+    <div id="body" class = 'grow'>
       
 
-        <div id="body-bottom">
-          <div class="flex flex-col md:flex-row">
+        <div id="body-bottom" class = 'h-full'>
+          <div class="flex flex-col md:flex-row h-full">
             <!-- Sidebar -->
-            <div class="w-full md:w-1/4 bg-white h-auto md:h-screen p-4 flex flex-col justify-between border-r border-gray-300">
+            <div class="w-full md:w-1/4 bg-white h-auto p-4 flex flex-col justify-between border-r border-gray-300">
               <div>
                 <h2 class="text-2xl font-bold mb-8">SETTINGS</h2>
                 <div class="mb-8">

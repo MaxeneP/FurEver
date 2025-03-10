@@ -29,6 +29,10 @@ body {
   background-color: #e5e7eb;
 }
 
+.menu-item:hover {
+  cursor: pointer;
+}
+
 .section {
   display: none;
 }
@@ -63,7 +67,7 @@ body {
   z-index: 423;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 2rem;
+  font-size: calc(.75*2rem);
   font-weight: 400;
   border-radius: 1.5rem;
   box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.15);
