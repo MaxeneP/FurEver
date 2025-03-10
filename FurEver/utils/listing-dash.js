@@ -163,7 +163,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     
         //show as adopted
         let listingElement = document.getElementById(id);
-        let nameElement = listingElement.querySelector(".listing-name");
     
         const {error} = await supabase.from("adoption").insert([{user_id: userId, animal_id: id}]);
 
