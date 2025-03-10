@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: "League Spartan", sans-serif;
+}
+
+a {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+ul, ol {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+img {
+    padding: 0;
+    border: 0;
+}
+
+:root {
+    font-size: 12px;
+    --furever-orange: #ef7122;
+    --furever-grey: rgba(57 30 13 0.34);
+    --furever-blue: rgba(37, 150, 190);
+}
+
+#flex-wrapper {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1.5fr 10fr 1fr;
+    overflow: hidden;
+    overflow-x: hidden; 
+    min-height: 0px;
+    min-width: 0px;
+    position: relative;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+}
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid lightblue;
+    border-right-color: var(--furever-orange);
+    animation: l2 1s infinite linear;
+    position: absolute;
+    top: 45%;
+    right: 45%;
+    height: 50px;
+  }
+  @keyframes l2 {to{transform: rotate(1turn)}}
+
+
+/****************BODY TOP*********************/
+/****************BODY TOP*********************/
+/****************BODY TOP*********************/
+/****************BODY TOP*********************/
+/****************BODY TOP*********************/
+/****************BODY TOP*********************/
+
+#body {
+    height: 100%;
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 8fr;
+    padding: 1rem 6rem 1rem 6rem;
+    overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+    background: rgb(253, 253, 253);
+
+}
+
+#body-top {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3rem;
+}
+
+
+/**********BODY CONTENT*************/
+/**********BODY CONTENT*************/
+/**********BODY CONTENT*************/
+/**********BODY CONTENT*************/
+/**********BODY CONTENT*************/
+/**********BODY CONTENT*************/
+/**********BODY CONTENT*************/
+
+#body-content {
+    max-height: 100%;
+    width: 100%;
+    overflow-x: scroll;
+    min-height: 0;
+    min-width: 0;
+}
+
+#listing-scroll {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    min-height: 0;
+    min-width: 0;
+    position: relative;
+}
+
+.listing {
+    background-color: var(--furever-orange);
+    border-radius: 1rem;
+    height: 100%;
+    width: 25%;
+    min-height: 0;
+    min-width: 25%;
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr min-content;
+    overflow: hidden;
+    transition: all ease .2s;
+    box-shadow: 5px 0px 5px 0px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.adopted-tint {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background: rgb(0,0,0, .5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.adopted-tint > p {
+    font-size: 2rem;
+    color: white;
+    text-transform: uppercase;
+}
+
+.visible {
+    display: flex;
+}
+
+.listing-pic {
+    height: 100%;
+    width: 100%;
+    justify-self: center;
+    object-fit: cover;
+    min-height: 0;
+    min-width: 0;
+}
+
+.listing-name {
+    text-transform: capitalize;
+    text-overflow: hidden;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    padding: .5rem 0;
+}
+
+.listing:hover {
+    min-width: 50%;
+    cursor: pointer;
+    transition-delay: .5s;
+}
+
+.potd-wrapper {
+    background: white;
+    border: 1px solid rgb(245, 245, 245);
+    height: 60%;
+    width: 60%;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 1rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 999999999;
+    display: none;
+    grid-template-columns: 50% 50%;
+    justify-content: center;
+    align-content: center;
+    box-shadow: 0px 7px 5px 0px rgba(0,0,0,0.2);
+}
+
+#potd-pic {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    object-fit: cover;
+    border-radius: 1rem 0 0 1rem;
+}
+
+#potd-right {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    align-content: center;
+    grid-template-rows: min-content min-content;
+    padding: 1rem;
+}
+
+#potd-right > div:first-child {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    text-transform: uppercase;
+}
+
+#potd-name {
+    font-weight: bolder;
+    overflow-x: auto;
+    color: var(--furever-orange);
+}
+
+#potd-right > p {
+    font-size: 2.5rem;
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center
+}
+
+#potd-btns {
+    height: 100%;
+    width: 100%;
+    padding-top: 3rem;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: bold
+}
+
+#potd-btns > div {
+    display: flex;
+    align-items: center;
+    background-color: var(--furever-orange);
+    border: 2px solid var(--furever-orange);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    transition: all ease .2s;
+}
+
+#potd-btns > div:hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--furever-orange);
+}
+
+#potd-trigger {
+    display: none;
+}
+
+#potd-trigger:checked ~ .potd-wrapper {
+    display: grid;
+}
+
+
+/*************ALTERNATIVE LAYOUT****************/
+@media only screen and (max-width: 519px) {
+    .listing {
+        min-width: 100%;
+    }
+
+    #body {
+        padding: 0 2rem 1rem 2rem;
+    }
+}
+
+@media only screen and (min-width: 520px) and (max-width: 620px) {
+    #body {
+        padding: 0 2rem 1rem 2rem;
+    }
+
+    .listing {
+        min-width: 50%;
+    }
+}
+
+@media only screen and (min-width: 621px) and (max-width: 919px) {
+    .listing {
+        min-width: 50%;
+    }
+
+    #body {
+        padding: 0 6rem 1rem 6rem;
+    }
+}
+
+@media only screen and (min-width: 920px) and (max-width: 1170px) {
+    .listing {
+        min-width: 33%;
+    }
+
+    #body {
+        padding: 0 6rem 1rem 6rem;
+    }
+}
+
+
+
+@media only screen and (max-width: 1000px) {
+    .footer-email {
+        display: none;
+    }
+
+    #footer > div:nth-child(1) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+}

@@ -37,8 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
             clearListings();
             data.forEach(listing => {
-                let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
-                createTile(name, listing.image_URL, listing.animal_id);
+                createTile(listing.animal_name, listing.image_URL, listing.animal_id, listing.Is_adopted);
             });
         }
     
@@ -61,22 +60,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             let cb = document.getElementById('location-dropdown-trigger');
             cb.checked = false;
         }
-        if (e.target.closest('#carousel-right')) {
-            let carousel = document.getElementById('carousel-window');
-            let size = carousel.offsetWidth;
-            carousel.scrollBy(size,0);
-        }
-        if (e.target.closest('#carousel-left')) {
-            let carousel = document.getElementById('carousel-window');
-            let size = carousel.offsetWidth;
-            carousel.scrollBy(-size,0);
-        }
-        if (e.target == document.getElementById('close-lv')) {
-            let lv = document.getElementById('listing-view-wrapper');
-            lv.setAttribute('style', 'display: none'); 
-        }
     }
-    
+
+    window.addEventListener('click', eventDelegation);
+
     // **************************************************************************************************************
     // **************************************************************************************************************
     // **************************************************************************************************************
@@ -84,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     // takes name of animal and cover picture of animal
     // then creates necessary HTML elements and appends output to be displayed on page
-    function createTile(name, imageSrc, id) {
+    function createTile(name, imageSrc, id, adopted) {
         let listing = document.createElement('div');
         listing.classList.add('listing');
         listing.setAttribute('animal_id', id);
@@ -97,14 +84,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         listingName.classList.add('listing-name');
         listingName.textContent = name;  // name of animal
     
-        let listingHover = document.createElement('div');
         let p = document.createElement('p');
-    
+        p.textContent = 'Adopted';
+        let tint = document.createElement('div');
+        tint.classList.add('adopted-tint');
+        tint.appendChild(p);
+
+        if (adopted) {
+            tint.classList.add('visible');
+        }
     
         listing.setAttribute('animal_id', id); 
     
-        p.textContent = 'View More';
-        listingHover.setAttribute('class', 'listing-hover');
         listingName.setAttribute('class', 'listing-name');
         listingPic.setAttribute('class', 'listing-pic');
     
@@ -112,23 +103,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             window.location.href = `../pages/view-lising.html?animal_id=${id}`;
         });
         
-        listingHover.appendChild(p);
         listing.appendChild(listingPic);
         listing.appendChild(listingName);
-        listing.appendChild(listingHover)
+        listing.appendChild(tint);
         
         let ls = document.getElementById('listing-scroll');
         ls.appendChild(listing);
     }
-    
-    function createEmptyTile() {
-        let ls = document.getElementById('listing-scroll');
-        do {
-            let empty = document.createElement('div');
-            ls.appendChild(empty);
-        }
-        while (ls.children.length % 4 != 1)
-        }
     
     init();
     
