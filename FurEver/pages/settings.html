@@ -4,8 +4,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
 	<link rel="icon" href="../assets/favicon.png">
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../style/header-footer.css">
-  
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style/settings.css">
   <script src="../utils/settings.js"></script>
@@ -15,7 +13,7 @@
   <div id="flex-wrapper">
     <div id="header">
       <div id="header-left">
-        <label class="fa fa-bars header-buttons" aria-hidden="true" for="burger-menu-trigger"></label>
+        <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
         <input type="checkbox" id="burger-menu-trigger">
         <div id="burger-menu-dropdown">
           <div class="bm-item">
@@ -35,14 +33,19 @@
 
       <div id="header-right">
                 <div class="header-buttons">
-                    <i class="fa fa-bookmark" aria-hidden="true"></i>                </div>
+					<a href="savedlist.html">
+                    <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true" ></i> 
+						</a>
+		  		</div>
                 <div class="header-buttons">
                     <a href="listing-dashboard.html">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
                     </a>
                 </div>
                 <div class="header-buttons">
-                    <i class="fa fa-cog" aria-hidden="true"></i>
+					<a href="settings.html">
+                    <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
+					</a>
                 </div>
             </div>
         </div>
