@@ -190,13 +190,30 @@ function createLoader() {
 }
 
 // function triggered when location from dropdown changes
-function onLocationChange(location) {
+async function onLocationChange(city = null) {
+    let Listingfilter = supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted, city").eq("Is_adopted", false);
+
+    if(city){
+        Listingfilter = Listingfilter.eq("city", city);
+    }
+
+    const {data, error} = await Listingfilter;
+    
+    if (!data || data.length === 0) {
+        alert("There are no adoptable pets available in this city.");
+        return;
+    }
+
+    if(error){
+        alert("No listing in that location");
+    }
+
     clearListings();
     createLoader(); 
-    // get listings
-    // ...
-    // call create tile for listings
-}
+    data.forEach(listing => {
+        createTile(listing.animal_name, listing.image_URL, listing.animal_id);
+
+    });
 
 // function called when a listing is clicked, id is
 // id of listing in database
