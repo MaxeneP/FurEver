@@ -12,8 +12,37 @@ document.addEventListener("DOMContentLoaded", async function(){
         const { data, error } = await supabase.auth.getUser();
         return error ? null : data.user;
     }
-
+    
+const submit = document.getElementById("survey-btn");
+    
 function init() {
+    //for survey button
+    if (submit) {
+        submit.addEventListener("click", function(event) {
+            event.preventDefault();
+            console.log("Button clicked");
+            
+            let species = document.getElementById('species').value;
+            let size = document.getElementById('size').value;
+            let sex = document.querySelector('input[name="sex"]:checked')?.id;
+            let activeness = document.querySelector('input[name="activity"]:checked')?.id || "";
+            let temperament = document.querySelector('input[name="children"]:checked')?.id === "family-yes" ? "true" : "false";
+
+            let filterData = {
+                species: species || "",
+                size: size || "",
+                sex: sex || "",
+                activeness: activeness || "",
+                temperament: temperament || ""
+            };
+    
+            localStorage.setItem("surveyFilters", JSON.stringify(filterData)); // Save filters
+    
+            window.location.href = "home.html";
+
+        });
+    }
+    
     // for populating dropdown
     let cityObj = new City();
     let locations = cityObj.getAllCities();
@@ -35,16 +64,61 @@ function init() {
 }
 
     //fetch records
-    async function fetchListings(){
-        const {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted").eq("Is_adopted", false);
+       async function fetchListings(){
 
-        if(error){
-            console.error("Error fetching listings: ", error);
+        if (!document.referrer.includes("survey_2.html")) {
+            localStorage.removeItem("surveyFilters"); // Remove filters if user didn't come from survey
         }
+
+        let filterData = localStorage.getItem("surveyFilters"); // Check if survey filters exist
+        let filters = filterData ? JSON.parse(filterData) : null;
+
+        let {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted, city, species, size, sex, activeness, temperament").eq("Is_adopted", false);
+
+        if (filters){
+            if (filters.species && filters.species.toLowerCase() !== "others") {
+                data = data.filter(item => item.species.toLowerCase() === filters.species.toLowerCase());
+            } else if (filters.species.toLowerCase() === "others") {
+                data = data.filter(item => item.species.toLowerCase() !== "dog" && item.species.toLowerCase() !== "cat");
+            }            
+            if(filters.size){
+                data = data.filter(item => item.size === filters.size);
+            }
+            if(filters.sex){
+                data = data.filter(item => item.sex === filters.sex);
+            }
+            if (filters.activeness) {
+                let activenessValue = parseInt(filters.activeness, 10);
+                console.log("Activeness filter value:", activenessValue);
+                
+                data = data.filter(item => {
+                    let itemActiveness = parseInt(item.activeness, 10); //pass as int
+                    return itemActiveness >= (activenessValue <= 3 ? 1 : 4) &&
+                           itemActiveness <= (activenessValue <= 3 ? 3 : 5);
+                });
+            }
+            if (filters.temperament) {
+                let temperamentValue = parseInt(filters.temperament, 10);
+                if (!isNaN(temperamentValue)) {
+                    data = data.filter(item => {
+                        let itemTemperament = parseInt(item.temperament, 10);
+                        return itemTemperament >= 1 && itemTemperament <= 3;
+                    });
+                }
+            }
+            
+        }
+            if (!data || data.length === 0) {
+                alert("No listings match your preferences.");
+            }
 
         clearListings();
         data.forEach(listing => {
             createTile(listing.animal_name, listing.image_URL, listing.animal_id);
+
+            if(error){
+                console.error("Error fetching listings: ", error);
+            }
         });
     }
 
