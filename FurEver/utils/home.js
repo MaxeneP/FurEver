@@ -212,8 +212,9 @@ async function onLocationChange(city = null) {
     createLoader(); 
     data.forEach(listing => {
         createTile(listing.animal_name, listing.image_URL, listing.animal_id);
-
     });
+
+}
 
 // function called when a listing is clicked, id is
 // id of listing in database
