@@ -3,6 +3,24 @@ const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.sup
 
 console.log("Supabase success.", supabase);
 
+async function createUserFolder(userId){
+    const folderPath = `user_${userId}/placeholder.txt`;
+
+    const placeholderContent = new Blob(["This is a placeholder file."], { type: "text/plain" });
+
+    const { error } = await supabase.storage
+        .from("images")
+        .upload(folderPath, placeholderContent, { upsert: false });
+
+    if (error) {
+        console.error("Error creating user folder:", error);
+        alert("Error creating user folder: " + error.message);
+    } else {
+        console.log(`Folder created for user: ${userId}`);
+    }
+
+}
+
 const submit = document.getElementById('signup-submit');
 if (submit){
     submit.addEventListener('click', async function(event){
@@ -13,7 +31,6 @@ if (submit){
         const email = document.getElementById("email").value;
         const password = document.getElementById("signup-password").value;
         const conpassword = document.getElementById("confirm-password").value;
-
         if(password !== conpassword){
             alert("Your passwords do not match!");
         }
@@ -25,6 +42,7 @@ if (submit){
         if (!(password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(\)\\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~\(\)\\\/+\-]{6,6}$/))) {
             alert("Passwords should have at least one one uppercase character, one lowercase character, one special character, one digit, and be 6 characters long.")
         }
+
 
         try {
             const {data, error} = await supabase.auth.signUp({
@@ -48,8 +66,10 @@ if (submit){
             if (insertError) {
                 throw insertError;
             }
+            
+            await createUserFolder(userId);
 
-            alert("Accont successfully created! Redirecting to sign in...");
+            alert("Account successfully created! Redirecting to sign in...");
             window.location.href = "../pages/signin_Furever.html";
         } catch (error){
             alert(error.message);
