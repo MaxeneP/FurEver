@@ -4,44 +4,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../style/survey_2.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../utils/auth.js"></script>
-    <script src="../utils/home.js" defer></script>
 </head>
 <body class="bg-white font-sans">
 
     <!-- Header Section -->
-    <div id="flex-wrapper">
-    <div id="header">
-      <div id="header-left">
-        <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
-        <input type="checkbox" id="burger-menu-trigger">
-        <div id="burger-menu-dropdown">
-          <div class="bm-item">
-            <a href="home.html">Home</a>
-          </div>
-          <div class="bm-item">
-            <a href="survey_1.html">Survey</a>
-          </div>
-          <div class="bm-item">
-            <a href="#" id="sign-out">Sign Out</a>
-          </div>
-        </div>
-      </div>
+    <div id="flex-wrapper" class = 'grid grid-cols-[1fr] grid-rows-[1.5fr_10fr_1fr] h-screen'>
+        <div id="header">
+            <div id="header-left">
+                <label class="fa fa-bars header-buttons text-5xl" aria-hidden="true" for="burger-menu-trigger"></label>
+                <input type="checkbox" id="burger-menu-trigger">
+                <div id="burger-menu-dropdown">
+                <div class="bm-item">
+                    <a href="../pages/home.html">Home</a>
+                </div>
+                <div class="bm-item">
+                    <a href="../pages/survey_1 .html">Survey</a>
+                </div>
+                <div class="bm-item">
+                    <a href="../pages/signin_Furever.html" id="sign-out">Sign Out</a>
+                </div>
+                </div>
+            </div>
 
-      <div id="header-right">
+            <div id="header-right">
                 <div class="header-buttons">
-					<a href="savedlist.html">
+					<a href="../pages/wishlist.html">
                     <i class="fa fa-bookmark text-orange-500 text-5xl" aria-hidden="true" ></i> 
 						</a>
 		  		</div>
                 <div class="header-buttons">
-                    <a href="listing-dashboard.html">
+                    <a href="../pages/listing-dashboard.html">
                         <i class="fa fa-user-circle text-orange-500 text-5xl" aria-hidden="true"></i>
                     </a>
                 </div>
                 <div class="header-buttons">
-					<a href="settings.html">
+					<a href="../pages/settings.html">
                     <i class="fa fa-cog text-orange-500 text-5xl" aria-hidden="true"></i>
 					</a>
                 </div>
@@ -49,7 +46,7 @@
         </div>
 
     <!-- Body Section -->
-    <div class="flex flex-col items-center mt-8 space-y-4">
+    <div class="flex flex-col items-center justify-center space-y-4" id="survey-body">
         <div class="flex justify-center items-center">
             <img alt="Survey icon" class="h-16" src="../assets/survey.png" style="height: 70px; width: auto; max-width: 200%;"/>
         </div>
@@ -61,11 +58,10 @@
                 <label class="font-bold">WHAT KIND OF ANIMAL ARE YOU LOOKING FOR?</label>
                 <div class="relative">
                     <i class="fa fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl"></i>
-                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none" id = "species">
+                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
                         <option></option>
-                        <option>dog</option>
-						<option>cat</option>
-                        <option>others</option>
+                        <option>Dog</option>
+						<option>Cat</option>
                     </select>
                 </div>
             </div>
@@ -75,11 +71,11 @@
                 <label class="font-bold">WHAT SIZE DO YOU PREFER?</label>
                 <div class="relative">
                     <i class="fa fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl"></i>
-                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none" id = "size">
+                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
                         <option></option>
-                        <option>toy</option>
-                        <option>medium</option>
-                        <option>large</option>
+                        <option>Toy</option>
+                        <option>Medium</option>
+                        <option>Large</option>
                     </select>
                 </div>
             </div>
@@ -89,12 +85,12 @@
                 <label class="font-bold">DO YOU PREFER MALE OR FEMALE?</label>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="sex" id = "Female" type="radio"/>
-                        <span>Female</span>
+                        <input class="form-radio" name="gender" type="radio"/>
+                        <span>FEMALE</span>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="sex" id="Male" type="radio"/>
-                        <span>Male</span>
+                        <input class="form-radio" name="gender" type="radio"/>
+                        <span>MALE</span>
                     </label>
                 </div>
             </div>
@@ -105,19 +101,19 @@
                 <div class="flex items-center space-x-2">
                     <span>1 - SEDIMENTARY</span>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" id="1" value = "1" type="radio"/>
+                        <input class="form-radio" name="activity" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" id="2" value= "2" type="radio"/>
+                        <input class="form-radio" name="activity" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" id="3" value = "3" type="radio"/>
+                        <input class="form-radio" name="activity" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" id="4" value = "4" type="radio"/>
+                        <input class="form-radio" name="activity" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" id="5" value = "5" type="radio"/>
+                        <input class="form-radio" name="activity" type="radio"/>
                     </label>
                     <span>ACTIVE - 5</span>
                 </div>
@@ -128,11 +124,11 @@
                 <label class="font-bold">DO YOU HAVE CHILDREN?</label>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" id ="family-yes" name="children" type="radio"/>
+                        <input class="form-radio" name="children" type="radio"/>
                         <span>YES</span>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" id="family-no" name="children" type="radio"/>
+                        <input class="form-radio" name="children" type="radio"/>
                         <span>NO</span>
                     </label>
                 </div>
@@ -140,30 +136,36 @@
         </div>
 
         <!-- Submit Button -->
-        <button id="survey-btn" class="bg-orange-500 text-white px-10 py-1 rounded-full flex items-center space-x-2 mt-8" style="height: 40px; width: 100px;">
+        <button class="bg-orange-500 text-white px-10 py-1 rounded-full flex items-center space-x-2 mt-8" style="height: 40px; width: 100px;">
+			<a href="home.html">
             <i class="fa fa-arrow-right text-lg" style="font-size: 25px;"></i>
+			</a>
         </button>
 		
     </div>
 
-    <!-- Footer Section with Paw Prints -->
-    <div class="relative">
-        <div style="position: fixed; bottom: 0; left: 0; width: 100%; height: 190px; overflow: hidden; z-index: 0;">
-            <img alt="Paw prints on the left" src="../assets/paws.png" style="position: absolute; bottom: 0; left: 0; height: 190px; width: auto; max-width: none;"/>
+    <div id="footer">
+        <div class="footer-email">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <p>pmpurificacion@mymail.mapua.edu.ph</p>
         </div>
-
-        <div style="position: fixed; bottom: 0; right: 0; width: 100%; height: 160px; overflow: hidden;">
-            <img alt="Paw prints on the right" src="../assets/pets.png" style="position: absolute; bottom: 0; right: 0; height: 160px; width: auto; max-width: none;"/>
+        <div class="footer-email">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <p>elcmapalad@mymail.mapua.edu.ph</p>
         </div>
-
-        <!-- Footer Section with Contact Info -->
-        <div class="fixed bottom-0 left-0 w-full bg-blue-200 bg-opacity-50 p-4 flex justify-between items-center">
-            <div class="text-white">
-                <p>CONTACT US</p>
-                <p>EMAILS</p>
-            </div>
+        <div class="footer-email">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <p>blvfrancisco@mymail.mapua.edu.ph</p>
         </div>
-    </div>
+        <div class="footer-email">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <p>aktcoquia@mymail.mapua.edu.ph</p>
+        </div>
+        <div class="footer-email">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <p>abchan@mymail.mapua.edu.ph</p>
+        </div>
+    </div>  
     
 </body>
 </html>
