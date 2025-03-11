@@ -32,6 +32,7 @@ img {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.03);
 }
 
 #header > div {
