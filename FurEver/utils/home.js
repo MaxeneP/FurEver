@@ -191,6 +191,8 @@ function createLoader() {
 
 // function triggered when location from dropdown changes
 async function onLocationChange(city = null) {
+    clearListings();
+    createLoader();
     let Listingfilter = supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted, city").eq("Is_adopted", false);
 
     if(city){
@@ -209,7 +211,6 @@ async function onLocationChange(city = null) {
     }
 
     clearListings();
-    createLoader(); 
     data.forEach(listing => {
         createTile(listing.animal_name, listing.image_URL, listing.animal_id);
     });
