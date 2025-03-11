@@ -4,6 +4,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../style/survey_2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../utils/auth.js"></script>
+    <script src="../utils/home.js" defer></script>
 </head>
 <body class="bg-white font-sans">
 
@@ -58,10 +61,11 @@
                 <label class="font-bold">WHAT KIND OF ANIMAL ARE YOU LOOKING FOR?</label>
                 <div class="relative">
                     <i class="fa fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl"></i>
-                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
+                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none" id = "species">
                         <option></option>
-                        <option>Dog</option>
-						<option>Cat</option>
+                        <option>dog</option>
+						<option>cat</option>
+                        <option>others</option>
                     </select>
                 </div>
             </div>
@@ -71,11 +75,11 @@
                 <label class="font-bold">WHAT SIZE DO YOU PREFER?</label>
                 <div class="relative">
                     <i class="fa fa-chevron-down absolute left-2 top-1/2 transform -translate-y-1/2 text-xl"></i>
-                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none">
+                    <select class="border border-black rounded pl-8 pr-4 py-2 appearance-none" id = "size">
                         <option></option>
-                        <option>Toy</option>
-                        <option>Medium</option>
-                        <option>Large</option>
+                        <option>toy</option>
+                        <option>medium</option>
+                        <option>large</option>
                     </select>
                 </div>
             </div>
@@ -85,12 +89,12 @@
                 <label class="font-bold">DO YOU PREFER MALE OR FEMALE?</label>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="gender" type="radio"/>
-                        <span>FEMALE</span>
+                        <input class="form-radio" name="sex" id = "Female" type="radio"/>
+                        <span>Female</span>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="gender" type="radio"/>
-                        <span>MALE</span>
+                        <input class="form-radio" name="sex" id="Male" type="radio"/>
+                        <span>Male</span>
                     </label>
                 </div>
             </div>
@@ -101,19 +105,19 @@
                 <div class="flex items-center space-x-2">
                     <span>1 - SEDIMENTARY</span>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" type="radio"/>
+                        <input class="form-radio" name="activity" id="1" value = "1" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" type="radio"/>
+                        <input class="form-radio" name="activity" id="2" value= "2" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" type="radio"/>
+                        <input class="form-radio" name="activity" id="3" value = "3" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" type="radio"/>
+                        <input class="form-radio" name="activity" id="4" value = "4" type="radio"/>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="activity" type="radio"/>
+                        <input class="form-radio" name="activity" id="5" value = "5" type="radio"/>
                     </label>
                     <span>ACTIVE - 5</span>
                 </div>
@@ -124,11 +128,11 @@
                 <label class="font-bold">DO YOU HAVE CHILDREN?</label>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="children" type="radio"/>
+                        <input class="form-radio" id ="family-yes" name="children" type="radio"/>
                         <span>YES</span>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input class="form-radio" name="children" type="radio"/>
+                        <input class="form-radio" id="family-no" name="children" type="radio"/>
                         <span>NO</span>
                     </label>
                 </div>
@@ -136,10 +140,8 @@
         </div>
 
         <!-- Submit Button -->
-        <button class="bg-orange-500 text-white px-10 py-1 rounded-full flex items-center space-x-2 mt-8" style="height: 40px; width: 100px;">
-			<a href="home.html">
+        <button id="survey-btn" class="bg-orange-500 text-white px-10 py-1 rounded-full flex items-center space-x-2 mt-8" style="height: 40px; width: 100px;">
             <i class="fa fa-arrow-right text-lg" style="font-size: 25px;"></i>
-			</a>
         </button>
 		
     </div>
