@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", async function(){
     }
     
 const submit = document.getElementById("survey-btn");
+const searchInput = document.getElementById("searchbar");
+
+if (searchInput) {
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.toLowerCase();
+        fetchListings(query);
+    });
+}
     
 function init() {
     //for survey button
@@ -64,7 +72,7 @@ function init() {
 }
 
     //fetch records
-       async function fetchListings(){
+       async function fetchListings(searchQuery = ""){
 
         if (!document.referrer.includes("survey_2.html")) {
             localStorage.removeItem("surveyFilters"); // Remove filters if user didn't come from survey
@@ -75,6 +83,9 @@ function init() {
 
         let {data, error} = await supabase.from("animal_listing").select("animal_id, animal_name, image_URL, Is_adopted, city, species, size, sex, activeness, temperament").eq("Is_adopted", false);
 
+        if(searchQuery){
+            data = data.filter(item => item.animal_name.toLowerCase().includes(searchQuery)); //search pet name
+        }
         if (filters){
             if (filters.species && filters.species.toLowerCase() !== "others") {
                 data = data.filter(item => item.species.toLowerCase() === filters.species.toLowerCase());
