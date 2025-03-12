@@ -56,9 +56,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             let cb = document.getElementById('burger-menu-trigger')
             cb.checked = false;
         }
-        if (e.target != document.getElementById('location-dropdown-trigger')) {
-            let cb = document.getElementById('location-dropdown-trigger');
-            cb.checked = false;
+        if (e.target.classList.contains('remove-btn')) {
+            animal_id = e.target.closest('.listing').getAttribute('animal_id');
+            removeFromWishlist(animal_id);
+        }
+        if (e.target.classList.contains('listing-pic')) {
+            animal_id = e.target.closest('.listing').getAttribute('animal_id');
+            window.location.href = `../pages/view-lising.html?animal_id=${animal_id}`;
         }
     }
 
@@ -67,8 +71,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // **************************************************************************************************************
     // **************************************************************************************************************
     // **************************************************************************************************************
-    
-    
+
     // takes name of animal and cover picture of animal
     // then creates necessary HTML elements and appends output to be displayed on page
     function createTile(name, imageSrc, id, adopted) {
@@ -90,6 +93,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         tint.classList.add('adopted-tint');
         tint.appendChild(p);
 
+        // remove from wishlist button
+        let removeBtn = document.createElement('span');
+        removeBtn.classList.add('fa');
+        removeBtn.classList.add('fa-times-circle-o');
+        removeBtn.classList.add('remove-btn');
+
         if (adopted) {
             tint.classList.add('visible');
         }
@@ -98,17 +107,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     
         listingName.setAttribute('class', 'listing-name');
         listingPic.setAttribute('class', 'listing-pic');
-    
-        listing.addEventListener('click', function () {
-            window.location.href = `../pages/view-lising.html?animal_id=${id}`;
-        });
-        
+
         listing.appendChild(listingPic);
         listing.appendChild(listingName);
         listing.appendChild(tint);
+        listing.appendChild(removeBtn);
         
         let ls = document.getElementById('listing-scroll');
         ls.appendChild(listing);
+    }
+
+    async function removeFromWishlist(animal_id) {
+        // HI
     }
     
     init();

@@ -142,6 +142,19 @@ img {
     position: relative;
 }
 
+.remove-btn {
+    position: absolute;
+    font-size: 3rem;
+    top: 1rem;
+    right: 1rem;
+    color: white;
+    transition: all ease .2s;
+}
+
+.remove-btn:hover {
+    color: var(--furever-orange);
+}
+
 .adopted-tint {
     position: absolute;
     height: 100%;
