@@ -119,6 +119,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function removeFromWishlist(animal_id) {
         // HI
+        const {error} = await supabase.from("wishlist").delete().eq("animal_id", animal_id);
+        if(error){
+            console.error("Error deleting record.", error);
+        }
+        clearListings();
     }
     
     init();
