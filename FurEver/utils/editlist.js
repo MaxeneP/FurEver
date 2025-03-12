@@ -63,14 +63,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (data.temperament) document.querySelector(`input[name='temperament'][value='${data.temperament}']`).checked = true;
 
 
-        if (data.Is_neutered.toString) document.querySelector(`input[name='neutered'][value='${data.Is_neutered}']`).checked = true;
+        document.querySelector(`input[name='neutered'][value='${data.Is_neutered.toString()}']`).checked = true;
+
 
         //load image
-        if (data.image_URL){
-            let photoSlot = document.querySelector(".photo-slot");
-            photoSlot.innerHTML = `<img src="${data.image_URL}" width="100%" height="100%">`;
-            photoSlot.dataset.imageUrl = data.image_URL;
+        let photoSlot = document.querySelector(".photo-slot img");
+        if (!photoSlot) {
+            photoSlot = document.createElement("img");
+            photoSlot.style.width = "100%";
+            photoSlot.style.height = "100%";
+            document.querySelector(".photo-slot").appendChild(photoSlot);
         }
+        photoSlot.src = data.image_URL;
     }
 
 
