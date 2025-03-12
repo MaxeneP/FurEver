@@ -156,28 +156,46 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     
     // function called when mark Adopted is clicked
+        // function called when mark Adopted is clicked
     async function markAdopted(id) {
         console.log("Attempting to mark as adopted, Animal ID:", id);
 
         const userId = localStorage.getItem("user_id");
     
-        const {error} = await supabase.from("adoption").insert([{user_id: userId, animal_id: id}]);
+        const { error: insertError } = await supabase
+        .from("adoption")
+        .insert([{ user_id: userId, animal_id: id }]);
 
-        if (error){
+        if (insertError) {
+            console.error("Error inserting into adoption table:", insertError);
             alert("Cannot insert into table");
+            return;
         }
 
-        const { error: updateError } = await supabase
-        .from("animal_listing")
-        .update({ Is_adopted: true })
-        .eq("animal_id", id);
-        
-        if (updateError) {
-            console.error("Error updating adoption status:", updateError);
+        const { error: updateError1 } = await supabase
+            .from("animal_listing")
+            .update({ Is_adopted: true })
+            .eq("animal_id", id);
+
+        if (updateError1) {
+            console.error("Error updating adoption status in animal_listing:", updateError1);
             alert("Failed to update adoption status.");
-        } else {
-            alert("Animal is adopted!");
+            return;
         }
 
+
+        const { data: updatedWishlist, error: updateError2 } = await supabase
+            .from("wishlist")
+            .update({ Is_adopted: true })
+            .eq("animal_id", id)
+
+            if (updateError2) {
+                console.error("Error updating adoption status in wishlist:", updateError2);
+            } else {
+                console.log("Wishlist updated successfully:", updatedWishlist);
+            }
+
+        alert("Animal is adopted!");
+        location.reload();
     }
 });
