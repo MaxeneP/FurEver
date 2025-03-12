@@ -39,7 +39,7 @@ if (submit){
             alert("Please enter an email, password, and username");
         }
 
-        if (!(password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(\)\\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~\(\)\\\/+\-]{6,6}$/))) {
+        if (!(password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(\)\\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~\(\)\\\/+\-]{6,}$/))) {
             alert("Passwords should have at least one one uppercase character, one lowercase character, one special character, one digit, and be 6 characters long.")
         }
 
