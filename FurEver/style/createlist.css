@@ -223,6 +223,7 @@ label {
 
 .photo-slot > i {
     font-size: 20rem;
+    position: absolute;
     transition: all ease .2s;
 }
 
