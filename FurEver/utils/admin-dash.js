@@ -158,6 +158,28 @@ async function deleteRecord(table, id) {
             console.error("Invalid table selection.");
     }
 
+     if (table === 2) {
+        const { error: adoptionError } = await supabase
+            .from("adoption")
+            .delete()
+            .eq("animal_id", id);
+
+        if (adoptionError) {
+            console.error("Error deleting related adoption records:", adoptionError);
+            alert("Failed to delete related adoption records.");
+            return;
+        }
+
+        const { error: wishError } = await supabase
+        .from("wishlist")
+        .delete()
+        .eq("animal_id", id);
+
+        if(wishError){
+            console.error("Error deleting related wishlist records:", wishError);
+            alert("Failed to delete related adoption records.");
+        }
+         
     const {error} = await supabase.from(tableName).delete().eq(primaryKey, id);
 
     if (error){
