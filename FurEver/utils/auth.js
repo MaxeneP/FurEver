@@ -80,54 +80,58 @@ if (submit){
 }
 
 //sign in user
-const signIn = document.getElementById('signin-submit');
-if(signIn){
-    signIn.addEventListener("click", async function(event){
-        event.preventDefault();
+const signIn = document.getElementById("signin-submit");
+if (signIn) {
+  signIn.addEventListener("click", async function (event) {
+    event.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("signin-password").value;
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('signin-password').value;
+    if (!email || !password) {
+      alert("Please enter your email and password");
+      return;
+    }
 
-        if (!email || !password){
-            alert("Please enter your email and password");
-        }
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-        try{
-            const {data, error} = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            });
-            if (error){
-                throw error;
-            }
+      if (error) {
+        throw error;
+      }
 
-            const userId = data.user.id;
+      // check if user exists
+      if (!data.user) {
+        alert("User does not exist. Please sign up.");
+        return;
+      }
 
-            const {data: userData, error: fetchError} = await supabase
-                .from("users")
-                .select("username, contact_number")
-                .eq("user_id", userId)
-                .single();
-            
-            if (fetchError){
-                throw fetchError;
-            }
+      const userId = data.user.id;
 
-            localStorage.setItem("username", userData.username);
-            localStorage.setItem("contact_number", userData.phone);
+      const {error: fetchError } = await supabase
+        .from("users")
+        .select("username, contact_number")
+        .eq("user_id", userId)
+        .single();
 
-            alert('Account successfully logged in!');
-            window.location.href="../pages/home.html";
-        }catch (error){
-            alert(error.message);
-            console.error("Sign-in error:", error);
-        }
+      if (fetchError) {
+        alert("User not found in database. Please contact support.");
+        throw fetchError;
+      }
 
-        if (email == "systemadmin@gmail.com" && password == "root123"){
-            alert("Admin Login Authorized.");
-            window.location.href = "../pages/admin-dash.html";
-        }
-    })
+      alert("Account successfully logged in!");
+      window.location.href = "../pages/home.html";
+
+      if (email === "systemadmin@gmail.com" && password === "root123") {
+        alert("Admin Login Authorized.");
+        window.location.href = "../pages/admin-dash.html";
+      }
+    } catch (error) {
+      console.error("Sign-in error:", error);
+    }
+  });
 }
 
 //sign out user
