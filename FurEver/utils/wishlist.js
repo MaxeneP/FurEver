@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         if(error){
             console.error("Error deleting record.", error);
         }
-        clearListings();
+        location.reload();
     }
     
     init();
