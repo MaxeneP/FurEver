@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     if(newPass !== conPass){
       alert("Passwords do not match.");
     }
-    if (!(newPass.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(\)\\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~\(\)\\\/+\-]{6,6}$/))) {
+    if (!(newPass.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(\)\\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~\(\)\\\/+\-]{6,}$/))) {
       alert("Passwords should have at least one one uppercase character, one lowercase character, one special character, one digit, and be 6 characters long.");
       return;
     }
@@ -138,8 +138,14 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Failed to delete account and records.");
     }
   });
+
+  const cancel = document.getElementById("cancel"); //cancel button
+  cancel.addEventListener("click", function() {
+    document.getElementById("new-password").value = "";
+    document.getElementById("con-password").value = "";
+  });
+
 });
- 
 
  function selectMenuItem(item, sectionId) {
   document.querySelectorAll('.menu-item').forEach(el => {
@@ -154,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.getElementById(sectionId).classList.add('active');
 }
-
 
 function enableEditing(id) {
   const input = document.getElementById(id);
