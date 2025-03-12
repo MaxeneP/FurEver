@@ -103,22 +103,34 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     //wish list feature here
     async function addToWsihlist(listingId, animalName, imageUrl){
-       const {data, error} = await supabase
-       .from("wishlist")
-       .insert([{
-            user_id: user.id,
-            animal_id: listingId,
-            animal_name: animalName,
-            image_URL: imageUrl
-            }
-        ]);
+         // check if record already exists
+        const { data: existingEntry, error: fetchError } = await supabase.from("wishlist").select("animal_id").eq("user_id", user.id).eq("animal_id", listingId).single();
 
-        if (error){
-            console.error("Error adding to wishlist: ", error);
-                alert("Failed to add to wishlist.");
-            }else{
-                alert("Added to wishlist!");
-            }
+        if (fetchError){
+            console.error("Error checking wishlist: ", fetchError);
+        }
+
+        if(existingEntry){
+            alert("This animal is already saved in your wish list!");
+        }else{
+            const {data, error} = await supabase
+            .from("wishlist")
+            .insert([{
+                    user_id: user.id,
+                    animal_id: listingId,
+                    animal_name: animalName,
+                    image_URL: imageUrl
+                    }
+                ]);
+    
+            if (error){
+                console.error("Error adding to wishlist: ", error);
+                    alert("Failed to add to wishlist.");
+                }else{
+                    alert("Added to wishlist!");
+                }
+
+        }
         }
     
     //wish list button listener
