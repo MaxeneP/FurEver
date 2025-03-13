@@ -158,3 +158,46 @@ body {
         display: none;
     }
 }
+
+@media only screen and (max-width: 485px) {
+    #left > div:first-child > img {
+        width: 300px;
+    }
+    
+    #left {
+        grid-template-rows: 200px min-content 1fr;
+        justify-content: center;
+        align-content: center;
+    }
+    
+    #left > div:nth-child(2) {
+        width: 80%;
+        justify-self: center;
+    }
+}
+
+@media only screen and (max-width: 435px) {
+    
+    #left > div:nth-child(2) {
+        font-size: 4rem;
+        margin-top: 2rem;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    
+    #left > div:nth-child(3) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: .5rem;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    
+    #left > div:nth-child(2) {
+        font-size: 3rem;
+    }
+}
