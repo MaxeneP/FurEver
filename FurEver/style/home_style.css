@@ -431,6 +431,21 @@ img {
     }
 }
 
+@media only screen and (max-width: 900px) {
+    .potd-wrapper {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .potd-wrapper {
+        height: 90%;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+    }
+}
+
 @media only screen and (min-width: 621px) and (max-width: 919px) {
     .listing {
         min-width: 50%;
