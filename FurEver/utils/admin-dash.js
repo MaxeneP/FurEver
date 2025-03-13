@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     let user = await getUser();
     if(!user){
-        alert("You must be logged in to create a listing");
+        alert("You must be logged in to access this page.");
         window.location.href="../pages/signin_Furever.html";
     }
 
@@ -16,11 +16,20 @@ function init() {
     window.addEventListener('click', eventDelegation);
 }
 
+let selectedTable = 1;
+const searchInput = document.getElementById("searchbar");
+if (searchInput) {
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.toLowerCase();
+        fetchTable(selectedTable, query);
+    });
+}
+
 // function called on table change, table has 3 values
 // if table == 1 we fetch user tables
 // if table == 2 we fetch animal tables
 // if table == 3 we fetch adoption tables
-async function fetchTable(table) {
+async function fetchTable(table, searchQuery="") {
     let data, error;
 
     switch(table){
@@ -29,6 +38,20 @@ async function fetchTable(table) {
             if (error){
                 console.error("Error fetching users: ", error);
             }
+            if (searchQuery) {
+                data = data.filter(user => 
+                    String(user.user_id).includes(searchQuery) ||
+                    user.username.includes(searchQuery) ||
+                    user.email.includes(searchQuery) ||
+                    String(user.contact_number).includes(searchQuery)
+                );
+
+                if (data.length === 0) {
+                    alert("No matching records found.");
+                    return;
+                    }
+                }
+
             clearTable();
             data.forEach(users => { 
                 createUserRecordTile(users.user_id, users.username, users.email, users.contact_number);
@@ -40,6 +63,30 @@ async function fetchTable(table) {
             if(error){
                 console.error("Error fetching animal listings: ", error);
             }
+            if (searchQuery) {
+                console.log("Search Query:", searchQuery);
+                data = data.filter(animal =>
+                    String(animal.animal_id).toLowerCase().includes(searchQuery) ||
+                    String(animal.user_id).toLowerCase().includes(searchQuery) ||
+                    animal.animal_name.toLowerCase().includes(searchQuery) ||
+                    animal.species.toLowerCase().includes(searchQuery) ||
+                    animal.breed.toLowerCase().includes(searchQuery) ||
+                    animal.sex.toLowerCase().includes(searchQuery) ||
+                    animal.dob.toLowerCase().includes(searchQuery) ||
+                    animal.size.toLowerCase().includes(searchQuery) ||
+                    String(animal.activeness).includes(searchQuery) ||
+                    String(animal.temperament).includes(searchQuery) ||
+                    String(animal.Is_neutered).toLowerCase().includes(searchQuery) ||
+                    String(animal.contact_info).toLowerCase().includes(searchQuery) ||
+                    animal.region.toLowerCase().includes(searchQuery) ||
+                    animal.city.toLowerCase().includes(searchQuery)
+                );
+                console.log("Fetched Data:", data);
+                if (data.length === 0) {
+                    alert("No matching records found.");
+                    return;
+                    }
+                }
             clearTable();
             data.forEach(animal => {
                 createAnimalRecordTile(animal.animal_id, animal.user_id, animal.animal_name, animal.species, animal.breed, animal.sex, animal.dob, animal.size, animal.activeness, animal.temperament, animal.Is_neutered, animal.contact_info, animal.region, animal.city);
@@ -50,6 +97,17 @@ async function fetchTable(table) {
             ({data, error} = await supabase.from("adoption").select("adoption_id, user_id, animal_id"));
             if(error){
                 console.error("Error fetching adoption records: ", error);
+            }
+            if (searchQuery) {
+                data = data.filter(adoption =>
+                    String(adoption.adoption_id).toLowerCase().includes(searchQuery) ||
+                    String(adoption.user_id).toLowerCase().includes(searchQuery) ||
+                    String(adoption.animal_id).toLowerCase().includes(searchQuery)
+                );
+                if (data.length === 0) {
+                    alert("No matching records found.");
+                    return;
+                    }
             }
             clearTable();
             data.forEach(adoption => {
@@ -76,16 +134,19 @@ function eventDelegation(e) {
     if (e.target == document.getElementById('users')) {
         clearTable();
         changeTableHeaders(0);
+        selectedTable = 1;
         fetchTable(1);
     }
     if (e.target == document.getElementById('animals')) {
         clearTable();
         changeTableHeaders(1);
+        selectedTable = 2;
         fetchTable(2);
     }
     if (e.target == document.getElementById('adoption')) {
         clearTable();
         changeTableHeaders(2);
+        selectedTable = 3;
         fetchTable(3);
     }
     if (e.target.closest('.delete-record-btn')) {
@@ -158,11 +219,8 @@ async function deleteRecord(table, id) {
             console.error("Invalid table selection.");
     }
 
-     if (table === 2) {
-        const { error: adoptionError } = await supabase
-            .from("adoption")
-            .delete()
-            .eq("animal_id", id);
+    if (table === 2) {
+        const { error: adoptionError } = await supabase.from("adoption").delete().eq("animal_id", id);
 
         if (adoptionError) {
             console.error("Error deleting related adoption records:", adoptionError);
@@ -170,17 +228,15 @@ async function deleteRecord(table, id) {
             return;
         }
 
-        const { error: wishError } = await supabase
-        .from("wishlist")
-        .delete()
-        .eq("animal_id", id);
+        const { error: wishError } = await supabase.from("wishlist").delete().eq("animal_id", id);
 
         if(wishError){
             console.error("Error deleting related wishlist records:", wishError);
             alert("Failed to delete related adoption records.");
         }
-         
-    const {error} = await supabase.from(tableName).delete().eq(primaryKey, id);
+    }
+
+    const { error } = await supabase.from(tableName).delete().eq(primaryKey, id);
 
     if (error){
         console.error("Error deleting record:", error);
