@@ -114,6 +114,7 @@ img {
     overflow-x: scroll;
     min-height: 0;
     min-width: 0;
+    scroll-snap-type: x mandatory;
 }
 
 #listing-scroll {
@@ -140,6 +141,7 @@ img {
     transition: all ease .2s;
     box-shadow: 5px 0px 5px 0px rgba(0,0,0,0.1);
     position: relative;
+    scroll-snap-align: start;
 }
 
 .remove-btn {
