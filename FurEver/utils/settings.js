@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       localStorage.clear();
       alert("Account Successfully Deleted");
-      window.location.href = "../pages/landing-page.html";
+      window.location.href = "../index.html";
 
     } catch (error) {
       console.error("Error deleting account:", error);
