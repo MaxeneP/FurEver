@@ -68,7 +68,7 @@ function init() {
     fetchPotd();
     showPotd();
 
-    setInterval(fetchPotd, 60000); //for testing, 24 hours = 86400000
+    setInterval(fetchPotd, 86400000); //for testing, 24 hours = 86400000
 }
 
     //fetch records
