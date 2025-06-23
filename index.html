@@ -28,13 +28,13 @@
     </div>
     <script>
 
-  window.addEventListener("load", () => {
-    const hash = window.location.hash;
-
-    if (hash.includes("access_token")) {
-     
-      window.location.href = "/FurEver/index.html" + hash;
-    }
+      window.addEventListener("load", () => {
+        const hash = window.location.hash;
+    
+        if (hash.includes("access_token")) {
+         
+          window.location.href = "/FurEver/" + hash;
+        }
   });
 </script>
 </body>
