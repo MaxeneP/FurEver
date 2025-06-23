@@ -53,7 +53,7 @@ if (submit) {
         email,
         password,
         options: {
-          emailRedirectTo: "https://maxenep.github.io/FurEver/FurEver/pages/signin_Furever.html/",
+          emailRedirectTo: "https://maxenep.github.io/FurEver/",
           data: {
             username,
             contact_number: phone,
