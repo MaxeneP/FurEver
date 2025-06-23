@@ -21,65 +21,55 @@ async function createUserFolder(userId){
 
 }
 
+// SIGN UP
 const submit = document.getElementById('signup-submit');
-if (submit){
-    submit.addEventListener('click', async function(event){
-        event.preventDefault();
-        
-        const username = document.getElementById("display-name").value;
-        const phone = document.getElementById("contact_number").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("signup-password").value;
-        const conpassword = document.getElementById("confirm-password").value;
-        if(password !== conpassword){
-            alert("Your passwords do not match!");
-        }
+if (submit) {
+  submit.addEventListener('click', async function (event) {
+    event.preventDefault();
 
-        if(!email || !password || !username){
-            alert("Please enter an email, password, and username");
-        }
+    const username = document.getElementById("display-name").value;
+    const phone = document.getElementById("contact_number").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("signup-password").value;
+    const conpassword = document.getElementById("confirm-password").value;
 
-        if (!(password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@\(\)\\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~\(\)\\\/+\-]{6,}$/))) {
-            alert("Passwords should have at least one one uppercase character, one lowercase character, one special character, one digit, and be 6 characters long.")
-        }
+    if (password !== conpassword) {
+      return alert("Your passwords do not match!");
+    }
 
+    if (!email || !password || !username) {
+      return alert("Please enter an email, password, and username");
+    }
 
-        try {
-            const {data, error} = await supabase.auth.signUp({
-                email,
-                password,
-            });
-            if (error){
-                throw error;
-            }
-            const userId = data.user.id;
-            const {error: insertError} = await supabase
-                .from("users")
-                .insert([
-                    {
-                        user_id: userId,
-                        email: email,
-                        username: username,
-                        contact_number: phone
-                    },
-                ]);
-            if (insertError) {
-                throw insertError;
-            }
-            
-            await createUserFolder(userId);
+    if (
+      !password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@()\\/~$!%^*?&+\-])[A-Za-z\d@$!%^*?&~()\\/+]{6,}$/)
+    ) {
+      return alert("Password must have at least 1 uppercase letter, 1 lowercase letter, 1 special character, 1 digit, and be at least 6 characters long.");
+    }
 
-            alert("Account successfully created! Redirecting to sign in...");
-            window.location.href = "../pages/signin_Furever.html";
-        } catch (error){
-            alert(error.message);
-            console.error("Signup error:", error);
-        }
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username,
+            contact_number: phone,
+          },
+        },
+      });
 
-    });
+      if (error) throw error;
+
+      alert("A verification email has been sent to your inbox. Please verify your email before logging in.");
+    } catch (error) {
+      alert(error.message);
+      console.error("Signup error:", error);
+    }
+  });
 }
 
-//sign in user
+// SIGN IN
 const signIn = document.getElementById("signin-submit");
 if (signIn) {
   signIn.addEventListener("click", async function (event) {
@@ -98,41 +88,57 @@ if (signIn) {
         password,
       });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
-      // check if user exists
       if (!data.user) {
         alert("User does not exist. Please sign up.");
         return;
       }
 
+      if (!data.user.email_confirmed_at) {
+        alert("Please verify your email before logging in.");
+        await supabase.auth.signOut();
+        return;
+      }
+
       const userId = data.user.id;
 
-      const {error: fetchError } = await supabase
+      // Check if user already exists in DB
+      const { data: existingUser, error: fetchError } = await supabase
         .from("users")
         .select("username, contact_number")
         .eq("user_id", userId)
         .single();
 
-      if (fetchError) {
-        alert("User not found in database. Please contact support.");
-        throw fetchError;
+      // If not in DB, insert user now (after verification)
+      if (!existingUser) {
+        const { error: insertError } = await supabase.from("users").insert([
+          {
+            user_id: userId,
+            email: email,
+            username: data.user.user_metadata?.username || '',
+            contact_number: data.user.user_metadata?.contact_number || '',
+          },
+        ]);
+        if (insertError) throw insertError;
+
+        await createUserFolder(userId);
       }
 
       alert("Account successfully logged in!");
-      window.location.href = "../pages/home.html";
-
       if (email === "systemadmin@gmail.com" && password === "root123") {
         alert("Admin Login Authorized.");
         window.location.href = "../pages/admin-dash.html";
+      } else {
+        window.location.href = "../pages/home.html";
       }
     } catch (error) {
       console.error("Sign-in error:", error);
+      alert(error.message);
     }
   });
 }
+
 
 //sign out user
 const signOut = document.getElementById('sign-out');
