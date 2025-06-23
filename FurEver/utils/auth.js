@@ -3,6 +3,26 @@ const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.sup
 
 console.log("Supabase success.", supabase);
 
+window.addEventListener("load", async () => {
+  const hash = window.location.hash;
+
+  // Only proceed if the URL contains an access token from Supabase
+  if (hash.includes("access_token") && hash.includes("type=signup")) {
+    console.log("Verifying email from Supabase...");
+
+    const { data, error } = await supabase.auth.getSessionFromUrl();
+
+    if (error) {
+      console.error("Email verification failed:", error.message);
+      alert("Email verification failed: " + error.message);
+      return;
+    }
+
+    alert("Your email has been successfully verified! Please log in.");
+    window.location.href = "../pages/signin_Furever.html"; // Update to your sign-in page path
+  }
+});
+
 async function createUserFolder(userId){
     const folderPath = `user_${userId}/placeholder.txt`;
 
