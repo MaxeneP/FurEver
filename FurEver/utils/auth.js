@@ -53,7 +53,6 @@ if (submit) {
         email,
         password,
         options: {
-          emailRedirectTo: "https://maxenep.github.io/FurEver/",
           data: {
             username,
             contact_number: phone,
