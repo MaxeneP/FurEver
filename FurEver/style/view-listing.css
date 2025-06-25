@@ -109,7 +109,6 @@ img {
     gap: .5rem;
     overflow-y: auto;
     overflow-x: hidden; 
-    display: none;
 }
 
 #pictures-left > img, #pic-right-slider > img {
@@ -118,10 +117,6 @@ img {
     object-fit: cover;
     min-height: 0;
     min-width: 0;
-}
-
-#pictures-left > img:hover {
-    cursor: pointer;
 }
 
 #pictures-right {
@@ -283,7 +278,7 @@ img {
 
 #description {
     overflow: auto;
-    font-size: 1.2rem;
+    font-size: 2rem;
     text-align: balance;
     white-space: pre-line;
 }
@@ -305,6 +300,7 @@ img {
     gap: 1rem;
     align-items: center;
 }
+
 
 @media only screen and (max-width: 1235px) {
     #listing-wrapper {
