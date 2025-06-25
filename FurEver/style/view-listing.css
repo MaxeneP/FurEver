@@ -91,7 +91,7 @@ img {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
     gap: .5rem;
     min-width: 0;
@@ -109,7 +109,6 @@ img {
     gap: .5rem;
     overflow-y: auto;
     overflow-x: hidden; 
-    display: none;
 }
 
 #pictures-left > img, #pic-right-slider > img {
@@ -118,10 +117,6 @@ img {
     object-fit: cover;
     min-height: 0;
     min-width: 0;
-}
-
-#pictures-left > img:hover {
-    cursor: pointer;
 }
 
 #pictures-right {
@@ -323,9 +318,17 @@ img {
     }
     
     #pictures {
-        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
     }
-    
+
+    #body {
+        padding: 1rem 2rem 1rem 2rem;
+    }
+
+    #pictures-left {
+        display: none;
+    }
+
 }
 
 @media only screen and (max-width: 1000px) {
