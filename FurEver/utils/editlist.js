@@ -2,6 +2,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNDAyMjQsImV4cCI6MjA1NTcxNjIyNH0.Q4HGFs832rIw2jhlKvFg2LsCgQuA7hEw91eedAApY60");
     console.log("Supabase success.", supabase);
 
+     let user = await getUser();
+    if(!user){
+        alert("You must be logged in to create a listing");
+        window.location.href="../pages/signin_Furever.html";
+    }
+
+    async function getUser(){
+        const { data, error } = await supabase.auth.getUser();
+        return error ? null : data.user;
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const animalId = urlParams.get("animal_id");
 
@@ -42,6 +53,26 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error("Error fetching listing: ", error);
             return;
         }
+
+            if (data.image_URL) {
+            let imageUrls;
+            try {
+                imageUrls = data.image_URL.split(",").map(url => url.trim()); 
+            } catch (e) {
+                console.error("Failed to parse image_URL:", e);
+                imageUrls = [];
+            }
+
+            const slots = document.querySelectorAll(".photo-slot");
+            imageUrls.slice(0, 6).forEach((url, index) => {
+                if (slots[index]) {
+                    slots[index].innerHTML = `<img src="${url}" width="100%" height="100%"> 
+                        <button class="remove-btn" type="button">&#10006;</button>`;
+                    slots[index].dataset.imageUrl = url;
+                    slots[index].classList.add("has-image");
+                }
+            });
+        }
         document.getElementById("name").value = data.animal_name || "";
         document.getElementById("dob").value = data.dob || "";
         document.getElementById("species").value = data.species || "";
@@ -66,15 +97,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.querySelector(`input[name='neutered'][value='${data.Is_neutered.toString()}']`).checked = true;
 
 
-        //load image
-        let photoSlot = document.querySelector(".photo-slot img");
-        if (!photoSlot) {
-            photoSlot = document.createElement("img");
-            photoSlot.style.width = "100%";
-            photoSlot.style.height = "100%";
-            document.querySelector(".photo-slot").appendChild(photoSlot);
-        }
-        photoSlot.src = data.image_URL;
     }
 
 
@@ -82,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function updateListing(){
         let name = document.getElementById("name").value;
         let dobInput = document.getElementById("dob").value;
-        let dob = "";
+        let dob = null;
         if (dobInput) {
             let dateObj = new Date(dobInput);
             let year = dateObj.getFullYear();
@@ -105,10 +127,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         let images = [];
         document.querySelectorAll(".photo-slot").forEach(slot => {
-            if (slot.dataset.imageUrl) images.push(slot.dataset.imageUrl);
+            if (slot.dataset.imageUrl){
+                images.push(slot.dataset.imageUrl);
+            }
         });
 
-        const { error } = await supabase
+        const { data, error } = await supabase
         .from("animal_listing")
         .update({
             animal_name: name,
@@ -124,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             region,
             city,
             description,
-            image_URL: images.length > 0 ? images[0] : null
+            image_URL: images.join(","),
         })
         .eq("animal_id", animalId);
 
@@ -163,21 +187,59 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     const fileinput = document.getElementById("fileInput");
+    let currentUSlot = null;
+
+    document.querySelectorAll(".photo-slot").forEach(slot => {
+    slot.addEventListener("click", function () {
+        currentUSlot = slot;
+        fileinput.click();
+        });
+    });
 
     fileinput.addEventListener("change", async function(event){
         event.preventDefault();
 
         let file = event.target.files[0];
-        if (!file) return;
+        if (!file || !currentUSlot) return;
 
         let imageUrl = await uploadImage(file, user.id);
         if (imageUrl){
-            let photoSlot = document.querySelector(".photo-slot");
-            photoSlot.innerHTML = `<img src="${imageUrl}" width="100%" height="100%">`;
-            photoSlot.dataset.imageUrl = imageUrl;
+            currentUSlot.innerHTML = `<img src="${imageUrl}" width="100%" height="100%"> 
+                                        <button class="remove-btn" type="button">&#10006;</button>`;
+            currentUSlot.dataset.imageUrl = imageUrl;
+            currentUSlot.classList.add("has-image");
         }
+        fileinput.value = "";
     });
 
+    const photoGrid = document.getElementById("photoGrid");
+    photoGrid.addEventListener("click", async function (e) {
+    if (e.target.classList.contains("remove-btn")) {
+        e.stopPropagation();
+        const slot = e.target.closest(".photo-slot");
+         const imageUrl = slot.dataset.imageUrl;
+         
+        if(imageUrl){
+            const urlParts = imageUrl.split("/storage/v1/object/public/images/");
+            const filePath = urlParts[1];
+            if (filePath) {
+                const { data, error } = await supabase
+                    .storage
+                    .from("images")
+                    .remove([filePath]);
+
+                if (error) {
+                    console.error("Failed to delete image from Supabase:", error);
+                } else {
+                    console.log("Image deleted:", filePath);
+                }
+            }
+        }
+        slot.innerHTML = `<i class="fa fa-upload" aria-hidden="true"></i><button class="remove-btn" type="button"></button>`;
+        slot.classList.remove("has-image");
+        delete slot.dataset.imageUrl;
+    }
+});
 
     const save = document.querySelector(".save-create-btn");
 
@@ -191,4 +253,3 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     fetchListings();
 });
-
