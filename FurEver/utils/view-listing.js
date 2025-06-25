@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", async function(){
             });
 
             document.getElementById("birthday").textContent = formattedDOB;
+        }else{
+            document.getElementById("birthday").textContent = "Unknown";
         }
 
         document.getElementById("description").textContent = listing.description;
@@ -83,10 +85,43 @@ document.addEventListener("DOMContentLoaded", async function(){
         
         // Display the uploaded image
         console.log(listing.image_URL);
-        let imageContainer = document.getElementById("pic-right-slider");
-        let image = document.createElement('img');
-        image.setAttribute('src', listing.image_URL);
-        imageContainer.appendChild(image);
+
+        if (listing.image_URL) {
+            let imageUrls;
+            try {
+                imageUrls = listing.image_URL.split(",").map(url => url.trim()); 
+            } catch (e) {
+                console.error("Failed to parse image_URL:", e);
+                imageUrls = [];
+            }
+
+            let imageContainer = document.getElementById("pic-right-slider");
+            let imageSlots = document.getElementById("pictures-left");
+            let pictures = document.getElementById("pictures");
+
+            imageContainer.innerHTML = "";
+            imageSlots.innerHTML = "";
+            
+            if(imageUrls.length > 0){
+                let image = document.createElement('img');
+                image.setAttribute('src', imageUrls[0]);
+                imageContainer.appendChild(image);
+            }
+
+           if (imageUrls.length > 1){
+            imageSlots.style.display = "grid";
+            pictures.style.gridTemplateColumns = "1fr 2fr";
+            imageUrls.slice(1).forEach((url, index) => {
+            const thumb = document.createElement("img");
+            thumb.src = url;
+            thumb.setAttribute("data-slot", index + 1);
+            imageSlots.appendChild(thumb);
+            });
+            }
+        }
+
+        localStorage.setItem('listing_creator_id', listing.user_id);
+        console.log(listing.user_id);
     
 }
 
