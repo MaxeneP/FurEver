@@ -17,9 +17,12 @@ const submit = document.getElementById("survey-btn");
 const searchInput = document.getElementById("searchbar");
 
 if (searchInput) {
-    searchInput.addEventListener("input", function () {
+    searchInput.addEventListener("keydown", function (event) {
+    if(event.key=="Enter"){
+        event.preventDefault();
         const query = searchInput.value.toLowerCase();
         fetchListings(query);
+    }
     });
 }
     
