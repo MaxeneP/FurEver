@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", async function(){
   let user = await getUser();
   if(!user){
       alert("You must be logged in to access this page.");
-      window.location.href="../pages/signin_Furever.html";
+      window.location.href = "/FurEver/";
+
   }
 
   async function getUser(){
