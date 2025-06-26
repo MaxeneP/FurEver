@@ -1,4 +1,5 @@
-const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNDAyMjQsImV4cCI6MjA1NTcxNjIyNH0.Q4HGFs832rIw2jhlKvFg2LsCgQuA7hEw91eedAApY60");
+const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MDE0MDIyNCwiZXhwIjoyMDU1NzE2MjI0fQ.erJ4RgCMIN3Z9KYvzjeoJ9XU8yCzX7UjV3xU4SccbA0");
+//DO NOT CHANGE THE KEY!
 
 document.addEventListener("DOMContentLoaded", async function(){
   console.log("Supabase success.", supabase);
@@ -105,18 +106,16 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    try {
+        try {
      //delete user folder from storage
-      const { data: images, error: imgError } = await supabase.storage
+    const { data: images } = await supabase.storage
         .from("images")
         .list(user_id + "/");
 
-      if (imgError) console.error("Error fetching images: ", imgError);
-
       if (images && images.length > 0) {
-        for (let image of images) {
-          await supabase.storage.from("images").remove([user_id + "/" + image.name]);
-        }
+        const filePaths = images.map(image => user_id + "/" + image.name);
+        await supabase.storage.from("images").remove(filePaths);
+        await supabase.storage.from("images").remove([user_id + "/"]);
       }
 
       await supabase.from("animal_listing").delete().eq("user_id", user_id); //delete user records from tables
@@ -131,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       localStorage.clear();
       alert("Account Successfully Deleted");
-      window.location.href = "index.html";
+      window.location.href = "/index.html";
 
     } catch (error) {
       console.error("Error deleting account:", error);
