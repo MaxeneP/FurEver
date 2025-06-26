@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function(){
   let user = await getUser();
   if(!user){
       alert("You must be logged in to access this page.");
-      window.location.href = "/FurEver/";
+      window.location.href="../pages/signin_Furever.html";
 
   }
 
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       localStorage.clear();
       alert("Account Successfully Deleted");
-      window.location.href = "/index.html";
+      window.location.href = "/FurEver/";
 
     } catch (error) {
       console.error("Error deleting account:", error);
