@@ -131,7 +131,7 @@ if (signIn) {
         alert("Admin Login Authorized.");
         window.location.href = "../pages/admin-dash.html";
       } else {
-        window.location.href = "../pages/survey_1 .html";
+        window.location.href = "../pages/survey_1.html";
       }
     } catch (error) {
       console.error("Sign-in error:", error);
