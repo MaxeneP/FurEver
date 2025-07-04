@@ -335,6 +335,10 @@ img {
         align-items: center;
         width: 100%;
     }
+
+    #pictures-left {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 830px) {
