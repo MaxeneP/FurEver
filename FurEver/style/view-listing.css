@@ -109,6 +109,7 @@ img {
     gap: .5rem;
     overflow-y: auto;
     overflow-x: hidden; 
+    display: none;
 }
 
 #pictures-left > img, #pic-right-slider > img {
