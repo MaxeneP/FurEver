@@ -35,11 +35,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (error){
             console.error("Error fetching listings: ", error);
             return;
-        }
+        } /*
         data.forEach(listing => { // check if adopted
             let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
             createEntry(name, listing.animal_id);
-        });
+        }); */
     }
 
     function init(){
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             cb.checked = false;
         }
         if (e.target.closest('.listing-settings-button')) {
-            popup = e.target.closest('.listing-settings-button').nextElementSibling;
+            popup = e.target.closest('.listing-action').nextElementSibling;
             popup.setAttribute('style', 'display: flex');
         }
         if (e.target.classList.contains('view-listing')) {
@@ -69,6 +69,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (e.target.classList.contains('mark-adopted')) {
             id = e.target.closest('.listing').id
             markAdopted(id);
+        }
+        if (e.target.classList.contains('delete-listing')) {
+            id = e.target.closest('.listing').id
+            deleteListing(id);
         }
         document.querySelectorAll('.listing').forEach(listing => {
             if (e.target.closest('.listing') != listing) {
@@ -99,49 +103,107 @@ document.addEventListener("DOMContentLoaded", async function () {
     // creates an entry for a listing
     // can be used when initially fetching data
     // id is id of listing in db, name is name of listing
-    function createEntry(name, id) {
+    // view is how many clicks
+    // save is how many bookmarks
+    // image is main picture
+    function createEntry(name, image, view, save, description, id) {
+        // creating listing and setting listing id to id
         let pane = document.getElementById('body-bottom');
         let listing = document.createElement('div');
         listing.classList.add('listing');
         listing.id = id;
 
+        let pictureWrapper = document.createElement('div');
+        pictureWrapper.classList.add('listing-picture');
+
+        // for setting image
+        let listingPicture = document.createElement('img');
+        listingPicture.src = image; // image set here
+        pictureWrapper.appendChild(listingPicture);
+
+        let listingContent = document.createElement('div');
+        listingContent.classList.add('listing-content');
+
+        // for setting listing name
         let listingName = document.createElement('div');
-        listing.classList.add('listing-name');
+        listingName.classList.add('listing-name');
         listingName.textContent = name;
 
-        let btnWrapper = document.createElement('div');
-        let btn = document.createElement('i');
+        // for setting listing description
+        let listingDescription = document.createElement('div');
+        listingDescription.classList.add('listing-description');
+        listingDescription.textContent = description;
+
+        let listingStats = document.createElement('div');
+        listingStats.classList.add('listing-stats');
+        
+        // for setting view number
+        let stat1 = document.createElement('div');
+        stat1.classList.add('stat');
+        let eyeIcon = document.createElement('i')
+        eyeIcon.classList.add('fa')
+        eyeIcon.classList.add('fa-eye')
+        let viewNumber = document.createElement('p')
+        viewNumber.textContent = view // set here
+        stat1.appendChild(eyeIcon);
+        stat1.appendChild(viewNumber);
+
+        // for setting save number
+        let stat2 = document.createElement('div');
+        stat2.classList.add('stat');
+        let saveIcon = document.createElement('i')
+        saveIcon.classList.add('fa')
+        saveIcon.classList.add('fa-bookmark')
+        let saveNumber = document.createElement('p')
+        saveNumber.textContent = save // set here
+        stat2.appendChild(saveIcon);
+        stat2.appendChild(saveNumber);
+
+        listingStats.appendChild(stat1);
+        listingStats.appendChild(stat2);
+
+        listingContent.appendChild(listingName);
+        listingContent.appendChild(listingDescription);
+        listingContent.appendChild(listingStats);
+
+        let listingAction = document.createElement('div');
+        listingAction.classList.add('listing-action');
+        
+        let actionBtn = document.createElement('i');
+        actionBtn.classList.add('fa');
+        actionBtn.classList.add('fa-ellipsis-h');
+        actionBtn.classList.add('listing-settings-button');
+ 
+        listingAction.appendChild(actionBtn);
+
         let popupWrapper = document.createElement('div');
-        let view = document.createElement('div');
-        let edit = document.createElement('div');
-        let mark = document.createElement('div');
+        let pview = document.createElement('div');
+        let pedit = document.createElement('div');
+        let pmark = document.createElement('div');
+        let pdelete = document.createElement('div');
     
-        listing.setAttribute('class', 'listing');
-        listingName.setAttribute('class', 'listing-name');
-        btnWrapper.setAttribute('class', 'listing-settings-button');
-        btn.setAttribute('class', 'fa fa-ellipsis-h');
-        btn.setAttribute('aria-hidden', 'true');
         popupWrapper.setAttribute('class', 'listing-settings-popup');
-        view.setAttribute('class', 'view-listing');
-        edit.setAttribute('class', 'edit');
-        mark.setAttribute('class', 'mark-adopted');
+        pview.setAttribute('class', 'view-listing');
+        pedit.setAttribute('class', 'edit');
+        pmark.setAttribute('class', 'mark-adopted');
+        pdelete.setAttribute('class', 'delete-listing');
+
+        pview.textContent = "View";
+        pedit.textContent = "Edit";
+        pmark.textContent = "Mark as Adopted";
+        pdelete.textContent = "Delete";
     
-        listingName.textContent = name;
-        listing.id = id;
-        view.textContent = "View";
-        edit.textContent = "Edit";
-        mark.textContent = "Mark as Adopted";
-    
-        popupWrapper.appendChild(view);
-        popupWrapper.appendChild(edit);
-        popupWrapper.appendChild(mark);
-        btnWrapper.appendChild(btn);
-        listing.appendChild(listingName);
-        listing.appendChild(btnWrapper);
+        popupWrapper.appendChild(pview);
+        popupWrapper.appendChild(pedit);
+        popupWrapper.appendChild(pmark);
+        popupWrapper.appendChild(pdelete);
+
+        listing.appendChild(pictureWrapper);
+        listing.appendChild(listingContent);
+        listing.appendChild(listingAction);
         listing.appendChild(popupWrapper);
-        pane.appendChild(listing);    
+        pane.appendChild(listing);   
     }
-    
     
     // function called when view listing is clicked 
     function viewListing(id) {
@@ -153,6 +215,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     function editListing(id) {
         console.log(id);
         window.location.href = `../pages/editlist.html?animal_id=${id}`;
+    }
+
+    // function called when delete listing is called
+    function deleteListing(id) {
+        console.log(id);
     }
     
     // function called when mark Adopted is clicked
