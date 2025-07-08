@@ -65,11 +65,35 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // for click events
     function eventDelegation(e) {
-        // console.log(e.target);
+        console.log(e.target)
         if (e.target != document.querySelector('#burger-menu-trigger')) {
             let cb = document.getElementById('burger-menu-trigger')
             cb.checked = false;
         }
+        if (e.target == document.getElementById('tnc-open-btn')) {
+            let tnc = document.getElementById('tnc-wrapper');
+            tnc.classList.toggle('hidden');
+            tnc.classList.toggle('flex');
+        }
+        if (e.target == document.getElementById('close-tnc-btn')) {
+            let tnc = document.getElementById('tnc-wrapper');
+            tnc.classList.toggle('hidden');
+            tnc.classList.toggle('flex');
+        }
+        if (e.target.classList.contains('toggle')) {
+            let date = e.target.nextElementSibling.nextElementSibling;
+            if (date.disabled) {
+                date.disabled = false;
+            } else {
+                date.disabled = true;
+            }
+        }
+        if (e.target.classList.contains('file-toggle')) {
+            let label = e.target.nextElementSibling.nextElementSibling.nextElementSibling;
+            label.classList.toggle('file-label-disabled');
+            label.classList.toggle('file-label-hover');
+        }
+        
     }
 
     function provinceChange(e) {

@@ -99,7 +99,8 @@ body {
     min-width: 0;
     padding: 1rem;
     display: grid;
-    grid-template-rows: repeat(9, 10%) 50% repeat(2, 10%) min-content;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(9, 10%) min-content min-content 50% min-content repeat(2, 10%) min-content min-content;
     gap: 1rem;
     overflow-y: scroll;
     box-shadow: 0 5px 5px 0 rgba(0,0,0,.1);
@@ -115,15 +116,64 @@ body {
     gap: .2rem;
 }
 
-#description {
-    border-radius: 1rem;
-    padding: 1rem;
-}
-
 .info > input {
     padding: 0 1rem;
     border-radius: 1rem;
     border: none;
+}
+
+.info-file {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    gap: .2rem;
+}
+
+.info-terms {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    gap: .2rem;
+}
+
+.terms-group {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 10% 1fr;
+    align-items: center;
+    gap: 1rem;  
+}
+
+.terms-group > p > a {
+    text-decoration-line: underline;
+}
+
+.terms-group > p > a:hover {
+    cursor: pointer;
+}
+
+.vaccination {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr 1fr 1fr;
+    gap: .2rem;
+}
+
+#description {
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 .radio-group {
@@ -134,6 +184,85 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.check-group {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 10% 20% 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-group {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: min-content 40% 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.file-group > input[type='file'] {
+    display: none;
+}
+
+.file-label {
+    border: 2px solid white;
+    border-radius: 1rem;
+    padding: .2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+}
+
+.file-label-disabled {
+    border: 2px solid grey;
+    color: grey;
+}
+
+.file-label-hover:hover {
+    cursor: pointer;
+    transition: all .2s ease-in;
+    background-color: white;
+    color: var(--furever-orange);
+}
+
+.check-group-2 {
+    margin-top: .5rem;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template:
+    'input other' min-content
+    'text text' 1fr
+    /10% 90%;
+}
+
+.check-group-2 > input {
+    grid-area: input;
+}
+
+.check-group-2 > p {
+    grid-area: other;
+    margin-left: 1rem;
+}
+
+.check-group-2 > textarea {
+    margin-top: 1rem;
+    grid-area: text;
+    height: 10rem;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 label {
@@ -250,6 +379,67 @@ label {
 
 .radio-group > input:checked + .pseudoradio > div {
     background: white;
+}
+
+#tnc-wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+}
+
+#tnc {
+    background-color: white;
+    height: 90%;
+    width: max(310px, 35%);
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,.1);
+    border-radius: 1rem;
+    border: 1px solid rgb(185, 185, 185);
+    padding: 1rem;
+    grid-template-rows: min-content 1fr;
+    gap: 1rem;
+    display: grid;
+}
+
+#tnc > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tnc > div > i {
+    font-size: 2rem;
+    color: var(--furever-orange);
+    transition: all ease-in .2s;
+}
+
+#tnc > div > i:hover {
+    cursor: pointer;
+    color: red;
+}
+
+#tnc > div > label {
+    color: var(--furever-orange);
+    font-size: 1.5rem;
+}
+
+#tnc > p {
+    overflow: scroll;
+    font-size: 1.2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.grid {
+    display: grid;
+}
+
+.flex {
+    display: flex;
 }
 
 
