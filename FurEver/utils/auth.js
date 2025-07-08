@@ -22,6 +22,28 @@ async function createUserFolder(userId){
 
 }
 
+function init() {
+      window.addEventListener('click', eventDelegation);
+    }
+
+function eventDelegation(e) {
+    console.log(e.target)
+            
+    if (e.target == document.getElementById('tnc-open-btn')) {
+      let tnc = document.getElementById('tnc-wrapper');
+      tnc.classList.remove('hidden');
+      tnc.classList.add('flex');
+    }
+            
+    if (e.target == document.getElementById('close-tnc-btn')) {
+      let tnc = document.getElementById('tnc-wrapper');
+      tnc.classList.add('hidden');
+      tnc.classList.remove('flex');
+    }
+}
+
+init();
+
 // SIGN UP
 const submit = document.getElementById('signup-submit');
 if (submit) {
@@ -33,6 +55,11 @@ if (submit) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("signup-password").value;
     const conpassword = document.getElementById("confirm-password").value;
+    const tncCheckbox = document.getElementById("tnc-cb");
+
+    if (!tncCheckbox.checked) {
+    return alert("You must agree to the Terms and Conditions before signing up.");
+    }
 
     if (password !== conpassword) {
       return alert("Your passwords do not match!");
