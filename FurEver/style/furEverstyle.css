@@ -1,7 +1,13 @@
+:root {
+    --furever-orange: #ef7122;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -10,6 +16,8 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .title-img {
@@ -23,12 +31,14 @@ body {
     margin: 10px 0;
     border: 2px solid #ef7122;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .password-container {
     position: relative;
     display: flex;
     align-items: center;
+    width: 250px;
 }
 
 .reveal-btn {
@@ -46,7 +56,7 @@ body {
 }
 
 .text {
-    margin-top: 20px;
+     margin-top: 20px;
     font-size: 14px;
 }
 
@@ -58,4 +68,111 @@ body {
 
 .link:hover {
     text-decoration: underline;
+}
+
+.info-terms {
+    width: 250px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.info-terms > label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.terms-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.terms-group > p {
+    margin: 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.terms-group > p > a {
+    text-decoration-line: underline;
+    color: #ef7122;
+    cursor: pointer;
+}
+
+.terms-group > p > a:hover {
+    cursor: pointer;
+}
+
+#tnc-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#tnc {
+    background-color: white;
+    height: 90%;
+    width: max(310px, 35%);
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,.1);
+    border-radius: 1rem;
+    border: 1px solid rgb(185, 185, 185);
+    padding: 1rem;
+    grid-template-rows: min-content 1fr;
+    gap: 1rem;
+    display: grid;
+}
+
+#tnc > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tnc > div > i {
+    font-size: 2rem;
+    color: var(--furever-orange);
+    transition: all ease-in .2s;
+}
+
+#tnc > div > i:hover {
+    cursor: pointer;
+    color: red;
+}
+
+#tnc > div > label {
+    color: var(--furever-orange);
+    font-size: 1.5rem;
+}
+
+#tnc > p {
+    overflow: scroll;
+    font-size: 1.2rem;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.hidden {
+    display: none;
+}
+
+.grid {
+   display: grid;
+}
+
+.flex {
+    display: flex;
 }
