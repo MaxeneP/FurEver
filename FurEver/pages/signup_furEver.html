@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../style/furEverstyle.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -26,9 +27,39 @@
                     class="input-box">
                 <button type="button" class="reveal-btn" onclick="togglePassword('confirm-password')">👁</button>
             </div>
+            <div class="info-terms">
+            <label>Terms and Conditions</label>
+            <div class="terms-group">
+                <input type="checkbox" name='tnc-cb' id='tnc-cb'>
+                <p>I agree to the &nbsp; <a id='tnc-open-btn'>terms and conditions</a></p>
+            </div>
+            </div>
             <a href="#" class="enter-btn" id="signup-submit"> <img src="../assets/furEver_enter.png"  
                 alt="Enter"></a>
             <p class="text">Already have an account? <a href="signin_Furever.html" class="link">Sign in!</a></p>
+
+             <div id="tnc-wrapper" class = 'hidden'>
+            <div id="tnc">
+                <div>
+                    <label>Terms and Conditions</label>
+                    <i class="fa fa-times-circle" aria-hidden="true" id = 'close-tnc-btn'></i>
+                </div>
+                <p>By signing up, you agree to the following terms: <br><br>
+                    1. Data Collection and Use<br><br> 
+                    When you create an account, we collect your contact number, email address, username, and password. This information is used solely for authentication purposes and to facilitate communication between users within our platform for pet adoption.<br><br>
+                    2. Data Privacy <br><br>
+                    Your personal information will not be shared, sold, or disclosed to any third parties. We are committed to protecting your privacy and using your data only to support your activity within this website.<br><br>
+                    3. User Responsibilities<br><br>
+                    You are responsible for keeping your login credentials confidential.<br>
+                    You agree to use the platform only for lawful purposes and respectful interactions with other users.<br><br>
+                    4. Account Security<br><br>
+                    We take reasonable steps to protect your data, but you are also responsible for ensuring the security of your account. If you believe your account has been compromised, please contact us immediately.<br><br>
+                    5. Modifications to Terms<br><br>
+                    These terms may be updated occasionally. If any significant changes are made, we will notify users through email or the platform.<br><br>
+                    By clicking Sign Up, you confirm that you have read and agreed to these terms.
+                </p>
+            </div>
+        </div>
         </div>
         <script src="../utils/furever_password.js"></script>
         <script src="../utils/auth.js" defer></script>
