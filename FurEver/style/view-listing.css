@@ -177,14 +177,14 @@ img {
     grid-template:
     'name gender' 1fr
     'breed gender' 1fr
-    /1fr 1fr;
+    /1fr min-content;
     z-index: 999;
-    overflow-x: auto;
+    overflow: hidden;
 }
 
 #name {
     grid-area: name;
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 #breed {
@@ -194,6 +194,8 @@ img {
     font-size: 2rem;
     font-weight: 100;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #gender {
@@ -235,7 +237,9 @@ img {
     min-width: 0;
     min-height: 0;
     display: grid;
-    grid-template-rows: 2fr 3fr 1fr;
+    grid-template-rows: repeat(4, min-content);
+    overflow-x: hidden;
+    overflow-y: none;
     gap: 1rem;
     padding: 1rem;
     color: white;
@@ -277,11 +281,91 @@ img {
     border: 3px solid white;
 }
 
+.d-b-label {
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
 #description {
     overflow: auto;
-    font-size: 2rem;
-    text-align: balance;
+    font-size: 1.5rem;
+    text-align: justify;
     white-space: pre-line;
+}
+
+#lvv-wrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+}
+
+#ohi-wrapper {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    font-size: 1.5rem;
+    gap: 1rem;
+}
+
+#other-health-info {
+    text-align: justify;
+}
+
+#v-wrapper {
+    display: grid;
+    grid-template-rows: repeat(5, min-content);
+    gap: 1rem;
+    font-size: 1.5rem;
+}
+
+.vaccine {
+    width: 100%;
+    display: grid;
+    grid-template-columns: min-content 1fr 1fr;
+    gap: 1rem;
+    justify-items: center;
+}
+
+#vo-wrapper {
+    font-size: 1.5rem;
+    text-align: justify;
+    display: grid;
+    gap: 1rem;
+    grid-template-rows: repeat(2, min-content);
+}
+
+#p-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: left;
+    gap: 1rem;
+    text-align: center;
+}
+
+.button {
+    justify-items: center;
+    font-size: 1.5rem;
+    border: 2px solid grey;
+    color: grey;
+    padding: .2rem .5rem;
+    border-radius: 1rem;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.enabled {
+    border: 2px solid white;
+    color: white;
+}
+
+.enabled:hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--furever-orange);
+    transition: all ease .2s;
 }
 
 .checked {
@@ -366,5 +450,12 @@ img {
 
     #details-top-values {
         justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    #p-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, min-content);
     }
 }
