@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         return error ? null : data.user;
     }
 
-    function newFetchListings() {
+    /*function newFetchListings() {
         document.getElementById("name").textContent; //name
         document.getElementById("breed").textContent; //breed
         document.getElementById("size").textContent; //size
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function(){
             ped.href; // set href for picture
         }
 
-    }
+    } */
 
     async function fetchListingDetails(listingId){
         let { data: listing, error } = await supabase
@@ -95,25 +95,37 @@ document.addEventListener("DOMContentLoaded", async function(){
                 document.getElementById("listing-wrapper").innerHTML = "<p>Listing not found.</p>";
                 return;
             }
+        
+        let { data: health, error: healthError } = await supabase
+            .from("health_record")
+            .select("*")
+            .eq("animal_id", listingId)
+            .single();
+
+            if (healthError){
+                console.error("No health records found: ", healthError);
+            }
+
+        let { data: paper, error: paperError } = await supabase
+            .from("paperwork")
+            .select("*")
+            .eq("animal_id", listingId)
+            .single();
+
+            if(paperError){
+                console.error("No paperworks found: ", paperError);
+            }
+
         let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
         document.getElementById("name").textContent = name;
         document.getElementById("breed").textContent = listing.breed;
         document.getElementById("size").textContent = listing.size;
         
         //date format
-        let dob = listing.dob;  
-
-        if (dob) {
-            let formattedDOB = new Date(dob).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-            });
-
-            document.getElementById("birthday").textContent = formattedDOB;
-        }else{
-            document.getElementById("birthday").textContent = "Unknown";
-        }
+       let dob = listing.dob;
+        document.getElementById("birthday").textContent = dob
+            ? new Date(dob).toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" })
+            : "Unknown";
 
         document.getElementById("description").textContent = listing.description;
         document.getElementById("contact-number").textContent = listing.contact_info;
@@ -190,8 +202,63 @@ document.addEventListener("DOMContentLoaded", async function(){
             }
         }
 
-        localStorage.setItem('listing_creator_id', listing.user_id);
-        console.log(listing.user_id);
+        // Vaccination and Health Info
+        const vaxMap = [
+            { key: "rabies", label: "rabies-date" },
+            { key: "five_in_one", label: "5-in-1-date" },
+            { key: "three_in_one", label: "3-in-1-date" },
+            { key: "deworm", label: "deworm-date" },
+        ];
+
+        vaxMap.forEach(({ key, label }) => {
+            const rawDate = health?.[`${key}_date`];
+            const formattedDate = rawDate
+                ? new Date(rawDate).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                })
+                : "N/A";
+
+            document.getElementById(label).textContent = formattedDate;
+
+            if (rawDate) {
+                document.getElementById(key.replace("_", "-")).classList.add("checked");
+            }
+        });
+
+    const lastVetVisit = health?.last_vet_visit;
+    document.getElementById("last-vet-visit-date").textContent = lastVetVisit
+        ? new Date(lastVetVisit).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        })
+        : "N/A";
+    document.getElementById("other-health-info").textContent = health?.other_health_info || "None";
+    document.getElementById("other-vaccination-info").textContent = health?.other_vaccination_info || "None";
+
+    const paperMap = [
+        { id: "vaccination-card", field: "vac_card_url" },
+        { id: "medical-certificate", field: "med_cert_url" },
+        { id: "pedigree", field: "ped_cert_url" },
+    ];
+
+    paperMap.forEach(({ id, field }) => {
+        const url = paper?.[field];
+        const el = document.getElementById(id);
+        if (url && el) {
+            el.classList.add("enabled");
+            el.href = url;
+        } else if (el) {
+            el.classList.remove("enabled");
+            el.removeAttribute("href");
+        }
+    });
+
+    // Save creator ID
+    localStorage.setItem("listing_creator_id", listing.user_id);
+    console.log("Listing owner:", listing.user_id);
     
 }
 
