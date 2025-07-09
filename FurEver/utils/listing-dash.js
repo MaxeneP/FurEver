@@ -27,19 +27,51 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     async function fetchListings(){
-        const {data, error} = await supabase
+        const {data : listings, error} = await supabase
             .from("animal_listing")
-            .select("animal_id, animal_name, Is_adopted")
+            .select("animal_id, animal_name, Is_adopted, description, image_URL, view_count")
             .eq("user_id", user.id);
         
         if (error){
             console.error("Error fetching listings: ", error);
             return;
-        } /*
-        data.forEach(listing => { // check if adopted
-            let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
-            createEntry(name, listing.animal_id);
-        }); */
+        }
+        
+        for(const listing of listings){
+            if(listing.Is_adopted === false ){
+                const {count : wishCount, error: wishError} = await supabase
+                .from("wishlist")
+                .select("*", {count: "exact", head: true})
+                .eq("animal_id", listing.animal_id);
+
+                if (wishError){
+                console.error(`Error fetching wishlist count for animal_id ${listing.animal_id}:`, wishError);
+                continue;
+                }
+
+                if (!user.id){
+                    const {error: viewError} = await supabase
+                    .from("animal_listing")
+                    .update({view_count: (listing.view_count || 0) + 1})
+                    .eq("animal_id", listing.animal_id);
+
+                    if(viewError){
+                    console.error("Error updating view count: ", viewError);
+                }
+
+                }
+                const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
+
+                createEntry(
+                    listing.animal_name,
+                    firstImage,
+                    listing.view_count || 0,
+                    wishCount || 0,
+                    listing.description,
+                    listing.animal_id
+                );
+            }
+        }
     }
 
     function init(){
