@@ -149,7 +149,7 @@
                 <div class="info">
                     <label>Medical History</label>
                     <div class="check-group">
-                        <input type="checkbox" class = 'toggle' name = 'vet-visit-cb'>
+                        <input type="checkbox" class = 'toggle' name = 'vet-visit-cb' id='vet-visit-cb'>
                         <p>Vet Visit</p>
                         <input disabled type="date" name="vet-visit-date" id = 'vet-visit-date'>
                     </div>
@@ -203,7 +203,7 @@
                         <input type="checkbox" class = 'toggle file-toggle' id = 'p-medical-certificate-cb' name = 'p-medical-certificate-cb'>
                         <p>Medical Certificate</p>
                         <input disabled type="file" accept="image/*" id = 'p-medical-certificate' name = 'p-medical-certificate'>
-                        <label class = 'file-label-disabled file-label ' for="paperwork-vaccination">Upload file</label>
+                        <label class = 'file-label-disabled file-label ' for="p-medical-certificate">Upload file</label>
                     </div>
                     <div class="file-group">
                         <input type="checkbox" class = 'toggle file-toggle' name = 'p-pedigree-cb' id = 'p-pedigree-cb'>
@@ -223,7 +223,7 @@
                         <select name="cities" id="cities"></select>
                     </div>
                 </div>
-                <div class="info-terms">
+                 <div class="info-terms">
                     <label>Terms and Conditions</label>
                     <div class="terms-group">
                         <input type="checkbox" name = 'tnc-cb' id = 'tnc-cb'>
@@ -235,15 +235,36 @@
                 </div>
             </div>
 
-            <!-- Right Section: Form -->
+ <!-- Right Section: Form -->
             <div class="right-section">
                 <div class="right-section-top">
                     <h2>Upload Photo</h2>
                 </div>
                 <div class="photo-grid" id="photoGrid">
                     <!-- 6 Upload Slots -->
-                    <div class="photo-slot">
+                    <div class="photo-slot" data-slot="0">
                         <i class="fa fa-upload" aria-hidden="true"></i>
+                        <button class="remove-btn" type="button"></button>
+                    </div>
+                    <div class="photo-slot" data-slot="1">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <button class="remove-btn" type="button"></button>
+                    </div>
+                    <div class="photo-slot" data-slot="2">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <button class="remove-btn" type="button"></button>
+                    </div>
+                    <div class="photo-slot" data-slot="3">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <button class="remove-btn" type="button"></button>
+                    </div>
+                    <div class="photo-slot" data-slot="4">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <button class="remove-btn" type="button"></button>
+                    </div>
+                    <div class="photo-slot" data-slot="5">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <button class="remove-btn" type="button"></button>
                     </div>
                 </div>
                 <input type="file" id="fileInput" accept="image/*" style="display: none;">
@@ -310,6 +331,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
