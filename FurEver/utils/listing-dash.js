@@ -26,49 +26,58 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href = "../pages/createlist.html";
     });
 
-    async function fetchListings(){
-        const {data : listings, error} = await supabase
+    let viewAdopted = false;
+    let deletedListing = false;
+
+    async function fetchListings(adoptedOnly = false, deletedOnly = false) {
+        const { data: listings, error } = await supabase
             .from("animal_listing")
-            .select("animal_id, animal_name, Is_adopted, description, image_URL, view_count")
+            .select("animal_id, animal_name, Is_adopted, description, image_URL, view_count, is_deleted")
             .eq("user_id", user.id);
-        
-        if (error){
+
+        if (error) {
             console.error("Error fetching listings: ", error);
             return;
         }
-        
-        for(const listing of listings){
-            if(listing.Is_adopted === false ){
-                const {count : wishCount, error: wishError} = await supabase
-                .from("wishlist")
-                .select("*", {count: "exact", head: true})
-                .eq("animal_id", listing.animal_id);
 
-                if (wishError){
-                console.error(`Error fetching wishlist count for animal_id ${listing.animal_id}:`, wishError);
-                continue;
-                }
+        for (const listing of listings) {
+            const showAdopted = adoptedOnly && listing.Is_adopted && !listing.is_deleted;
+            const showDeleted = deletedOnly && listing.is_deleted;
+            const showDefault = !adoptedOnly && !deletedOnly && !listing.Is_adopted && !listing.is_deleted;
 
-                if (!user.id){
-                    const {error: viewError} = await supabase
-                    .from("animal_listing")
-                    .update({view_count: (listing.view_count || 0) + 1})
+            if (showAdopted || showDeleted || showDefault) {
+                const { count: wishCount, error: wishError } = await supabase
+                    .from("wishlist")
+                    .select("*", { count: "exact", head: true })
                     .eq("animal_id", listing.animal_id);
 
-                    if(viewError){
-                    console.error("Error updating view count: ", viewError);
+                if (wishError) {
+                    console.error(`Error fetching wishlist count for animal_id ${listing.animal_id}:`, wishError);
+                    continue;
                 }
 
+                // Update view count if not listing creator
+                if (!user.id) {
+                    const { error: viewError } = await supabase
+                        .from("animal_listing")
+                        .update({ view_count: (listing.view_count || 0) + 1 })
+                        .eq("animal_id", listing.animal_id);
+
+                    if (viewError) {
+                        console.error("Error updating view count: ", viewError);
+                    }
                 }
+
                 const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
-
                 createEntry(
                     listing.animal_name,
                     firstImage,
                     listing.view_count || 0,
                     wishCount || 0,
                     listing.description,
-                    listing.animal_id
+                    listing.animal_id,
+                    listing.Is_adopted,
+                    listing.is_deleted
                 );
             }
         }
@@ -78,8 +87,64 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.addEventListener('click', eventDelegation);
         fetchListings();
     }
-    
-    
+
+    document.getElementById("adopted-listing-btn").addEventListener("click", function (event) {
+    event.preventDefault();
+    clearListings();
+
+        viewAdopted = !viewAdopted;
+        deletedListing = false;
+        fetchListings(viewAdopted);
+        this.innerHTML = viewAdopted ? "Return to<br> Main" : "View Adopted<br> Profiles";
+    });
+
+    document.getElementById("deleted-listing-btn").addEventListener("click", function (event) {
+        event.preventDefault();
+        clearListings();
+
+        deletedListing = !deletedListing;
+        viewAdopted = false;
+        fetchListings(false, deletedListing);
+        this.innerHTML = deletedListing ? "Return to<br> Main" : "Deleted<br> Profiles";
+    });
+
+    let pendingDeleteId = null;
+
+   function showDeleteConfirmation(id) {
+    pendingDeleteId = id;
+
+    const existingPopup = document.getElementById('delete-confirmation-popup');
+        if (!existingPopup.hasChildNodes()) {
+            existingPopup.innerHTML = `
+                <div class="popup-content">
+                    <h3>Confirm Deletion</h3>
+                    <p>Are you sure you want to permanently delete this listing?</p>
+                    <div class="popup-buttons">
+                        <button id="confirm-delete-btn" class="btn-danger">Yes, Delete</button>
+                        <button id="cancel-delete-btn" class="btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('confirm-delete-btn').addEventListener('click', confirmPermanentDelete);
+            document.getElementById('cancel-delete-btn').addEventListener('click', cancelPermanentDelete);
+        }
+
+        existingPopup.style.display = 'flex';
+    }
+
+    function confirmPermanentDelete() {
+        if (pendingDeleteId) {
+            deleteListing(pendingDeleteId);
+            document.getElementById('delete-confirmation-popup').style.display = 'none';
+            pendingDeleteId = null;
+        }
+    }
+
+    function cancelPermanentDelete() {
+        document.getElementById('delete-confirmation-popup').style.display = 'none';
+        pendingDeleteId = null;
+    }
     // event delegation for click events // buttons per record
     function eventDelegation(e) {
         if (e.target != document.querySelector('#burger-menu-trigger')) {
@@ -100,11 +165,32 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
         if (e.target.classList.contains('mark-adopted')) {
             id = e.target.closest('.listing').id
-            markAdopted(id);
+            const currentLabel = e.target.textContent;
+
+            if (currentLabel === "Mark as Adopted"){
+                markAdopted(id, e.target);
+            }
+            if (currentLabel === "Unmark as Adopted"){
+                unmarkAdopted(id, e.target);
+                clearListings();
+            }
         }
         if (e.target.classList.contains('delete-listing')) {
             id = e.target.closest('.listing').id
-            deleteListing(id);
+            const currentLabel = e.target.textContent;
+
+            if(currentLabel === "Delete"){
+                markDeleteListing(id);
+                clearListings();
+            }
+            if(currentLabel === "Restore"){
+                unmarkDeleteListing(id, e.target);
+                clearListings();
+            }
+             if(currentLabel === "Permanently Delete"){
+            showDeleteConfirmation(id);
+            clearListings();
+        }
         }
         document.querySelectorAll('.listing').forEach(listing => {
             if (e.target.closest('.listing') != listing) {
@@ -138,7 +224,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // view is how many clicks
     // save is how many bookmarks
     // image is main picture
-    function createEntry(name, image, view, save, description, id) {
+    function createEntry(name, image, view, save, description, id, isAdopted, isDeleted) {
         // creating listing and setting listing id to id
         let pane = document.getElementById('body-bottom');
         let listing = document.createElement('div');
@@ -213,6 +299,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         let pedit = document.createElement('div');
         let pmark = document.createElement('div');
         let pdelete = document.createElement('div');
+        
     
         popupWrapper.setAttribute('class', 'listing-settings-popup');
         pview.setAttribute('class', 'view-listing');
@@ -220,15 +307,33 @@ document.addEventListener("DOMContentLoaded", async function () {
         pmark.setAttribute('class', 'mark-adopted');
         pdelete.setAttribute('class', 'delete-listing');
 
+
         pview.textContent = "View";
         pedit.textContent = "Edit";
-        pmark.textContent = "Mark as Adopted";
-        pdelete.textContent = "Delete";
-    
-        popupWrapper.appendChild(pview);
-        popupWrapper.appendChild(pedit);
-        popupWrapper.appendChild(pmark);
-        popupWrapper.appendChild(pdelete);
+        if (deletedListing) {
+            // In deleted profiles view
+            pmark.textContent = "Mark as Adopted";
+            pdelete.textContent = "Permanently Delete";
+            
+            //add restore button
+            let prestore = document.createElement('div');
+            prestore.setAttribute('class', 'delete-listing');
+            prestore.textContent = "Restore";
+            popupWrapper.appendChild(pview);
+            popupWrapper.appendChild(pedit);
+            popupWrapper.appendChild(pmark);
+            popupWrapper.appendChild(prestore);
+            popupWrapper.appendChild(pdelete);
+        } else {
+            // In main or adopted view
+            pmark.textContent = isAdopted ? "Unmark as Adopted" : "Mark as Adopted";
+            pdelete.textContent = "Delete";
+            
+            popupWrapper.appendChild(pview);
+            popupWrapper.appendChild(pedit);
+            popupWrapper.appendChild(pmark);
+            popupWrapper.appendChild(pdelete);
+        }
 
         listing.appendChild(pictureWrapper);
         listing.appendChild(listingContent);
@@ -250,8 +355,86 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // function called when delete listing is called
-    function deleteListing(id) {
+   async function markDeleteListing(id) {
         console.log(id);
+        const { error: updateError1 } = await supabase
+            .from("animal_listing")
+            .update({ is_deleted : true })
+            .eq("animal_id", id);
+
+        if (updateError1) {
+            console.error("Error updating adoption status in animal_listing:", updateError1);
+            alert("Failed to update delete status.");
+            return;
+        }
+    }
+
+    async function unmarkDeleteListing(id) {
+        console.log(id);
+        const { error: updateError } = await supabase
+            .from("animal_listing")
+            .update({ is_deleted : false })
+            .eq("animal_id", id);
+
+        if (updateError1) {
+            console.error("Error updating adoption status in animal_listing:", updateError);
+            alert("Failed to update delete status.");
+            return;
+        }
+    }
+
+    async function deleteListing(id){ //permanently deletes listing from the database
+        console.log(id);
+
+        const {error: healthError} = await supabase
+            .from("health_record")
+            .delete()
+            .eq("animal_id", id);
+        
+        if (healthError){
+            console.error("Error deleting health record: ", healthError);
+        }
+
+        const {error: paperError} = await supabase
+            .from("paperwork")
+            .delete()
+            .eq("animal_id", id);
+
+        if(paperError){
+            console.error("Error deleting paperwork: ", paperError);
+        }
+
+        const { error: adoptionError } = await supabase
+        .from("adoption")
+        .delete()
+        .eq("animal_id", id);
+
+        if (adoptionError) {
+            console.error("Error deleting related adoption records:", adoptionError);
+            alert("Failed to delete related adoption records.");
+            return;
+        }
+
+        const { error: wishError } = await supabase
+        .from("wishlist")
+        .delete()
+        .eq("animal_id", id);
+
+        if(wishError){
+            console.error("Error deleting related wishlist records:", wishError);
+            alert("Failed to delete related adoption records.");
+        }
+        
+        const { error: deleteError} = await supabase
+            .from("animal_listing")
+            .delete()
+            .eq("animal_id", id);
+        
+        if(deleteError){
+            console.error("Listing failed to delete: ", deleteError);
+            alert("Listing was not deleted.");
+            return;
+        }
     }
     
     // function called when mark Adopted is clicked
@@ -296,5 +479,30 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         alert("Animal is adopted!");
         location.reload();
+    }
+
+    async function unmarkAdopted(id){
+        console.log(id);
+        const {error: removeError} = await supabase
+            .from("adoption")
+            .delete()
+            .eq("animal_id", id);
+        
+        if(removeError){
+            console.error("Error in deleting from adoption table: ", removeError);
+            alert("Cannot unmark as adopted.");
+            return;
+        }
+        
+        const {error: updateError} = await supabase 
+            .from("animal_listing")
+            .update({Is_adopted : false})
+            .eq("animal_id", id);
+
+        if(updateError){
+            console.error("Error updating animal table: ", updateError);
+            alert("Failed to update listing");
+            return;
+        }
     }
 });
