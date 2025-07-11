@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Listing</title>
-    <link rel="stylesheet" href="../style/createlist.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Edit Listing</title>
+    <link rel="stylesheet" href="../style/editlisting.css">
     <link rel="stylesheet" href="../style/header-footer.css">
+    <link rel="stylesheet" href="../style/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../utils/createlist.js"></script>
-    <script src="../utils/ph_provinces_and_cities-master/city.js"></script>
-    <script src="../utils/auth.js"></script>
-
+    <script src="../utils/editlist.js" defer></script>
+    <script src="../utils/ph_provinces_and_cities-master/city.js" defer></script>
+    <script src="../utils/auth.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -138,10 +137,10 @@
                 <div class="info">
                     <label>Neutered</label>
                     <div class="radio-group">
-                        <input type="radio" name="neutered" id="yes" value="TRUE">
+                        <input type="radio" name="neutered" id="yes" value="true">
                         <label for="yes" class = 'pseudoradio'><div></div></label>
                         <p>Yes</p>
-                        <input type="radio" name="neutered" id="no" value="FALSE">
+                        <input type="radio" name="neutered" id="no" value="false">
                         <label for="no" class = 'pseudoradio'><div></div></label>
                         <p>No</p>
                     </div>
@@ -223,19 +222,12 @@
                         <select name="cities" id="cities"></select>
                     </div>
                 </div>
-                 <div class="info-terms">
-                    <label>Terms and Conditions</label>
-                    <div class="terms-group">
-                        <input type="checkbox" name = 'tnc-cb' id = 'tnc-cb'>
-                        <p>I agree to the &nbsp; <a id = 'tnc-open-btn'>terms and conditions</a></p>
-                    </div>
-                </div>
                 <div class="button-group">
-                    <div class="save-create-btn">SAVE AND CREATE</div>
+                    <div class="save-create-btn">SAVE AND UPDATE</div>
                 </div>
             </div>
 
- <!-- Right Section: Form -->
+            <!-- Right Section: Form -->
             <div class="right-section">
                 <div class="right-section-top">
                     <h2>Upload Photo</h2>
@@ -293,43 +285,7 @@
                 <p>abchan@mymail.mapua.edu.ph</p>
             </div>
         </div>  
-
-        <div id="tnc-wrapper" class = 'hidden'>
-            <div id="tnc">
-                <div>
-                    <label>Terms and Conditions</label>
-                    <i class="fa fa-times-circle" aria-hidden="true" id = 'close-tnc-btn'></i>
-                </div>
-                <p> 1. Accuracy of Information <br><br>
-                    You confirm that all details provided about the animal — including but not limited to species, breed, age, health condition, temperament, and vaccination status — are true and accurate to the best of your knowledge. Misrepresentation may result in removal of the listing and possible banning from the platform.
-                    <br><br>
-                    2. Ownership and Legal Rights<br><br>
-                    You certify that you are the lawful owner or authorized guardian of the animal, and that you have the full right to rehome the animal through adoption. You agree not to post animals that you do not have legal authority over.<br><br>
-
-                    3. Health and Safety Disclosure<br><br>
-                    You agree to disclose all known medical conditions, behavioral issues, and special care requirements. FurEver is not liable for any injury, illness, or property damage resulting from adoption of an animal listed on our platform.<br><br>
-
-                    4. Vaccination and Records<br><br>
-                    You are encouraged to provide supporting documents (e.g., vet records, vaccination cards, certificates). However, FurEver does not independently verify the authenticity or accuracy of submitted documents.<br><br>
-
-                    5. Adoption Outcome Responsibility<br><br>
-                    FurEver is only a facilitator of adoption connections. All decisions, arrangements, and interactions between posters and adopters are conducted independently of FurEver. We do not guarantee successful rehoming or compatibility.<br><br>
-
-                    6. Release of Liability<br><br>
-                    You acknowledge that FurEver, its team, and its affiliates shall not be held responsible for any disputes, damages, losses, or injuries arising from the adoption process, including after the animal is rehomed.<br><br>
-
-                    7. Moderation and Removal<br><br>
-                    FurEver reserves the right to edit, reject, or remove any adoption listing that violates our guidelines or raises concerns regarding animal welfare, legality, or authenticity — without prior notice.<br><br>
-
-                    8. Consent to Contact<br><br>
-                    You consent to being contacted by potential adopters, FurEver moderators, or animal welfare authorities regarding your listing.<br><br>
-
-                    9. Compliance with Local Laws<br><br>
-                    You agree to comply with all applicable laws and regulations concerning animal welfare, pet ownership, and adoption in your jurisdiction<br><br>
-                    By posting an animal for adoption, you confirm that you have read, understood, and agreed to these Terms and Conditions.
-                </p>
-            </div>
-        </div>
     </div>
+
 </body>
 </html>
