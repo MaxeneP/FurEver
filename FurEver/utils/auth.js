@@ -131,14 +131,18 @@ if (signIn) {
 
       const userId = data.user.id;
 
-      // Check if user already exists in DB
       const { data: existingUser, error: fetchError } = await supabase
         .from("users")
-        .select("username, contact_number")
+        .select("username, contact_number, is_deleted")
         .eq("user_id", userId)
         .single();
+      
+      if (existingUser && existingUser.is_deleted === true) {
+        alert("Your account has been deactivated. Please contact the administrator (systemadmin@gmail.com) to restore access.");
+        await supabase.auth.signOut(); // force logout if logged in
+        return;
+      }
 
-      // If not in DB, insert user now (after verification)
       if (!existingUser) {
         const { error: insertError } = await supabase.from("users").insert([
           {
