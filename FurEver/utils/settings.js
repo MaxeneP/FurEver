@@ -1,5 +1,5 @@
-const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MDE0MDIyNCwiZXhwIjoyMDU1NzE2MjI0fQ.erJ4RgCMIN3Z9KYvzjeoJ9XU8yCzX7UjV3xU4SccbA0");
-//DO NOT CHANGE THE KEY!
+const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNDAyMjQsImV4cCI6MjA1NTcxNjIyNH0.Q4HGFs832rIw2jhlKvFg2LsCgQuA7hEw91eedAApY60");
+
 
 document.addEventListener("DOMContentLoaded", async function(){
   console.log("Supabase success.", supabase);
@@ -90,54 +90,40 @@ async function updateAccount() {
 document.addEventListener("DOMContentLoaded", function () {
   const remove = document.getElementById("delete");
 
-  remove.addEventListener("click", async function (event) {
-    event.preventDefault();
-    console.log("Button clicked");
-    
-    let user_id = localStorage.getItem("user_id");
-    let confirmText = document.getElementById("confirm").value;
+ remove.addEventListener("click", async function (event) {
+  event.preventDefault();
+  console.log("Button clicked");
 
-    if (confirmText !== "DELETE") {
-      alert("You must enter 'DELETE' to proceed.");
-      return;
-    }
+  let user_id = localStorage.getItem("user_id");
+  let confirmText = document.getElementById("confirm").value;
 
-    if (!user_id) {
-      console.error("Error: User ID not found.");
-      return;
-    }
+  if (confirmText !== "DELETE") {
+    alert("You must enter 'DELETE' to proceed.");
+    return;
+  }
 
-        try {
-     //delete user folder from storage
-    const { data: images } = await supabase.storage
-        .from("images")
-        .list(user_id + "/");
+  if (!user_id) {
+    console.error("Error: User ID not found.");
+    return;
+  }
 
-      if (images && images.length > 0) {
-        const filePaths = images.map(image => user_id + "/" + image.name);
-        await supabase.storage.from("images").remove(filePaths);
-        await supabase.storage.from("images").remove([user_id + "/"]);
-      }
+  try {
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ is_deleted: true })
+      .eq("user_id", user_id);
 
-      await supabase.from("animal_listing").delete().eq("user_id", user_id); //delete user records from tables
-      await supabase.from("adoption").delete().eq("user_id", user_id);
-      await supabase.from("wishlist").delete().eq("user_id", user_id);
-      await supabase.from("users").delete().eq("user_id", user_id);
+    if (updateError) throw updateError;
 
-      const { error: authError } = await supabase.auth.admin.deleteUser(user_id); //delete user from Auth
-      if (authError) {
-        console.error("Cannot delete user from authentication:", authError);
-      }
+    localStorage.clear();
+    alert("Account has been deactivated and will be deleted in 30 days. Contact the admin to restore the account.");
+    window.location.href = "/FurEver/";
 
-      localStorage.clear();
-      alert("Account Successfully Deleted");
-      window.location.href = "/FurEver/";
-
-    } catch (error) {
-      console.error("Error deleting account:", error);
-      alert("Failed to delete account and records.");
-    }
-  });
+  } catch (error) {
+    console.error("Error during account soft-delete:", error);
+    alert("Failed to mark account as deleted.");
+  }
+});
 
   const cancel = document.getElementById("cancel"); //cancel button
   cancel.addEventListener("click", function() {
