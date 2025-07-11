@@ -135,6 +135,73 @@ function init() {
         });
     }
 
+    const applyFilter = document.getElementById("apply-filters-btn");
+
+    applyFilter.addEventListener("click", async function(event) {
+    event.preventDefault();
+
+    let species = document.getElementById('species').value;
+    let size = document.getElementById('size').value;
+    let sex = document.getElementById('sex').value;
+    let neutered = document.getElementById('neutered').value;
+
+    let neuteredValue = null;
+    if (neutered === "male") neuteredValue = true;
+    else if (neutered === "female") neuteredValue = false;
+
+    const filters = {
+        species: species !== "1=1" ? species : null,
+        size: size !== "1=1" ? size : null,
+        sex: sex !== "1=1" ? sex : null,
+        neutered: neuteredValue
+    };
+
+    fetchListingsWithFilters(filters);
+    });
+
+
+    async function fetchListingsWithFilters(filters) {
+    let query = supabase.from("animal_listing").select(
+        "animal_id, animal_name, image_URL, Is_adopted, city, species, size, sex, activeness, temperament, Is_neutered"
+    ).eq("Is_adopted", false);
+
+    if (filters.species) query = query.eq("species", filters.species);
+    if (filters.size) query = query.eq("size", filters.size);
+    if (filters.sex) query = query.eq("sex", filters.sex);
+    if (filters.neutered !== null) query = query.eq("Is_neutered", filters.neutered);
+
+    const { data, error } = await query;
+
+    if (error) {
+        console.error("Error fetching filtered results:", error);
+        alert("Failed to load filtered listings.");
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        alert("No listings match your preferences.");
+    }
+
+    clearListings();
+    data.forEach(listing => {
+        createTile(listing.animal_name, listing.image_URL, listing.animal_id);
+    });
+    }
+
+    const resetBtn = document.getElementById("reset-filters-btn");
+
+    resetBtn.addEventListener("click", function () {
+    document.getElementById('species').value = "1=1";
+    document.getElementById('size').value = "1=1";
+    document.getElementById('sex').value = "1=1";
+    document.getElementById('neutered').value = "1=1";
+
+    localStorage.removeItem("surveyFilters");
+
+    fetchListings();
+    });
+
+
     function clearListings() {
         let ls = document.getElementById('listing-scroll');
         while (ls.firstChild) {
