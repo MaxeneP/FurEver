@@ -169,10 +169,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if (currentLabel === "Mark as Adopted"){
                 markAdopted(id, e.target);
+                document.getElementById(id).remove();
             }
             if (currentLabel === "Unmark as Adopted"){
                 unmarkAdopted(id, e.target);
-                clearListings();
+                document.getElementById(id).remove();
             }
         }
         if (e.target.classList.contains('delete-listing')) {
@@ -181,15 +182,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             if(currentLabel === "Delete"){
                 markDeleteListing(id);
-                clearListings();
+                document.getElementById(id).remove();
+                
             }
             if(currentLabel === "Restore"){
                 unmarkDeleteListing(id, e.target);
-                clearListings();
+                document.getElementById(id).remove();
             }
              if(currentLabel === "Permanently Delete"){
             showDeleteConfirmation(id);
-            clearListings();
+             document.getElementById(id).remove();
         }
         }
         document.querySelectorAll('.listing').forEach(listing => {
@@ -224,7 +226,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // view is how many clicks
     // save is how many bookmarks
     // image is main picture
-    function createEntry(name, image, view, save, description, id, isAdopted, isDeleted) {
+    function createEntry(name, image, view, save, description, id, isAdopted) {
         // creating listing and setting listing id to id
         let pane = document.getElementById('body-bottom');
         let listing = document.createElement('div');
@@ -315,7 +317,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             pmark.textContent = "Mark as Adopted";
             pdelete.textContent = "Permanently Delete";
             
-            //add restore button
+            // Also add restore button
             let prestore = document.createElement('div');
             prestore.setAttribute('class', 'delete-listing');
             prestore.textContent = "Restore";
@@ -386,55 +388,77 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function deleteListing(id){ //permanently deletes listing from the database
         console.log(id);
 
-        const {error: healthError} = await supabase
+        const { data: listingData, error: fetchError } = await supabase
+        .from("animal_listing")
+        .select("image_URL")
+        .eq("animal_id", id)
+        .single();
+
+        if (fetchError) {
+            console.error("Failed to fetch listing for image removal:", fetchError);
+        }
+
+        if (listingData?.image_URL) {
+            const imageUrl = listingData.image_URL;
+            const filePath = imageUrl.split("/storage/v1/object/public/images/")[1];
+
+            const { error: storageError } = await supabase.storage
+                .from("images") 
+                .remove([filePath]);
+
+            if (storageError) {
+                console.error("Failed to delete image from storage:", storageError);
+            } else {
+                console.log("Image deleted successfully.");
+            }
+        }
+
+        const { error: healthError } = await supabase
             .from("health_record")
             .delete()
             .eq("animal_id", id);
-        
-        if (healthError){
-            console.error("Error deleting health record: ", healthError);
-        }
 
-        const {error: paperError} = await supabase
+        if (healthError) console.error("Error deleting health record:", healthError);
+
+        const { error: paperError } = await supabase
             .from("paperwork")
             .delete()
             .eq("animal_id", id);
 
-        if(paperError){
-            console.error("Error deleting paperwork: ", paperError);
-        }
+        if (paperError) console.error("Error deleting paperwork:", paperError);
 
         const { error: adoptionError } = await supabase
-        .from("adoption")
-        .delete()
-        .eq("animal_id", id);
+            .from("adoption")
+            .delete()
+            .eq("animal_id", id);
 
         if (adoptionError) {
-            console.error("Error deleting related adoption records:", adoptionError);
-            alert("Failed to delete related adoption records.");
+            console.error("Error deleting adoption records:", adoptionError);
+            alert("Failed to delete adoption records.");
             return;
         }
 
         const { error: wishError } = await supabase
-        .from("wishlist")
-        .delete()
-        .eq("animal_id", id);
+            .from("wishlist")
+            .delete()
+            .eq("animal_id", id);
 
-        if(wishError){
-            console.error("Error deleting related wishlist records:", wishError);
-            alert("Failed to delete related adoption records.");
+        if (wishError) {
+            console.error("Error deleting wishlist records:", wishError);
+            alert("Failed to delete wishlist records.");
         }
-        
-        const { error: deleteError} = await supabase
+
+        const { error: deleteError } = await supabase
             .from("animal_listing")
             .delete()
             .eq("animal_id", id);
-        
-        if(deleteError){
-            console.error("Listing failed to delete: ", deleteError);
+
+        if (deleteError) {
+            console.error("Listing failed to delete:", deleteError);
             alert("Listing was not deleted.");
             return;
         }
+
     }
     
     // function called when mark Adopted is clicked
