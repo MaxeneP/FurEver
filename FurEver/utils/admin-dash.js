@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     if(!user){
         alert("You must be logged in to access this page.");
         window.location.href="../pages/signin_Furever.html";
+    }else{
+        updateMetrics();
     }
 
     async function getUser(){
@@ -14,6 +16,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 function init() {
     window.addEventListener('click', eventDelegation);
+    showMetrics();
+    loadMetrics();
+    setInterval(updateMetrics, 30000);
 }
 
 let selectedTable = 1;
@@ -114,6 +119,28 @@ async function fetchTable(table, searchQuery="") {
                 createAdoptionRecordTile(adoption.adoption_id, adoption.animal_id, adoption.user_id);
             });
             break;
+        
+        case 4: // Health records
+            ({ data, error } = await supabase.from("health_record").select("*"));
+            if (error) {
+                console.error("Error fetching health records: ", error);
+            }
+            clearTable();
+            data.forEach(health => {
+                createHealthRecordTile(health.hr_id, health.animal_id, health.last_vet_visit, health.rabies_date, health["5-in-1_date"], health["3-in-1_date"], health.deworm_date, health.vacc_desc, health.health_desc);
+            });
+            break;
+
+        case 5: //paperwork records
+            ({data, error} = await supabase.from("paperwork").select("*"));
+            if(error){
+                console.error("Error fetching paperwork records: ", error);
+            }
+            clearTable();
+            data.forEach(paper => {
+                createPaperworkRecordTile(paper.record_id, paper.animal_id, paper.med_cert_url, paper.ped_cert_url, paper.vac_card_url);
+            });
+            break;
 
         default:
             console.error("Invalid table selection.");
@@ -136,19 +163,37 @@ function eventDelegation(e) {
         changeTableHeaders(0);
         selectedTable = 1;
         fetchTable(1);
+        hideMetrics();
     }
     if (e.target == document.getElementById('animals')) {
         clearTable();
         changeTableHeaders(1);
         selectedTable = 2;
         fetchTable(2);
+        hideMetrics();
     }
     if (e.target == document.getElementById('adoption')) {
         clearTable();
         changeTableHeaders(2);
         selectedTable = 3;
         fetchTable(3);
+        hideMetrics();
     }
+    if (e.target == document.getElementById('healthrecord')){
+        clearTable();
+        changeTableHeaders(3);
+        selectedTable = 4;
+        fetchTable(4);
+        hideMetrics();
+    }
+    if (e.target == document.getElementById('paperwork')){
+        clearTable();
+        changeTableHeaders(4);
+        selectedTable = 5;
+        fetchTable(5);
+        hideMetrics();
+    }
+
     if (e.target.closest('.delete-record-btn')) {
         if (e.target.closest('.user-record')) {
             deleteRecord(1, e.target.closest('.user-record').id);
@@ -156,7 +201,118 @@ function eventDelegation(e) {
             deleteRecord(2, e.target.closest('.animal-record').id);
         } else if (e.target.closest('.adoption-record')) {
             deleteRecord(3, e.target.closest('.adoption-record').id);
+        } else if (e.target.closest('.health-record')) {
+            deleteRecord(4, e.target.closest('.health-record').id);
+        }  else if (e.target.closest('.paper-record')) {
+            deleteRecord(5, e.target.closest('.paper-record').id);
         } 
+    }
+}
+
+const searchbarWrapper = document.getElementById("searchbar-wrapper");
+const dropdownWrapper = document.getElementById("dropdown-wrapper");
+const metricsSection = document.getElementById("metrics-section");
+const buttonGroup = document.querySelector(".button-group");
+const titleHeader = document.querySelector(".title-header");
+const returnBtn = document.getElementById("return-btn");
+
+document.getElementById("table-btn").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    metricsSection.style.display = "none";
+    buttonGroup.style.display = "none";
+    titleHeader.style.display = "none";
+
+    searchbarWrapper.style.display = "flex";
+    dropdownWrapper.style.display = "block";
+    returnBtn.style.display = "inline-block";
+});
+
+returnBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    metricsSection.style.display = "block";
+    buttonGroup.style.display = "flex";
+    titleHeader.style.display = "block";
+
+    searchbarWrapper.style.display = "none";
+    dropdownWrapper.style.display = "none";
+    returnBtn.style.display = "none";
+
+    clearTable();
+    showMetrics();
+});
+
+async function loadMetrics(){
+    //user count
+     let { data: users, error: userError } = await supabase
+        .from('users')
+        .select('user_id');
+    if (userError){
+        console.error("Error fetching users:", userError);
+    }
+    document.getElementById("user-value").textContent = users.length;
+    //listing count
+    let { data: animal, error: animalError } = await supabase
+        .from('animal_listing')
+        .select('animal_id');
+    if (animalError){
+        console.error("Error fetching users:", animalError);
+    }
+    document.getElementById("listing-value").textContent = animal.length;
+    //adopted count
+    let { data: adopted, error: adoptedError } = await supabase
+        .from('animal_listing')
+        .select('animal_id', { count: 'exact' })
+        .eq('Is_adopted', true)
+        .eq('is_deleted', false);
+    if (adoptedError) console.error("Error fetching adopted:", adoptedError);
+    document.getElementById("adopted-value").textContent = adopted.length;
+
+    // available listings
+    let { data: available, error: availableError } = await supabase
+        .from('animal_listing')
+        .select('animal_id', { count: 'exact' })
+        .eq('Is_adopted', false)
+        .eq('is_deleted', false);
+    if (availableError) console.error("Error fetching available:", availableError);
+    document.getElementById("available-value").textContent = available.length;
+}
+
+async function updateMetrics() {
+    try {
+       
+        let { data: users, error: userError } = await supabase.from("users").select("*", { count: "exact" });
+        if (userError) throw userError;
+
+        
+        let { data: listings, error: listingError } = await supabase.from("animal_listing").select("*", { count: "exact" });
+        if (listingError) throw listingError;
+
+        
+        let { data: adopted, error: adoptedError } = await supabase
+            .from("animal_listing")
+            .select("*", { count: "exact" })
+            .eq("Is_adopted", true)
+            .eq("is_deleted", false);
+        if (adoptedError) throw adoptedError;
+
+        
+        let { data: available, error: availableError } = await supabase
+            .from("animal_listing")
+            .select("*", { count: "exact" })
+            .eq("Is_adopted", false)
+            .eq("is_deleted", false);
+        if (availableError) throw availableError;
+
+        
+        document.getElementById("user-value").textContent = users.length;
+        document.getElementById("listing-value").textContent = listings.length;
+        document.getElementById("adopted-value").textContent = adopted.length;
+        document.getElementById("available-value").textContent = available.length;
+
+    } catch (err) {
+        console.error("Error updating metrics:", err.message);
     }
 }
 
@@ -247,6 +403,13 @@ async function deleteRecord(table, id) {
     }
 }
 
+function hideMetrics() {
+    document.getElementById('metrics-section').style.display = 'none';
+}
+
+function showMetrics() {
+    document.getElementById('metrics-section').style.display = 'block';
+}
 // this function creates a tile for the record
 // and appends it to the necessary DOM element
 // id should be the PK of the record in the DB
@@ -362,6 +525,85 @@ function createAdoptionRecordTile(id, animalId, userId) {
     record.append(adoptionId);
     record.append(animal);
     record.append(user);
+
+    delWrapper.appendChild(delBtn);
+    record.appendChild(delWrapper);
+    pane.appendChild(record);
+}
+
+//for paperwork records
+function createPaperworkRecordTile(id, animalId, medCertURL, pedCertURL, vacCardURL){
+    let pane = document.getElementById('body-content');
+    let delWrapper = document.createElement('div');
+    let delBtn = document.createElement('i');
+    let record = document.createElement('div');
+    let paperId = document.createElement('div');
+    let animal = document.createElement('div');
+    let medCert = document.createElement('div');
+    let pedCert = document.createElement('div');
+    let vacCard = document.createElement('div');
+
+    delWrapper.setAttribute('class', 'delete-record-btn');
+    delBtn.setAttribute('class', 'fa fa-trash');
+    record.setAttribute('class', 'paper-record');
+    record.id = id;
+    paperId.textContent = id;
+    animal.textContent = animalId;
+    medCert.textContent = medCertURL;
+    pedCert.textContent = pedCertURL;
+    vacCard.textContent = vacCardURL;
+
+    record.append(paperId);
+    record.append(animal);
+    record.append(medCert);
+    record.append(pedCert);
+    record.append(vacCard);
+    record.append(threeOne);
+
+    delWrapper.appendChild(delBtn);
+    record.appendChild(delWrapper);
+    pane.appendChild(record);
+}
+
+//for health records table
+function createHealthRecordTile(id, animalId, vetDate, rabiesDate, fiveOneDate, threeOneDate, dewormDate, vacDesc, healthDesc){
+    let pane = document.getElementById('body-content');
+    let delWrapper = document.createElement('div');
+    let delBtn = document.createElement('i');
+    let record = document.createElement('div');
+    let healthId = document.createElement('div');
+    let animal = document.createElement('div');
+    let vet = document.createElement('div');
+    let rabies = document.createElement('div');
+    let fiveOne = document.createElement('div');
+    let threeOne = document.createElement('div');
+    let deworm = document.createElement('div');
+    let vac = document.createElement('div');
+    let health = document.createElement('div');
+
+    delWrapper.setAttribute('class', 'delete-record-btn');
+    delBtn.setAttribute('class', 'fa fa-trash');
+    record.setAttribute('class', 'health-record');
+    record.id = id;
+    healthId.textContent = id;
+    animal.textContent = animalId;
+    vet.textContent = vetDate;
+    rabies.textContent = rabiesDate;
+    fiveOne.textContent = fiveOneDate;
+    threeOne.textContent = threeOneDate;
+    deworm.textContent = dewormDate;
+    vac.textContent = vacDesc;
+    health.textContent = healthDesc;
+    
+    record.append(healthId);
+    record.append(animal);
+    record.append(vet);
+    record.append(rabies);
+    record.append(fiveOne);
+    record.append(threeOne);
+    record.append(deworm);
+    record.append(vac);
+    record.append(health);
 
     delWrapper.appendChild(delBtn);
     record.appendChild(delWrapper);
