@@ -23,12 +23,22 @@
         </div>
         <div id="body">
             <div id="body-top">
-                <div id="searchbar-wrapper">
+                <div class="title-header">Admin Dashboard</div>
+                <div id="searchbar-wrapper" style="display: none;">
                     <form action="" name = "search-id" id = "search-id"></form>
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input type = "text" form = "search-id" id = "searchbar" placeholder="Enter ID"> <!-- will update nlng -->
+                    <input type = "text" form = "search-id" id = "searchbar" placeholder="Enter ID">
                 </div>
-                <div id="dropdown-wrapper">
+                <div class = "button-group">
+                    <a id = "table-btn">
+                        View Tables
+                    </a>
+                    <a id = "archive-btn">
+                        View Archive
+                    </a>
+                </div>
+                <a id="return-btn" style="display: none;">Return to Dashboard</a>
+                <div id="dropdown-wrapper" style="display: none;">
                     <input type="checkbox" id = 'dropdown-trigger'>
                     <label for="dropdown-trigger" id = 'table-dropdown-btn'>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -38,13 +48,54 @@
                         <div id="users">Users</div>
                         <div id="animals">Animals</div>
                         <div id="adoption">Adoption</div>
+                        <div id="healthrecord">Health Record</div>
+                        <div id="paperwork">Paperwork</div>
+                    </div>
+                </div>
+                <div id="dropdown-wrapper2" style="display: none;">
+                    <input type="checkbox" id = 'dropdown-trigger2'>
+                    <label for="dropdown-trigger2" id = 'table-dropdown-btn2'>
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        <p>Select Table</p>
+                    </label>
+                    <div id="tables2">
+                        <div id="users2">Users</div>
+                        <div id="animals2">Animals</div>
                     </div>
                 </div>
             </div>
             <div id="body-content">
+                <div id="metrics-section">
+                    <div id = "header-title">Report & Metrics</div>
+                    <div class="metrics-wrapper">
+                        <div class="metrics-container">
+                            <div class="metric-card" id="users-card">
+                                <div class="metric-value" id="user-value"></div>
+                                <div class="metric-label">Users</div>
+                            </div>
+                            <div class="metric-card" id="listings-card">
+                                <div class="metric-value" id="listing-value"></div>
+                                <div class="metric-label">Listings</div>
+                            </div>
+                            <div class="metric-card" id="adopted-card">
+                                <div class="metric-value" id="adopted-value"></div>
+                                <div class="metric-label">Adopted</div>
+                            </div>
+                            <div class="metric-card" id="available-card">
+                                <div class="metric-value" id="available-value"></div>
+                                <div class="metric-label">Available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <input type="checkbox" id = 'user-table'>
                 <input type="checkbox" id = 'animal-table'>
                 <input type="checkbox" id = 'adoption-table'>
+                <input type="checkbox" id = 'health-table'>
+                <input type="checkbox" id = 'paper-table'>
+                <input type="checkbox" id = 'user2-table'>
+                <input type="checkbox" id = 'animal2-table'>
                 <div class="user-record table-header">
                     <div>USER ID</div>
                     <div>USERNAME</div>
@@ -74,6 +125,52 @@
                     <div>ANIMAL ID</div>
                     <div>USER ID</div>
                     <div><i class="fa fa-trash" aria-hidden="true"></i></div>
+                </div>
+                 <div class="health-record table-header">
+                    <div>HEALTH RECORD ID</div>
+                    <div>ANIMAL ID</div>
+                    <div>LAST VET VISIT</div>
+                    <div>RABIES DATE</div>
+                    <div>5-IN-1 DATE</div>
+                    <div>3-IN-1 DATE</div>
+                    <div>DEWORM DATE</div>
+                    <div>VACCINATION DESCRIPTION</div>
+                    <div>HEALTH DESCRIPTION</div>
+                    <div><i class="fa fa-trash" aria-hidden="true"></i></div>
+                </div>
+                <div class="paper-record table-header">
+                    <div>RECORD ID</div>
+                    <div>ANIMAL ID</div>
+                    <div>MEDICAL CERTIFICATE</div>
+                    <div>PEDIGREE CERTIFICATE</div>
+                    <div>VACCINATION CARD</div>
+                     <div><i class="fa fa-trash" aria-hidden="true"></i></div>
+                </div>
+                <div class="user-record2 table-header">
+                    <div>USER ID</div>
+                    <div>USERNAME</div>
+                    <div>EMAIL</div>
+                    <div>CON_NUM</div>
+                    <div><i class="fa fa-trash" aria-hidden="true"></i></div>
+                    <div><i class="fa fa-history" aria-hidden="true"></i></div>
+                </div>
+                <div class="animal-record2 table-header">
+                    <div>ANIMAL ID</div>
+                    <div>USER ID</div>
+                    <div>NAME</div>
+                    <div>SPECIES</div>
+                    <div>BREED</div>
+                    <div>SEX</div>
+                    <div>DOB</div>
+                    <div>SIZE</div>
+                    <div>ACTIVENESS</div>
+                    <div>TEMPERAMENT</div>
+                    <div>NEUTERED</div>
+                    <div>CONTACT INFO</div>
+                    <div>REGION</div>
+                    <div>CITY</div>
+                    <div><i class="fa fa-trash" aria-hidden="true"></i></div>
+                    <div><i class="fa fa-history" aria-hidden="true"></i></div>
                 </div>
             </div>
         </div>

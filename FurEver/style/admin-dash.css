@@ -162,10 +162,107 @@ img {
     background-color: var(--furever-orange);
     border-radius: 1rem 1rem 0 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    padding: 2rem 2rem 2rem 2rem;
+    padding: 3rem 3rem 3rem 3rem;
+    justify-content: space-between;
 }
+
+#body-top .title-header{
+    font-size: 2.5rem;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bolder;
+    flex-shrink: 0;
+}
+
+#header-title {
+    font-size: 2.5rem;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bolder;
+    flex-shrink: 0;
+    padding: 3rem 4rem 4rem 4rem;
+}
+
+#body-top .button-group {
+    display: flex;
+    gap: 3rem;
+    flex-shrink: 0;
+}
+
+#table-btn, #archive-btn, #report-btn, #return-btn {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    text-align: center;
+    letter-spacing: .1rem;
+    background-color: var(--furever-orange);
+    border: 1px solid white;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    transition: all ease .2s;
+}
+
+#table-btn:hover, #archive-btn:hover, #report-btn:hover, #return-btn:hover {
+    cursor: pointer;
+    background: white;
+    color: var(--furever-orange);
+}
+
+.metrics-wrapper {
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--furever-orange);
+    padding: 2rem 0;
+}
+
+.metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.metric-card {
+    background-color: white;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    width: 220px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    font-size: 2rem;
+}
+
+.metric-card:hover {
+    transform: scale(1.03);
+    cursor: default;
+}
+
+.metric-value {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--furever-orange);
+}
+
+.metric-label {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #444;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
 
 #searchbar-wrapper {
     position: relative;
@@ -192,21 +289,16 @@ img {
     width: max(200px, 50%);
 }
 
-#body-content {
-    background-color: var(--furever-orange);
-    border-radius: 0 0 1rem 1rem;
-}
-
-#dropdown-wrapper {
+#dropdown-wrapper, #dropdown-wrapper2 {
     justify-self: self-end;
     position: relative;
 }
 
-#dropdown-trigger {
+#dropdown-trigger, #dropdown-trigger2 {
     display: none;
 }
 
-#table-dropdown-btn {
+#table-dropdown-btn, #table-dropdown-btn2 {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -220,14 +312,14 @@ img {
     border: 1px solid rgba(0,0,0,0);
 }
 
-#table-dropdown-btn:hover, #dropdown-trigger:checked ~ #table-dropdown-btn {
+#table-dropdown-btn:hover, #dropdown-trigger:checked ~ #table-dropdown-btn, #table-dropdown-btn2:hover, #dropdown-trigger2:checked ~ #table-dropdown-btn2 {
     cursor: pointer;
     background-color: var(--furever-orange);
     color: white;
     border: 1px solid white;
 }
 
-#tables {
+#tables, #tables2 {
     display: none;
     flex-direction: column;
     width: 100%;
@@ -239,7 +331,7 @@ img {
     border-radius: 2rem;
 }
 
-#tables > div {
+#tables > div, #tables2 > div {
     width: 100%;
     text-align: center;
     text-transform: uppercase;
@@ -249,22 +341,22 @@ img {
     z-index: 423;
 }
 
-#tables > div:first-child {
+#tables > div:first-child, #tables2 > div:first-child {
     border-radius: 2rem 2rem 0 0;
 }
 
-#tables > div:last-child {
+#tables > div:last-child, #tables2 > div:last-child {
     border-radius: 0 0 2rem 2rem;
 }
 
-#tables > div:hover {
+#tables > div:hover, #tables2 > div:hover {
     background-color: var(--furever-orange);
     color: white;
     cursor: pointer;
     border: 1px solid white;
 }
 
-#dropdown-trigger:checked ~ #tables {
+#dropdown-trigger:checked ~ #tables, #dropdown-trigger2:checked ~ #tables2 {
     display: flex;
 }
 
@@ -285,7 +377,14 @@ img {
     overflow-y: auto;
     overflow-x: hidden;
     padding: 2rem;
+    background-color: var(--furever-orange);
+    border-radius: 0 0 1rem 1rem;
 }
+
+#body-content > div:not(#metrics-section) {
+    background-color:antiquewhite
+}
+
 
 /**********************RECORDS*************************/
 /**********************RECORDS*************************/
@@ -299,14 +398,34 @@ img {
     grid-template-columns: repeat(5, 1fr) min-content;
 }
 
+.user-record2 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr) repeat(2,min-content);
+}
+
 .animal-record {
     display: grid;
     grid-template-columns: repeat(14, 1fr) min-content;
 }
 
+.animal-record2 {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr) repeat(2,min-content);
+}
+
 .adoption-record {
     display: grid;
     grid-template-columns: repeat(4, 1fr) min-content;
+}
+
+.health-record {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr) min-content;
+}
+
+.paper-record {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr) min-content;
 }
 
 .table-header > div:first-child {
@@ -330,7 +449,7 @@ img {
 }
 
 #body-content > div > div {
-    background: white;
+   /* background: white; */
     display: flex;
     align-items: center;
     overflow-x: auto;
@@ -353,24 +472,61 @@ img {
     color: rgb(223, 62, 97);
 }
 
+.perm-delete-record-btn > i {
+    transition: all ease .2s;
+}
+
+.perm-delete-record-btn > i:hover {
+    cursor: pointer;
+    scale: 1.3;
+    color: rgb(223, 62, 97);
+}
+
+.restore-record-btn > i {
+    transition: all ease .2s;
+}
+
+.restore-record-btn > i:hover {
+    cursor: pointer;
+    scale: 1.3;
+    color: rgb(60, 233, 112);
+}
+
 #body-content > input {
     display: none;
 }
 
+
+#user-table:checked ~ .user-record.table-header {
+    display: grid;
+}
+
+#user2-table:checked ~ .user-record2.table-header {
+    display: grid;
+}
+
+#animal-table:checked ~ .animal-record.table-header {
+    display: grid;
+}
+
+#animal2-table:checked ~ .animal-record2.table-header {
+    display: grid;
+}
+
+#adoption-table:checked ~ .adoption-record.table-header {
+    display: grid;
+}
+
+#health-table:checked ~ .health-record.table-header {
+    display: grid;
+}
+
+#paper-table:checked ~ .paper-record.table-header {
+    display: grid;
+}
+
 .table-header {
     display: none;
-}
-
-#user-table:checked ~ .table-header:first-of-type {
-    display: grid;
-}
-
-#animal-table:checked ~ .table-header:nth-of-type(2) {
-    display: grid;
-}
-
-#adoption-table:checked ~ .table-header:nth-of-type(3) {
-    display: grid;
 }
 
 /******************ALTS**********************/
