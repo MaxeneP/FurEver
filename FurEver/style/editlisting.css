@@ -99,7 +99,8 @@ body {
     min-width: 0;
     padding: 1rem;
     display: grid;
-    grid-template-rows: repeat(9, 10%) 50% repeat(2, 10%) min-content;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(9, 10%) min-content min-content 50% min-content repeat(2, 10%) min-content min-content;
     gap: 1rem;
     overflow-y: scroll;
     box-shadow: 0 5px 5px 0 rgba(0,0,0,.1);
@@ -115,15 +116,52 @@ body {
     gap: .2rem;
 }
 
-#description {
-    border-radius: 1rem;
-    padding: 1rem;
-}
-
 .info > input {
     padding: 0 1rem;
     border-radius: 1rem;
     border: none;
+}
+
+.info-file {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    gap: .2rem;
+}
+
+.file-selected {
+    background-color: var(--furever-orange);
+    color: white;
+}
+
+.file-label-hover:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.file-label-disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+
+.vaccination {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr 1fr 1fr;
+    gap: .2rem;
+}
+
+#description {
+    border-radius: 1rem;
+    padding: 1rem;
 }
 
 .radio-group {
@@ -134,6 +172,85 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.check-group {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 10% 20% 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-group {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: min-content 40% 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.file-group > input[type='file'] {
+    display: none;
+}
+
+.file-label {
+    border: 2px solid white;
+    border-radius: 1rem;
+    padding: .2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+}
+
+.file-label-disabled {
+    border: 2px solid grey;
+    color: grey;
+}
+
+.file-label-hover:hover {
+    cursor: pointer;
+    transition: all .2s ease-in;
+    background-color: white;
+    color: var(--furever-orange);
+}
+
+.check-group-2 {
+    margin-top: .5rem;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template:
+    'input other' min-content
+    'text text' 1fr
+    /10% 90%;
+}
+
+.check-group-2 > input {
+    grid-area: input;
+}
+
+.check-group-2 > p {
+    grid-area: other;
+    margin-left: 1rem;
+}
+
+.check-group-2 > textarea {
+    margin-top: 1rem;
+    grid-area: text;
+    height: 10rem;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 label {
@@ -159,7 +276,6 @@ label {
     color: black;
     display: flex;
     justify-content: center;
-    gap: 1rem;
 }
 
 .save-create-btn {
@@ -178,76 +294,76 @@ label {
     color: var(--furever-orange);
 }
 
-
 .radio-group > input {
     display: none;
 }
 
 .right-section {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            width: 400px;
-            overflow-y: scroll;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    width: 400px;
+    overflow-y: scroll;
 }
 
-        .right-section-top {
-            margin-bottom: 20px;
-        }
+.right-section-top {
+    margin-bottom: 20px;
+}
 
-        .right-section-top h2 {
-            color: #333;
-            font-size: 3rem;
-            margin: 0;
-        }
+.right-section-top h2 {
+    color: var(--furever-orange);
+    text-transform: uppercase;
+    top: 1rem;
+    left: 1rem;
+}
 
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-height: 500px;
-        }
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 100%;
+    max-height: 500px;
+}
 
-        .photo-slot {
-            aspect-ratio: 1;
-            border: 2px dashed #ddd;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--furever-orange);
-            background-color: white;
-            position: relative;
-            transition: all ease .2s;
-            cursor: pointer;
-        }
+.photo-slot {
+    aspect-ratio: 1;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--furever-orange);
+    background-color: white;
+    position: relative;
+    transition: all ease .2s;
+    cursor: pointer;
+}
 
-        .photo-slot:hover {
-            border-color: var(--furever-orange);
-            background-color: #fff5f2;
-            transform: scale(1.02);
-        }
+.photo-slot:hover {
+    border-color: var(--furever-orange);
+    background-color: #fff5f2;
+    transform: scale(1.02);
+}
 
-        .photo-slot > i {
-            grid-template-columns: 1fr 2fr;
-            grid-template-rows: 1fr;
-            position: absolute;
-            font-size: 20rem;
-            transition: all ease .2s;
-        }
+.photo-slot > i {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+    position: absolute;
+    font-size: 20rem;
+    transition: all ease .2s;
+}
 
-        .photo-slot > img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            position: absolute;
-            top: 0;
-            left: 0;
-        object-fit: cover;
-        z-index: 1;
-        }
+.photo-slot > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    z-index: 1;
+}
 
 .photo-slot.has-image {
     border: 2px solid var(--furever-orange);
@@ -266,7 +382,7 @@ label {
     border-radius: 3px;
     z-index: 2;
 }
-        
+
 .pseudoradio > div {
     width: 10px;
     height: 10px;
@@ -334,5 +450,3 @@ label {
     }
 
 }
-
-
