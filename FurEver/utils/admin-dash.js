@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNDAyMjQsImV4cCI6MjA1NTcxNjIyNH0.Q4HGFs832rIw2jhlKvFg2LsCgQuA7hEw91eedAApY60");
+  const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MDE0MDIyNCwiZXhwIjoyMDU1NzE2MjI0fQ.erJ4RgCMIN3Z9KYvzjeoJ9XU8yCzX7UjV3xU4SccbA0");
+//DO NOT CHANGE THE KEY!
     console.log("Supabase success.", supabase);
 
     let user = await getUser();
     if(!user){
         alert("You must be logged in to access this page.");
         window.location.href="../pages/signin_Furever.html";
-    }else{
-        updateMetrics();
     }
 
     async function getUser(){
@@ -18,16 +17,20 @@ function init() {
     window.addEventListener('click', eventDelegation);
     showMetrics();
     loadMetrics();
-    setInterval(updateMetrics, 30000);
+    updateMetrics();
 }
 
 let selectedTable = 1;
 const searchInput = document.getElementById("searchbar");
 if (searchInput) {
-    searchInput.addEventListener("input", function () {
-        const query = searchInput.value.toLowerCase();
-        fetchTable(selectedTable, query);
+    searchInput.addEventListener("keydown", function (event) {
+        if(event.key=="Enter"){
+            event.preventDefault();
+            const query = searchInput.value.toLowerCase();
+            fetchTable(selectedTable, query);
+        }
     });
+    
 }
 
 // function called on table change, table has 3 values
@@ -39,7 +42,7 @@ async function fetchTable(table, searchQuery="") {
 
     switch(table){
         case 1: // users
-            ({data, error} = await supabase.from("users").select("*"));
+            ({data, error} = await supabase.from("users").select("*").eq("is_deleted", false));
             if (error){
                 console.error("Error fetching users: ", error);
             }
@@ -56,15 +59,14 @@ async function fetchTable(table, searchQuery="") {
                     return;
                     }
                 }
-
-            clearTable();
-            data.forEach(users => { 
-                createUserRecordTile(users.user_id, users.username, users.email, users.contact_number);
-            });
+                clearTable();
+                data.forEach(users => { 
+                    createUserRecordTile(users.user_id, users.username, users.email, users.contact_number);
+                });
             break;
         
         case 2: //animal_listing
-            ({data, error} = await supabase.from("animal_listing").select("animal_id, user_id, animal_name, species, breed, sex, dob, size, activeness, temperament, Is_neutered, contact_info, region, city"));
+            ({data, error} = await supabase.from("animal_listing").select("animal_id, user_id, animal_name, species, breed, sex, dob, size, activeness, temperament, Is_neutered, contact_info, region, city, is_deleted").eq("is_deleted", false));
             if(error){
                 console.error("Error fetching animal listings: ", error);
             }
@@ -92,8 +94,8 @@ async function fetchTable(table, searchQuery="") {
                     return;
                     }
                 }
-            clearTable();
-            data.forEach(animal => {
+                 clearTable();
+                data.forEach(animal => {
                 createAnimalRecordTile(animal.animal_id, animal.user_id, animal.animal_name, animal.species, animal.breed, animal.sex, animal.dob, animal.size, animal.activeness, animal.temperament, animal.Is_neutered, animal.contact_info, animal.region, animal.city);
             });
             break;
@@ -143,7 +145,7 @@ async function fetchTable(table, searchQuery="") {
             break;
         
         case 6: // user records that are deleted
-            ({data, error} = await supabase.from("users").select("*"));
+            ({data, error} = await supabase.from("users").select("*").eq("is_deleted", true));
             if (error){
                 console.error("Error fetching users: ", error);
             }
@@ -160,15 +162,14 @@ async function fetchTable(table, searchQuery="") {
                     return;
                     }
                 }
-
-            clearTable();
-            data.forEach(users => { 
-                createUserRecordTile2(users.user_id, users.username, users.email, users.contact_number);
-            });
+                clearTable();
+                data.forEach(users => { 
+                    createUserRecordTile2(users.user_id, users.username, users.email, users.contact_number);
+                });
             break;
 
         case 7: // animal records that are deleted
-            ({data, error} = await supabase.from("animal_listing").select("animal_id, user_id, animal_name, species, breed, sex, dob, size, activeness, temperament, Is_neutered, contact_info, region, city"));
+            ({data, error} = await supabase.from("animal_listing").select("animal_id, user_id, animal_name, species, breed, sex, dob, size, activeness, temperament, Is_neutered, contact_info, region, city, is_deleted").eq("is_deleted", true));
             if(error){
                 console.error("Error fetching animal listings: ", error);
             }
@@ -272,18 +273,42 @@ function eventDelegation(e) {
         hideMetrics();
     }
 
-    if (e.target.closest('.delete-record-btn')) {
+    if (e.target.closest('.delete-record-btn')) { //for archive records
         if (e.target.closest('.user-record')) {
-            deleteRecord(1, e.target.closest('.user-record').id);
+            console.log("soft deleted user");
+            markDeleted(1, e.target.closest('.user-record').id);
         } else if (e.target.closest('.animal-record')) {
-            deleteRecord(2, e.target.closest('.animal-record').id);
+            console.log("soft deleted animal");
+            markDeleted(2, e.target.closest('.animal-record').id);
         } else if (e.target.closest('.adoption-record')) {
+            console.log("deleted adoption");
             deleteRecord(3, e.target.closest('.adoption-record').id);
         } else if (e.target.closest('.health-record')) {
+            console.log("deleted health record");
             deleteRecord(4, e.target.closest('.health-record').id);
-        }  else if (e.target.closest('.paper-record')) {
+        } else if (e.target.closest('.paper-record')) {
+            console.log("deleted paperwork");
             deleteRecord(5, e.target.closest('.paper-record').id);
-        } 
+        }
+    }
+
+     if (e.target.closest('.restore-record-btn')) { //restore records
+        if (e.target.closest('.user-record2')) {
+            console.log("restored user");
+            unmarkDeleted(1, e.target.closest('.user-record2').id);
+        } else if (e.target.closest('.animal-record2')) {
+            console.log("restored animal");
+            unmarkDeleted(2, e.target.closest('.animal-record2').id);
+        }
+    }
+     if (e.target.closest('.perm-delete-record-btn')) { //permanently delete records
+        if (e.target.closest('.user-record2')) {
+            console.log("permanent delete user");
+            confirmPermanentDelete(1, e.target.closest('.user-record2').id);
+        } else if (e.target.closest('.animal-record2')) {
+            console.log("permanent delete animal");
+            confirmPermanentDelete(2, e.target.closest('.animal-record2').id);
+        }
     }
 }
 
@@ -334,13 +359,17 @@ returnBtn.addEventListener("click", function (e) {
 
     clearTable();
     showMetrics();
+    loadMetrics();
+    updateMetrics();
+    
 });
 
 async function loadMetrics(){
     //user count
      let { data: users, error: userError } = await supabase
         .from('users')
-        .select('user_id');
+        .select('user_id')
+        .eq('is_deleted', false);
     if (userError){
         console.error("Error fetching users:", userError);
     }
@@ -348,17 +377,16 @@ async function loadMetrics(){
     //listing count
     let { data: animal, error: animalError } = await supabase
         .from('animal_listing')
-        .select('animal_id');
+        .select('animal_id')
+        .eq('is_deleted', false);
     if (animalError){
         console.error("Error fetching users:", animalError);
     }
     document.getElementById("listing-value").textContent = animal.length;
     //adopted count
     let { data: adopted, error: adoptedError } = await supabase
-        .from('animal_listing')
-        .select('animal_id', { count: 'exact' })
-        .eq('Is_adopted', true)
-        .eq('is_deleted', false);
+        .from('adoption')
+        .select('animal_id');
     if (adoptedError) console.error("Error fetching adopted:", adoptedError);
     document.getElementById("adopted-value").textContent = adopted.length;
 
@@ -375,19 +403,17 @@ async function loadMetrics(){
 async function updateMetrics() {
     try {
        
-        let { data: users, error: userError } = await supabase.from("users").select("*", { count: "exact" });
+        let { data: users, error: userError } = await supabase.from("users").select("*", { count: "exact" }).eq("is_deleted", false);
         if (userError) throw userError;
 
         
-        let { data: listings, error: listingError } = await supabase.from("animal_listing").select("*", { count: "exact" });
+        let { data: listings, error: listingError } = await supabase.from("animal_listing").select("*", { count: "exact" }).eq("is_deleted", false);
         if (listingError) throw listingError;
 
         
         let { data: adopted, error: adoptedError } = await supabase
-            .from("animal_listing")
-            .select("*", { count: "exact" })
-            .eq("Is_adopted", true)
-            .eq("is_deleted", false);
+            .from("adoption")
+            .select("*")
         if (adoptedError) throw adoptedError;
 
         
@@ -440,6 +466,55 @@ function clearTable() {
     } 
 }
 
+async function markDeleted(table, id) {
+    if (table === 1) { // users
+        ({ error } = await supabase.from("users").update({ is_deleted: true }).eq("user_id", id));
+    } else if (table === 2) { // animal_listing
+        ({ error } = await supabase.from("animal_listing").update({ is_deleted: true }).eq("animal_id", id));
+    }
+    if (error) {
+        console.error("Error marking record as deleted:", error);
+    } else {
+        console.log("Record marked as deleted.");
+        fetchTable(table);
+    }
+}
+
+// Unmark as deleted (restore)
+async function unmarkDeleted(table, id){
+    let tableName = "";
+    let primaryKey = "";
+
+    switch(table){
+        case 1:
+            tableName = "users";
+            primaryKey = "user_id";
+            break;
+        case 2:
+            tableName = "animal_listing";
+            primaryKey = "animal_id";
+            break;
+        
+        default:
+            console.error("Invalid table selection.");
+            return;
+    }
+
+    const {error} = await supabase.from(tableName).update({is_deleted : false}).eq(primaryKey, id);
+
+    if(error){
+        console.error("Error in restoring record: ", error);
+    } else {
+        document.getElementById(id).remove();
+        console.log(`Record with ID ${id} restored successfully.`);
+    }
+}
+
+function confirmPermanentDelete(table, id) {
+    if (confirm("Are you sure you want to permanently delete this record? This action cannot be undone.")) {
+        deleteRecord(table, id);
+    }
+}
 
 
 // function called when a record is clicked to be deleted
@@ -465,8 +540,17 @@ async function deleteRecord(table, id) {
             tableName = "adoption";
             primaryKey = "adoption_id";
             break;
+        case 4:
+            tableName = "health_record";
+            primaryKey = "hr_id";
+            break;
+        case 5:
+            tableName = "paperwork";
+            primaryKey = "record_id";
+            break;
         default:
             console.error("Invalid table selection.");
+            return;
     }
 
     if (table === 2) {
@@ -482,8 +566,54 @@ async function deleteRecord(table, id) {
 
         if(wishError){
             console.error("Error deleting related wishlist records:", wishError);
-            alert("Failed to delete related adoption records.");
+            alert("Failed to delete related wishlist records.");
         }
+
+        const {error: healthError} = await supabase.from("health_record").delete().eq("animal_id", id);
+        if(healthError){
+            console.error(healthError);
+            alert("Failed to delete related record");
+            return;
+        }
+
+        const {error: paperError} = await supabase.from("paperwork").delete().eq("animal_id", id);
+
+        if(paperError){
+            console.error(paperError);
+            alert("Failed to delete paperwork record")
+            return;
+        }
+    }
+
+    if(table === 2){
+        const { data: images, error: listError } = await supabase.storage
+        .from("images")
+        .list(user_id + "/", { limit: 100 });
+
+        if (listError) {
+        console.error("Error listing images:", listError);
+        }
+
+        if (images && images.length > 0) {
+        const filePaths = images.map(img => `${user_id}/${img.name}`);
+        const { error: removeError } = await supabase.storage
+            .from("images")
+            .remove(filePaths);
+
+        if (removeError) {
+            console.error("Error deleting image files:", removeError);
+        }
+        }
+
+      await supabase.from("animal_listing").delete().eq("user_id", user_id); //delete user records from tables
+      await supabase.from("adoption").delete().eq("user_id", user_id);
+      await supabase.from("wishlist").delete().eq("user_id", user_id);
+      await supabase.from("users").delete().eq("user_id", user_id);
+
+      const { error: authError } = await supabase.auth.admin.deleteUser(user_id); //delete user from Auth
+      if (authError) {
+        console.error("Cannot delete user from authentication:", authError);
+      }
     }
 
     const { error } = await supabase.from(tableName).delete().eq(primaryKey, id);
