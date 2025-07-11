@@ -259,7 +259,7 @@ function eventDelegation(e) {
             .single();
 
         //insert medical history records
-        if (vetcb.checked || healthcb.checked || rabiescb.checked || fivenonecb.checked || threenonecb.checked || dewormcb.checked || othercb.checked){
+        if (vetcb && vetcb.checked || healthcb && healthcb.checked || rabiescb && rabiescb.checked || fivenonecb && fivenonecb.checked || threenonecb && threenonecb.checked || dewormcb && dewormcb.checked || othercb && othercb.checked){
             let last_vet_visit = document.getElementById("vet-visit-date")?.value ? new Date(document.getElementById("vet-visit-date").value).toISOString().slice(0,10) : null;
             let health_desc = document.getElementById("other-health").value;
             let rabies_date = document.getElementById("rabies-date")?.value ? new Date(document.getElementById("rabies-date").value).toISOString().slice(0,10) : null;
