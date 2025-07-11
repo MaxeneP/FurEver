@@ -53,9 +53,15 @@
         <div id="body">
             <div id="body-top">
                 <div id="body-top-left">
-                    <form action="" id = "search-form" ></form>
-                    <i class="fa fa-search" aria-hidden="true" id = 'searchbar-label'></i>
-                    <input type="text" form="search-form" id = 'searchbar' placeholder = 'Find your FurEver!' name = 'searchbar'>
+                    <div>
+                        <form action="" id = "search-form" ></form>
+                        <i class="fa fa-search" aria-hidden="true" id = 'searchbar-label'></i>
+                        <input type="text" form="search-form" id = 'searchbar' placeholder = 'Find your FurEver!' name = 'searchbar'>
+                    </div>
+                    <div>
+                        <i class="fa fa-filter" aria-hidden="true" id = "filter-btn"></i>
+                    </div>
+                   
                 </div>
                 <div id="body-top-right">
                     <input type="checkbox" id = 'location-dropdown-trigger'>
@@ -115,7 +121,65 @@
                 </div>
             </div>
         </div>
+   
+        <div id="filters-wrapper">
+            <div id="filter-modal">
+                <div id="fmt">
+                    <p>Advanced Search</p>
+                    <p id="reset-filters-btn">Reset Filters</p>
+                </div>
+                <div id="filters">
+                    <div class="filter">
+                        <label>Species</label>
+                        <select name = 'species' id = 'species'>
+                            <option value="1=1">None</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="bird">Bird</option>
+                            <option value="hamster">Hamster</option>
+                            <option value="guinea pig">Guinea Pig</option>
+                            <option value="lizard">Lizard</option>
+                            <option value="snake">Snake</option>
+                            <option value="reptile">Reptile</option>
+                            <option value="fish">Fish</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="filter">
+                        <label>Sex</label>
+                        <select name="sex" id="sex">
+                            <option value="1=1">None</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="filter">
+                        <label>Size</label>
+                        <select name ='size' id = 'size'>
+                            <option value="1=1">None</option>
+                            <option value = 'toy'>Toy</option>
+                            <option value = 'medium'>Medium</option>
+                            <option value = 'large'>Large</option>
+                        </select>
+                    </div>
+                    <div class="filter">
+                        <label>Neutered</label>
+                        <select name="neutered" id="neutered">
+                            <option value="1=1">None</option>
+                            <option value="male">Yes</option>
+                            <option value="female">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="filter-btns">
+                    <div class="f-btn" id="close-filters-btn">Close</div>
+                    <div class="f-btn" id="apply-filters-btn">Apply</div>
+                </div>
+            </div>
+        </div>  
     </div>
+
+
     
     <script src="../utils/home.js"></script>
     <script src="../utils/auth.js"></script>

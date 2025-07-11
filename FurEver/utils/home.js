@@ -181,6 +181,12 @@ function eventDelegation(e) {
     if (e.target == document.getElementById('view-potd')) {
         viewPotd();
     }
+    if (e.target == document.getElementById("filter-btn")) {
+        document.getElementById("filters-wrapper").setAttribute('style', 'display: flex');
+    }
+    if (e.target == document.getElementById("close-filters-btn")) {
+        document.getElementById("filters-wrapper").setAttribute('style', 'display: none');
+    }
 }
 
 // **************************************************************************************************************
