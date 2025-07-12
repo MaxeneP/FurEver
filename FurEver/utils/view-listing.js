@@ -124,12 +124,16 @@ document.addEventListener("DOMContentLoaded", async function(){
             imageSlots.innerHTML = "";
             
             if(imageUrls.length > 0){
+                imageSlots.style.display = "grid";
+                pictures.style.gridTemplateColumns = "1fr";
                 let image = document.createElement('img');
                 image.setAttribute('src', imageUrls[0]);
                 imageContainer.appendChild(image);
             }
 
            if (imageUrls.length > 1){
+            imageSlots.style.display = "grid";
+            pictures.style.gridTemplateColumns = "1fr 2fr";
             imageUrls.slice(1).forEach((url, index) => {
             const thumb = document.createElement("img");
             thumb.src = url;
