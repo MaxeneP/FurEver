@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         deletedListing = false;
         fetchListings(viewAdopted);
         this.innerHTML = viewAdopted ? "Return to<br> Main" : "View Adopted<br> Profiles";
+        document.getElementById("deleted-listing-btn").innerHTML = "Deleted<br> Profiles";
     });
 
     document.getElementById("deleted-listing-btn").addEventListener("click", function (event) {
