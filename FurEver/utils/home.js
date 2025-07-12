@@ -126,9 +126,11 @@ function init() {
             }
 
         clearListings();
-         const firstImage = data.image_URL?.split(',')[0]?.trim() || '';
+        clearListings();
         data.forEach(listing => {
+            const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
             createTile(listing.animal_name, firstImage, listing.animal_id);
+
             if(error){
                 console.error("Error fetching listings: ", error);
             }
