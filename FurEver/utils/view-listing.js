@@ -45,6 +45,15 @@ document.addEventListener("DOMContentLoaded", async function(){
             if(paperError){
                 console.error("No paperworks found: ", paperError);
             }
+            
+         const { error: viewError } = await supabase
+                        .from("animal_listing")
+                        .update({ view_count: (listing.view_count || 0) + 1 })
+                        .eq("animal_id", listing.animal_id);
+
+                    if (viewError) {
+                        console.error("Error updating view count: ", viewError);
+            }
 
         let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
         document.getElementById("name").textContent = name;
