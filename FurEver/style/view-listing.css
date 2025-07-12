@@ -91,7 +91,7 @@ img {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;
     gap: .5rem;
     min-width: 0;
@@ -109,7 +109,6 @@ img {
     gap: .5rem;
     overflow-y: auto;
     overflow-x: hidden; 
-    display: none;
 }
 
 #pictures-left > img, #pic-right-slider > img {
@@ -391,20 +390,12 @@ img {
     #listing-wrapper {
         grid-template-columns: 2fr 1fr;
     }
-    
-    #pictures {
-        grid-template-columns: 1fr;
-    }
-    
+     
 }
 
 @media only screen and (max-width: 1235px) {
     #listing-wrapper {
         grid-template-columns: 1fr 1fr;
-    }
-    
-    #pictures {
-        grid-template-columns: 1fr;
     }
     
 }
@@ -423,6 +414,10 @@ img {
 
     #pictures-left {
         display: none;
+    }
+
+    #pictures {
+        grid-template-columns: 1fr;
     }
 }
 
