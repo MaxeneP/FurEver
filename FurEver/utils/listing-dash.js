@@ -56,15 +56,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     continue;
                 }
 
-                const { error: viewError } = await supabase
-                        .from("animal_listing")
-                        .update({ view_count: (listing.view_count || 0) + 1 })
-                        .eq("animal_id", listing.animal_id);
-
-                    if (viewError) {
-                        console.error("Error updating view count: ", viewError);
-                    }
-
                 const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
                 createEntry(
                     listing.animal_name,
