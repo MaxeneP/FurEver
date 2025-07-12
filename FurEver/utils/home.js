@@ -300,38 +300,55 @@ function createTile(name, imageSrc, id) {
 let animalId = null;
 
 // for potd record fetching
-async function fetchPotd(){
-        const potdCache = localStorage.getItem("potdCache");
-        const now = new Date().getTime();
-        const time = 86400000;
+async function fetchPotd() {
+    const potdCache = localStorage.getItem("potdCache");
+    const now = Date.now();
+    const oneDay = 86400000;
 
-        if (potdCache){
-            const {animal_id, animal_name, image_URL, timestamp} = JSON.parse(potdCache);
-            if(now - timestamp < time){
-                animalId = animal_id;
-                setPotd(animal_name, image_URL, animal_id);
-                return;
-            }
-        }
-        //fetch new potd if the alloted time has passed
-        const {data, error} = await supabase.from("potd_view").select("animal_id, animal_name, image_URL, Is_adopted").eq("Is_adopted", false).limit(1).single();
-        if (error){
-            console.error("Error fetching record:", error);
-        }
-        if (!data || data.length === 0){
-            alert("No pet of the day found");
-        }
+    if (potdCache) {
+        const { animal_id, animal_name, image_URL, timestamp } = JSON.parse(potdCache);
 
-        animalId = data.animal_id;
-        localStorage.setItem("potdCache", JSON.stringify({
-            animal_id: data.animal_id,
-            animal_name: data.animal_name,
-            image_URL: data.image_URL,
-            timestamp: now
-        }));
-        setPotd(data.animal_name, data.image_URL, data.animal_id);    
+        if (now - timestamp < oneDay) {
+            animalId = animal_id;
+            const firstImage = image_URL?.split(',')[0]?.trim() || '';
+            setPotd(animal_name, firstImage, animal_id);
+            return;
+        }
+    }
 
+    // Fetch new POTD
+    const { data, error } = await supabase
+        .from("potd_view")
+        .select("animal_id, animal_name, image_URL, Is_adopted")
+        .eq("Is_adopted", false)
+        .limit(1)
+        .single();
+
+    if (error) {
+        console.error("Error fetching record:", error);
+        return;
+    }
+
+    if (!data) {
+        alert("No pet of the day found");
+        return;
+    }
+
+    const { animal_id, animal_name, image_URL } = data;
+
+    const firstImage = image_URL?.split(',')[0]?.trim() || '';
+
+    localStorage.setItem("potdCache", JSON.stringify({
+        animal_id,
+        animal_name,
+        image_URL,
+        timestamp: now
+    }));
+
+    animalId = animal_id;
+    setPotd(animal_name, firstImage, animal_id);
 }
+
 // makes potd element visible
 // potd trigger is a checkbox
 // css rule makes potd tile visible depending
