@@ -126,7 +126,6 @@ function init() {
             }
 
         clearListings();
-        clearListings();
         data.forEach(listing => {
             const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
             createTile(listing.animal_name, firstImage, listing.animal_id);
