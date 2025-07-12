@@ -126,7 +126,7 @@ function init() {
             }
 
         clearListings();
-         const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
+         const firstImage = data.image_URL?.split(',')[0]?.trim() || '';
         data.forEach(listing => {
             createTile(listing.animal_name, firstImage, listing.animal_id);
             if(error){
