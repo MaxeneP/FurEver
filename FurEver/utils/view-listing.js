@@ -13,6 +13,76 @@ document.addEventListener("DOMContentLoaded", async function(){
         return error ? null : data.user;
     }
 
+    /*function newFetchListings() {
+        document.getElementById("name").textContent; //name
+        document.getElementById("breed").textContent; //breed
+        document.getElementById("size").textContent; //size
+        document.getElementById("description").textContent; //description
+        document.getElementById("contact-number").textContent;  //contact no
+        document.getElementById("location").textContent; //loc
+        document.getElementById("last-vet-visit-date").textContent; //last vet visit date
+        document.getElementById("other-health-info").textContent; //other health info
+
+        // Rabies vaccination
+        if (true) {
+            document.getElementById("rabies-date").textContent;
+            document.getElementById("rabies").classList.add('checked');
+        } else {
+            document.getElementById("rabies-date").textContent;
+        }
+
+        // 5-in-1 vaccination
+        if (true) {
+            document.getElementById("5-in-1-date").textContent;
+            document.getElementById("5-in-1-date").classList.add('checked');
+        } else {
+            document.getElementById("5-in-1-date").textContent;
+        }
+
+        // 3-in-1 vaccination
+        if (true) {
+            document.getElementById("3-in-1-date").textContent;
+            document.getElementById("3-in-1").classList.add('checked');
+        } else {
+            document.getElementById("3-in-1-date").textContent;
+        }
+
+        // Deworm
+        if (true) {
+            document.getElementById("deworm-date").textContent;
+            document.getElementById("deworm").classList.add('checked');
+        } else {
+            document.getElementById("deworm-date").textContent;
+        }
+
+        // other vax info
+        document.getElementById("other-vaccination-info").textContent;
+
+        // for different paperwork
+        
+        // vaccination card
+        if (true) {
+            let vaxCard = document.getElementById("vaccination-card");
+            vaxCard.classList.add('enabled');
+            vaxCard.href; // set href for picture
+        }
+
+        // for medical certificate
+        if (true) {
+            let medCert = document.getElementById("medical-certificate");
+            medCert.classList.add('enabled');
+            medCert.href; // set href for picture
+        }
+
+        // for pedigree
+        if (true) {
+            let ped = document.getElementById("pedigree");
+            ped.classList.add('enabled');
+            ped.href; // set href for picture
+        }
+
+    } */
+
     async function fetchListingDetails(listingId){
         let { data: listing, error } = await supabase
             .from("animal_listing")
@@ -45,14 +115,16 @@ document.addEventListener("DOMContentLoaded", async function(){
             if(paperError){
                 console.error("No paperworks found: ", paperError);
             }
-            
-         const { error: viewError } = await supabase
+        
+            if(!user || user.id !== listing.user_id){
+                 const { error: viewError } = await supabase
                         .from("animal_listing")
                         .update({ view_count: (listing.view_count || 0) + 1 })
                         .eq("animal_id", listing.animal_id);
 
                     if (viewError) {
                         console.error("Error updating view count: ", viewError);
+            }
             }
 
         let name = listing.Is_adopted? `${listing.animal_name} (ADOPTED)` : listing.animal_name;
@@ -124,7 +196,6 @@ document.addEventListener("DOMContentLoaded", async function(){
             imageSlots.innerHTML = "";
             
             if(imageUrls.length > 0){
-                imageSlots.style.display = "grid";
                 pictures.style.gridTemplateColumns = "1fr";
                 let image = document.createElement('img');
                 image.setAttribute('src', imageUrls[0]);
@@ -218,6 +289,11 @@ document.addEventListener("DOMContentLoaded", async function(){
     async function addToWsihlist(listingId, animalName, imageUrl){
          // check if record already exists
         const { data: existingEntry, error: fetchError } = await supabase.from("wishlist").select("animal_id").eq("user_id", user.id).eq("animal_id", listingId).single();
+
+         if (!user || user.id === localStorage.getItem("listing_creator_id")) {
+        alert("You cannot add your own listing to your wishlist.");
+        return;
+    }
 
         if (fetchError){
             console.error("Error checking wishlist: ", fetchError);
