@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         return error ? null : data.user;
     }
 
+    populateUserContact();
+
     
     //uploads images to supabase storage
     async function uploadImage(file, userId){
@@ -103,19 +105,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         
         window.addEventListener('click', eventDelegation);
         provinceDrop.addEventListener('change', provinceChange);
-        window.addEventListener('resize', fontChange);
-        fontChange();
     }
-
-    function fontChange() {  
-        parent = document.querySelector('.photo-slot')
-        uploadIcons = document.querySelectorAll('.photo-slot>i');
-        for (let icon of uploadIcons) {
-            fontSize = parent.offsetHeight - 50;
-            icon.style.fontSize = `${fontSize}px`;
-        }
-    }
-
 
 
     // for click events
@@ -238,7 +228,19 @@ function eventDelegation(e) {
             return;
         }
 
-
+        let { data: existingListing, error: checkError } = await supabase
+            .from("animal_listing")
+            .select("*")
+            .eq("user_id", user.id)
+            .eq("animal_name", name)
+            .eq("species", species)
+            .eq("breed", breed)
+            .maybeSingle();
+        
+            if (existingListing) {
+            alert("You already created a listing for this pet.");
+            return;
+        }
         
         let images = [];
         document.querySelectorAll(".photo-slot").forEach(slot => {
@@ -351,5 +353,18 @@ function eventDelegation(e) {
         }
 
     });
-});
 
+    async function populateUserContact() {
+    let { data: userInfo, error } = await supabase
+        .from("users")
+        .select("contact_number")
+        .eq("user_id", user.id)
+        .single();
+
+    if (error) {
+        console.error("Failed to fetch user contact:", error);
+        return;
+    }
+    document.getElementById("contact").value = userInfo?.contact_number || "";
+    }
+});
