@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     
             clearListings();
             data.forEach(listing => {
-                createTile(listing.animal_name, listing.image_URL, listing.animal_id, listing.Is_adopted);
+                 const firstImage = listing.image_URL?.split(',')[0]?.trim() || '';
+                createTile(listing.animal_name, firstImage, listing.animal_id, listing.Is_adopted);
             });
         }
     
