@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         viewAdopted = false;
         fetchListings(false, deletedListing);
         this.innerHTML = deletedListing ? "Return to<br> Main" : "Deleted<br> Profiles";
+        document.getElementById("adopted-listing-btn").innerHTML = "Adopted<br> Profiles";
     });
 
     let pendingDeleteId = null;
