@@ -42,7 +42,7 @@ async function fetchTable(table, searchQuery="") {
 
     switch(table){
         case 1: // users
-            ({data, error} = await supabase.from("users").select("*").eq("is_deleted", false));
+            ({data, error} = await supabase.from("users").select("*").eq("is_deleted", false).neq("user_id", "e9e77e08-99d4-4f77-88dd-fa6120a62980"));
             if (error){
                 console.error("Error fetching users: ", error);
             }
