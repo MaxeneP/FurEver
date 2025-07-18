@@ -1,5 +1,5 @@
-const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNDAyMjQsImV4cCI6MjA1NTcxNjIyNH0.Q4HGFs832rIw2jhlKvFg2LsCgQuA7hEw91eedAApY60");
-
+const supabase =  window.supabase.createClient("https://idiqjlywytsddktbcvvc.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkaXFqbHl3eXRzZGRrdGJjdnZjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MDE0MDIyNCwiZXhwIjoyMDU1NzE2MjI0fQ.erJ4RgCMIN3Z9KYvzjeoJ9XU8yCzX7UjV3xU4SccbA0");
+//DO NOT CHANGE THE KEY!
 
 document.addEventListener("DOMContentLoaded", async function(){
   console.log("Supabase success.", supabase);
@@ -87,6 +87,8 @@ async function updateAccount() {
   }
 }
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const remove = document.getElementById("delete");
 
@@ -107,6 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  const confirmed = await showConfirmationPopup();
+  if (!confirmed) return;
+
   try {
     const { error: updateError } = await supabase
       .from("users")
@@ -116,22 +121,91 @@ document.addEventListener("DOMContentLoaded", function () {
     if (updateError) throw updateError;
 
     localStorage.clear();
-    alert("Account has been deactivated and will be deleted in 30 days. Contact the admin to restore the account.");
-    window.location.href = "/FurEver/";
-
+    showMessage('Your account has been deactivated.', "We'll miss you. Come back to us soon!", true);
+    setTimeout(() => {
+        window.location.href = "/FurEver/";
+      }, 4000);
   } catch (error) {
     console.error("Error during account soft-delete:", error);
     alert("Failed to mark account as deleted.");
   }
 });
 
-  const cancel = document.getElementById("cancel"); //cancel button
-  cancel.addEventListener("click", function() {
-    document.getElementById("new-password").value = "";
-    document.getElementById("con-password").value = "";
-  });
+ const cancel = document.getElementById("cancel");
+    if (cancel) {
+      cancel.addEventListener("click", function () {
+        document.getElementById("new-password").value = "";
+        document.getElementById("con-password").value = "";
+      });
+    } else {
+      console.warn("Cancel button not found.");
+    }
 
 });
+
+function createPopup(title, content, buttons) {
+  const overlay = document.createElement('div');
+  overlay.className = 'popup-overlay';
+
+  const popup = document.createElement('div');
+  popup.className = 'popup-box';
+
+  const titleElement = document.createElement('h3');
+  titleElement.className = 'popup-title';
+  titleElement.textContent = title;
+
+  const contentElement = document.createElement('div');
+  contentElement.className = 'popup-content';
+  contentElement.innerHTML = content;
+
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'popup-buttons';
+
+  buttons.forEach(button => {
+    const btn = document.createElement('button');
+    btn.textContent = button.text;
+    btn.className = button.primary ? 'popup-btn primary' : 'popup-btn secondary';
+
+    btn.addEventListener('click', () => {
+      document.body.removeChild(overlay);
+      button.onClick();
+    });
+
+    buttonContainer.appendChild(btn);
+  });
+
+  popup.appendChild(titleElement);
+  popup.appendChild(contentElement);
+  popup.appendChild(buttonContainer);
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  });
+}
+
+function showConfirmationPopup() {
+  return new Promise((resolve) => {
+    createPopup(
+      'Are you sure?',
+      'Your account will be deactivated and permanently deleted in 30 days. Would you like to proceed?',
+      [
+        { text: 'Cancel', primary: false, onClick: () => resolve(false) },
+        { text: 'Deactivate Account', primary: true, onClick: () => resolve(true) }
+      ]
+    );
+  });
+}
+
+function showMessage(title, message, isSuccess = true) {
+  const content = `<div class="popup-message ${isSuccess ? 'success' : 'error'}">${message}</div>`;
+  createPopup(title, content, [
+    { text: 'OK', primary: true, onClick: () => {} }
+  ]);
+}
 
  function selectMenuItem(item, sectionId) {
   document.querySelectorAll('.menu-item').forEach(el => {
