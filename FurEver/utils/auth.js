@@ -75,8 +75,21 @@ if (submit) {
       return alert("Password must have at least 1 uppercase letter, 1 lowercase letter, 1 special character, 1 digit, and be at least 6 characters long.");
     }
 
-    try {
-      const { data, error } = await supabase.auth.signUp({
+  try {
+      const { data: existingUsers, error: fetchError } = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', email)
+        .limit(1);
+
+      if (fetchError) {
+        throw fetchError;
+      }
+
+      if (existingUsers.length > 0) {
+        return alert("An account with this email already exists. Please use a different email or log in.");
+      }else{
+         const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -90,11 +103,77 @@ if (submit) {
       if (error) throw error;
 
       alert("A verification email has been sent to your inbox. Please verify your email before logging in.");
+      }
     } catch (error) {
       alert(error.message);
       console.error("Signup error:", error);
     }
   });
+}
+
+// popup for recovering account
+function createPopup(title, content, buttons) {
+  const overlay = document.createElement('div');
+  overlay.className = 'popup-overlay';
+
+  const popup = document.createElement('div');
+  popup.className = 'popup-box';
+
+  const titleElement = document.createElement('h3');
+  titleElement.className = 'popup-title';
+  titleElement.textContent = title;
+
+  const contentElement = document.createElement('div');
+  contentElement.className = 'popup-content';
+  contentElement.innerHTML = content;
+
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'popup-buttons';
+
+  buttons.forEach(button => {
+    const btn = document.createElement('button');
+    btn.textContent = button.text;
+    btn.className = button.primary ? 'popup-btn primary' : 'popup-btn secondary';
+
+    btn.addEventListener('click', () => {
+      document.body.removeChild(overlay);
+      button.onClick();
+    });
+
+    buttonContainer.appendChild(btn);
+  });
+
+  popup.appendChild(titleElement);
+  popup.appendChild(contentElement);
+  popup.appendChild(buttonContainer);
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  });
+}
+
+function showAccountRecoveryPopup() {
+  return new Promise((resolve) => {
+    createPopup(
+      'Account Deactivated',
+      'Your account has been deactivated. Would you like to recover your account?',
+      [
+        { text: 'Cancel', primary: false, onClick: () => resolve(false) },
+        { text: 'Restore Account', primary: true, onClick: () => resolve(true) }
+      ]
+    );
+  });
+}
+
+function showMessage(title, message, isSuccess = true) {
+  const content = `<div class="popup-message ${isSuccess ? 'success' : 'error'}">${message}</div>`;
+  createPopup(title, content, [
+    { text: 'OK', primary: true, onClick: () => {} }
+  ]);
 }
 
 // SIGN IN
@@ -111,11 +190,7 @@ if (signIn) {
     }
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
       if (!data.user) {
@@ -136,22 +211,41 @@ if (signIn) {
         .select("username, contact_number, is_deleted")
         .eq("user_id", userId)
         .single();
-      
-      if (existingUser && existingUser.is_deleted === true) {
-        alert("Your account has been deactivated. Please contact the administrator (systemadmin@gmail.com) to restore access.");
-        await supabase.auth.signOut(); // force logout if logged in
-        return;
+
+     if (existingUser?.is_deleted) {
+        await supabase.auth.signOut();
+
+       const wantsToRecover = await showAccountRecoveryPopup(email, password);
+      if (!wantsToRecover) return;
+
+      try {
+        const { error: updateError } = await supabase
+          .from("users")
+          .update({ is_deleted: false })
+          .eq("user_id", userId);
+
+        if (updateError) throw updateError;
+
+        showMessage('Success', 'Your account has been successfully reactivated!', true);
+
+        setTimeout(() => {
+          window.location.href = "../pages/signin_Furever.html";
+        }, 2000);
+      } catch (err) {
+        console.error("Account recovery error:", err);
+        showMessage('Error', 'Failed to reactivate account. Please try again.', false);
       }
 
+        return;
+      }
       if (!existingUser) {
-        const { error: insertError } = await supabase.from("users").insert([
-          {
-            user_id: userId,
-            email: email,
-            username: data.user.user_metadata?.username || '',
-            contact_number: data.user.user_metadata?.contact_number || '',
-          },
-        ]);
+        const { error: insertError } = await supabase.from("users").insert([{
+          user_id: userId,
+          email,
+          username: data.user.user_metadata?.username || '',
+          contact_number: data.user.user_metadata?.contact_number || '',
+        }]);
+
         if (insertError) throw insertError;
 
         await createUserFolder(userId);
