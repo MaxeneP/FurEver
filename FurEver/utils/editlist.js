@@ -24,6 +24,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             locationObject.showProvinces('#provinces');
             window.addEventListener('click', eventDelegation);
             provinceDrop.addEventListener('change', provinceChange);
+            window.addEventListener('resize', fontChange);
+            fontChange();
+        }
+
+        function fontChange() {  
+            parent = document.querySelector('.photo-slot')
+            uploadIcons = document.querySelectorAll('.photo-slot>i');
+            for (let icon of uploadIcons) {
+                fontSize = parent.offsetHeight - 50;
+                icon.style.fontSize = `${fontSize}px`;
+            }
         }
 
         function eventDelegation(e) {
