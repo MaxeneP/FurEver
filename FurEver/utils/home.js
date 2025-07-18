@@ -52,12 +52,13 @@ function init() {
             window.location.href = "home.html";
 
         });
-    }
+    }else{
+     // for populating dropdown
+    let dropdown = document.getElementById('cities');
+
     
-    // for populating dropdown
     let cityObj = new City();
     let locations = cityObj.getAllCities();
-    let dropdown = document.getElementById('cities');
     for (let i in locations) {
         let city = document.createElement('div');
         city.setAttribute('class', 'city');
@@ -70,6 +71,7 @@ function init() {
 
     fetchPotd();
     showPotd();
+    }
 
 }
 
@@ -138,28 +140,31 @@ function init() {
 
     const applyFilter = document.getElementById("apply-filters-btn");
 
-    applyFilter.addEventListener("click", async function(event) {
-    event.preventDefault();
+    if(applyFilter){
+        applyFilter.addEventListener("click", async function(event) {
+        event.preventDefault();
 
-    let species = document.getElementById('species').value;
-    let size = document.getElementById('size').value;
-    let sex = document.getElementById('sex').value;
-    let neutered = document.getElementById('neutered').value;
+        let species = document.getElementById('species').value;
+        let size = document.getElementById('size').value;
+        let sex = document.getElementById('sex').value;
+        let neutered = document.getElementById('neutered').value;
 
-    let neuteredValue = null;
-    if (neutered === "male") neuteredValue = true;
-    else if (neutered === "female") neuteredValue = false;
+        let neuteredValue = null;
+        if (neutered === "male") neuteredValue = true;
+        else if (neutered === "female") neuteredValue = false;
 
-    const filters = {
-        species: species !== "1=1" ? species : null,
-        size: size !== "1=1" ? size : null,
-        sex: sex !== "1=1" ? sex : null,
-        neutered: neuteredValue
-    };
+        const filters = {
+            species: species !== "1=1" ? species : null,
+            size: size !== "1=1" ? size : null,
+            sex: sex !== "1=1" ? sex : null,
+            neutered: neuteredValue
+        };
 
-    fetchListingsWithFilters(filters);
-    });
+        fetchListingsWithFilters(filters);
+        });
 
+    }
+   
 
     async function fetchListingsWithFilters(filters) {
     let query = supabase.from("animal_listing").select(
@@ -192,16 +197,18 @@ function init() {
 
     const resetBtn = document.getElementById("reset-filters-btn");
 
-    resetBtn.addEventListener("click", function () {
-    document.getElementById('species').value = "1=1";
-    document.getElementById('size').value = "1=1";
-    document.getElementById('sex').value = "1=1";
-    document.getElementById('neutered').value = "1=1";
+    if(resetBtn){
+        resetBtn.addEventListener("click", function () {
+        document.getElementById('species').value = "1=1";
+        document.getElementById('size').value = "1=1";
+        document.getElementById('sex').value = "1=1";
+        document.getElementById('neutered').value = "1=1";
 
-    localStorage.removeItem("surveyFilters");
+        localStorage.removeItem("surveyFilters");
 
-    fetchListings();
-    });
+        fetchListings();
+        });
+    }
 
 
     function clearListings() {
@@ -338,6 +345,7 @@ async function fetchPotd() {
 
     const firstImage = image_URL?.split(',')[0]?.trim() || '';
 
+    // Store full data in cache (including all image_URLs)
     localStorage.setItem("potdCache", JSON.stringify({
         animal_id,
         animal_name,
