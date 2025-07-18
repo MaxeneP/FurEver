@@ -219,6 +219,11 @@ function eventDelegation(e) {
         let city = document.getElementById("cities").value;
         let tncCheckbox = document.getElementById("tnc-cb");
 
+        if (city === "Select City / Municipality") {
+            alert("Please select a valid city.");
+            return;
+        }
+        
         if (!tncCheckbox.checked) {
         return alert("You must agree to the Terms and Conditions before signing up.");
         }
