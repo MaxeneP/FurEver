@@ -386,20 +386,6 @@ img {
 }
 
 
-@media only screen and (max-width: 1235px) {
-    #listing-wrapper {
-        grid-template-columns: 2fr 1fr;
-    }
-     
-}
-
-@media only screen and (max-width: 1235px) {
-    #listing-wrapper {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-}
-
 @media only screen and (max-width: 1000px) {
     .footer-email {
         display: none;
@@ -412,13 +398,6 @@ img {
         width: 100%;
     }
 
-    #pictures-left {
-        display: none;
-    }
-
-    #pictures {
-        grid-template-columns: 1fr;
-    }
 }
 
 @media only screen and (max-width: 830px) {
