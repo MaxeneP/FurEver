@@ -88,9 +88,8 @@ if (submit) {
 
       if (existingUsers.length > 0) {
         return alert("An account with this email already exists. Please use a different email or log in.");
-      }
-
-      const { data, error } = await supabase.auth.signUp({
+      }else{
+         const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -104,6 +103,7 @@ if (submit) {
       if (error) throw error;
 
       alert("A verification email has been sent to your inbox. Please verify your email before logging in.");
+      }
     } catch (error) {
       alert(error.message);
       console.error("Signup error:", error);
