@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showMessage('Your account has been deactivated.', "We'll miss you. Come back to us soon!", true);
     setTimeout(() => {
         window.location.href = "/FurEver/";
-      }, 4000);
+      }, 2000);
   } catch (error) {
     console.error("Error during account soft-delete:", error);
     alert("Failed to mark account as deleted.");
