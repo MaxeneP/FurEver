@@ -314,8 +314,11 @@ img {
 
 .listing-name {
     text-transform: capitalize;
-    text-overflow: hidden;
-    width: 100%;
+    justify-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
     text-align: center;
     font-size: 2rem;
     color: white;
